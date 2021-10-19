@@ -13,16 +13,24 @@ const userSchema = new mongoose.Schema({
         unique: true,
         trim: true,
       },
+    password : {
+          type: String,
+          require: [true, "Password is required."],
+          trim: true,
+        },
     phone : {
-        type: Number,
+        type: String,
         unique: true,
         trim: true,
       },
-    password : {
+    address : {
         type: String,
-        require: [true, "Password is required."],
         trim: true,
-      },
+    },
+    image : {
+      type: String,
+      trim: true,
+    },
     userType : String
 })
 
