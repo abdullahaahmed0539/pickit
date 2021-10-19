@@ -1,9 +1,3 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const emailValidator = require("email-validator");
-const passwordValidator = require("password-validator");
-const User = require("../model/user");
-
 /*
 DOCUMENTATION 
     Sign up:-
@@ -21,9 +15,14 @@ DOCUMENTATION
 
 */
 
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const emailValidator = require("email-validator");
+const passwordValidator = require("password-validator");
+const User = require("../model/user");
+
 const inputValidator = (email, password) => {
   const isEmailValid = emailValidator.validate(email);
-  console.log(isEmailValid);
   if (!isEmailValid) return "not valid";
 
   var passwordSchema = new passwordValidator();
@@ -44,7 +43,6 @@ const inputValidator = (email, password) => {
     .spaces(); // Should not have spaces
 
   const isPasswordValid = passwordSchema.validate(password);
-  console.log(isPasswordValid);
   if (!isPasswordValid) return "not valid";
 
   return "valid";
@@ -64,7 +62,6 @@ exports.signUp = (req, res) => {
         status: "1",
         code: "3",
         message: "Email or password not correct.",
-        log: "Incorrect email format or password",
       },
       data: {},
     });
@@ -79,10 +76,10 @@ exports.signUp = (req, res) => {
           status: "1",
           code: "2",
           message: "Encryption error",
-          log: err,
         },
         data: {},
       });
+      return console.error(`Error log: \n ${err}`);
     }
 
     //create new user
@@ -100,11 +97,10 @@ exports.signUp = (req, res) => {
             status: "1",
             code: "1",
             message: "Duplication error",
-            log: err,
           },
           data: {},
         });
-        return console.log(err);
+        return console.error(`Error log: \n ${err}`);
       }
 
       //if username or email doesn't exist in database, then send success response.
@@ -113,7 +109,6 @@ exports.signUp = (req, res) => {
           status: "0",
           code: "0",
           message: "no error.",
-          log: "none",
         },
         data: {
           _id: user._id,
@@ -140,7 +135,6 @@ exports.login = (req, res) => {
             status: "1",
             code: "5",
             message: "Username not found.",
-            log: "",
           },
           data: {},
         });
@@ -154,10 +148,10 @@ exports.login = (req, res) => {
                 code: "7",
                 message:
                   "Problem in comparing password with the encrypted password in database.",
-                log: err,
               },
               data: {},
             });
+            return console.error(`Error log: \n ${err}`);
           }
 
           //if both passwords are equal then sign the payload
@@ -170,7 +164,7 @@ exports.login = (req, res) => {
                 userType: user.userType,
               },
               "verysecretprivatekey",
-              { expiresIn: "1h" }
+              { expiresIn: "3h" }
             );
 
             res.status(200).json({
@@ -178,7 +172,6 @@ exports.login = (req, res) => {
                 status: "0",
                 code: "0",
                 message: "no error.",
-                log: "none",
               },
               data: {
                 _id: user._id,
@@ -197,7 +190,6 @@ exports.login = (req, res) => {
                 status: "1",
                 code: "6",
                 message: "Incorrect password.",
-                log: "",
               },
               data: {},
             });
@@ -205,15 +197,15 @@ exports.login = (req, res) => {
         });
       }
     })
-    .catch((err) =>
+    .catch((err) => {
       res.status(500).json({
         error: {
           status: "1",
           code: "4",
           message: "Problem with FindOne query.",
-          log: err,
         },
         data: {},
-      })
-    );
+      });
+      return console.error(`Error log: \n ${err}`);
+    });
 };
