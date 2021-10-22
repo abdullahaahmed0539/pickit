@@ -1,7 +1,9 @@
 const express = require("express");
-// const {  } = require("../api/controllers/categories/{filename}");
+const { displayCategories } = require("../api/controllers/categories/displayCategories");
+const { displayCategory } = require("../api/controllers/categories/displayCategory");
 const router = express.Router();
 
-// router.route("/create_new").post(createNewProductForListing);
+router.route("/").get(displayCategories);
+router.route("/:category_id").get(displayCategory);
 
 module.exports = router;
