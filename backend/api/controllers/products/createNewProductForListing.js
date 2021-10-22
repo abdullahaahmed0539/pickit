@@ -28,6 +28,7 @@ exports.createNewProductForListing = (req, res) => {
     transactionType,
     images,
     status: "pending",
+    requests: []
   });
 
   newProduct
@@ -40,7 +41,7 @@ exports.createNewProductForListing = (req, res) => {
           message: "no error.",
         },
         data: {
-          productName: product.Productname,
+          productName: product.productName,
           category_id: product.categoryId,
           description: product.description,
           transaction_type: product.transactionType,
@@ -48,6 +49,7 @@ exports.createNewProductForListing = (req, res) => {
           date: product.date,
           images: product.images,
           status: product.status,
+          requests: product.requests
         },
       });
     })
