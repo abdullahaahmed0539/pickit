@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+//make require -> after merging to master
+
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
