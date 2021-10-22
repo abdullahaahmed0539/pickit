@@ -1,7 +1,7 @@
 /*
 DOCUMENTATION       
 error types:
-     0 -> missing attributes which are required.
+     1 -> missing attributes which are required.
 */
 
 const Product = require("../../model/product");
@@ -55,8 +55,8 @@ exports.createNewProductForListing = (req, res) => {
       res.status(406).json({
         error: {
           status: "1",
-          code: "0",
-          message: "Missing values.",
+          code: "1",
+          message: "Missing values. Cannot accept null as a value.",
         },
         data: {},
       });
