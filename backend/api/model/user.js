@@ -34,6 +34,7 @@ const userSchema = new mongoose.Schema({
     trim: true,
   },
   userType: String,
+  categoryId: String
 });
 
 const User = mongoose.model("User", userSchema);

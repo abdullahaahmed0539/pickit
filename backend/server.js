@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const app = require("./app");
+const {MongoClient} = require('mongodb');
 
-const DB = 'mongodb+srv://shahmir:pickit@cluster0.zbkg4.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+const DB = 'mongodb://shahmir:pickit@cluster0-shard-00-00.zbkg4.mongodb.net:27017,cluster0-shard-00-01.zbkg4.mongodb.net:27017,cluster0-shard-00-02.zbkg4.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-p63ni9-shard-0&authSource=admin&retryWrites=true&w=majority';
 
 mongoose.connect(DB, {useNewUrlParser: true, useUnifiedTopology:true})
     .then(() => {
