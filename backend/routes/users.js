@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.route("/signup").post(signUp);
 router.route("/login").post(login);
-router.route("/updateprofile").post(checkAuth,updateProfile);
+router.route("/update_profile").post(checkAuth,updateProfile);
 router.route("/:userid/get_products").get(checkAuth, myProducts);
 
 

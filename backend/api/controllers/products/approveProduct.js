@@ -2,9 +2,11 @@ const Product = require('../../model/product');
 const jwt = require('jsonwebtoken');
 const User = require("../../model/user");
 
-exports.fetchUnapprovedProducts = async (req,res) => {
+exports.approveProduct = async (req,res) => {
 
     decodedToken = jwt.decode(req.headers.authorization.split(" ")[1]);
+    const action = req.body.action;
+    const productId = req.body.productId;
 
     if(decodedToken.userType!="moderator"){
         return res.status(401).json({
@@ -19,7 +21,6 @@ exports.fetchUnapprovedProducts = async (req,res) => {
     let moderatorCategoryId = null;
     await User.find({_id: decodedToken._id}).then((user) => {
         moderatorCategoryId = user[0].categoryId;
-        
     })
     .catch((err)=>{
         res.status(500).json({
@@ -31,7 +32,9 @@ exports.fetchUnapprovedProducts = async (req,res) => {
             data: {},
         });
     })
-    Product.find({status: "pending",categoryId: moderatorCategoryId})
+
+
+    Product.updateOne({_id: productId},{$set: {status: action}})
     .then((unapprovedProducts)=>{
         res.status(200).json({
             error: {
@@ -44,13 +47,15 @@ exports.fetchUnapprovedProducts = async (req,res) => {
     })
     .catch((err) => {
         res.status(406).json({
-          error: {
+        error: {
             status: "1",
             code: "1",
             message: "Problem in finding unapproved products in database",
-          },
-          data: {},
+        },
+        data: {},
         });
         return console.error(err);
     });
+
+
 }

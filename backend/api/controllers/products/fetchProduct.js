@@ -2,7 +2,7 @@ const Product = require('../../model/product');
 
 exports.fetchProduct = async (req,res) => {
     const productId = req.params.product_id;
-    // console.log(productId);
+    
 
     await Product.findById(productId)
     .then((product)=>{

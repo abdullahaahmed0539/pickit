@@ -10,9 +10,9 @@ DOCUMENTATION
 
 const CategoryProducts = require("../../model/product");
 exports.displayCategory = (req, res) => {
-  const categoryId = `ObjectId('${req.params.category_id}')`;
+  const categoryId = req.params.category_id;
 
-  CategoryProducts.find({ categoryId: categoryId, status: /active/ })
+  CategoryProducts.find({ categoryId: categoryId, status: "active" })
     .then((categoryProducts) => {
       res.status(200).json({
         error: {

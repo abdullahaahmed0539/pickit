@@ -6,11 +6,34 @@ DOCUMENTATION
 */
 
 const Products = require("../../model/product");
+const User = require("../../model/user");
+const jwt = require('jsonwebtoken');
 
-exports.myProducts = (req, res) => {
-  const { username } = req.body;
+exports.myProducts = async (req, res) => {
+  let username = null;
 
-  Products.find({ username: username })
+  decodedToken = jwt.decode(req.headers.authorization.split(" ")[1]);
+
+  await User.findById(req.params.userid)
+  .then((user)=>{
+    username = user.username;
+  })
+
+  if(username != decodedToken.username){
+    res.status(404).json({
+      error: {
+        status: "1",
+        code: "3",
+        message: "Not Your Products",
+      },
+      data: {
+        Products,
+      },
+    });
+    return;
+  }
+
+  await Products.find({ username: username })
     .then((Products) => {
       if (Products.length == 0) {
         res.status(404).json({
