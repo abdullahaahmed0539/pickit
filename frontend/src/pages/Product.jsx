@@ -26,7 +26,7 @@ const ProductDetails = ({history}) => {
         <div>
             <h1>{product.productName}</h1>
             <h2>{product.description}</h2>
-            <h1> $ {product.price}</h1>
+            <h1> PKR {product.price}</h1>
         </div>
      );
 }

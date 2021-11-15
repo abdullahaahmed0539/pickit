@@ -7,8 +7,10 @@ import Product from "./pages/Product";
 import MyAds from "./pages/MyAds";
 import CreateProduct from "./pages/CreateProduct";
 import UpdateProduct from "./pages/UpdateProduct";
+import UpdatePrice from "./pages/UpdatePrice";
 
 import NavBar from "./Components/Navbar";
+import ModeratorHome from "./pages/ModeratorHome";
 
 function App() {
   return (
@@ -21,13 +23,19 @@ function App() {
         <Route  path="/Home">
           <Home />
         </Route>
+        <Route  path="/moderator_home">
+          <ModeratorHome />
+        </Route>
         <Route  path="/:userId/get_products">
           <MyAds />
         </Route>
         <Route  path="/categories/:categoryId">
           <Category />
         </Route>
-        <Route  path="/products/create_new">
+        <Route  path= '/products/:productId/updatePrice'>
+          <UpdatePrice />
+        </Route>
+        <Route path="/products/create_new">
           <CreateProduct />
         </Route>
         <Route  path="/products/update_product">

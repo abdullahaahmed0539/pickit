@@ -28,7 +28,7 @@ const Home = ({ history }) => {
         (cat) => (
           <div className='col-md-3 mb-4' key={cat._id}>
           <div className="card">
-            <img src={`${cat.image}`} className="card-img-top mt-3" style={{height:"10em"}} alt="..." />
+            <img src={`${cat.image}`} className="card-img-top " style={{height:"10em"}} alt="..." />
             <div className="card-body">
               <h5 className="card-title"><strong>{cat.categoryName.charAt(0).toUpperCase() + cat.categoryName.slice(1)}</strong></h5>
               <p className="card-text">{cat.description}</p>

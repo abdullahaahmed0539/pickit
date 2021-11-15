@@ -7,13 +7,14 @@ exports.deleteProduct = async (req,res) => {
     decodedToken = jwt.decode(req.headers.authorization.split(" ")[1]);
     const productId = req.params.product_id;
     let productOwner = null;
+    let requestDealt = false;
 
     await Product.findById(productId)
     .then((product)=>{
         productOwner = product.username;
     })
 
-    if(productOwner != decodedToken.username){
+    if(productOwner != decodedToken.username && decodedToken.userType!="moderator"){
         res.status(404).json({
         error: {
             status: "1",
@@ -22,6 +23,40 @@ exports.deleteProduct = async (req,res) => {
         },
         data: {},
         });
+        return;
+    }
+
+    if(decodedToken.userType==="moderator"){
+        
+
+        Product.updateOne({_id: productId},{status: "rejected"})
+        .then((updatedProduct)=>{
+            res.status(200).json({
+                error: {
+                    status: "0",
+                    code: "0",
+                    message: "no error.",
+                },
+                data: updatedProduct
+            })
+        })
+        .catch((err) => {
+            res.status(406).json({
+            error: {
+                status: "1",
+                code: "1",
+                message: "Problem in updating the product in database",
+            },
+            data: {},
+            });
+            return console.error(err);
+        });
+
+        requestDealt = true;
+
+    }
+
+    if(requestDealt){
         return;
     }
 
