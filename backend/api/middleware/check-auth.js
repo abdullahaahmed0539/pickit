@@ -10,11 +10,7 @@ module.exports = (req, res, next) => {
         throw new Error("Access denied");
       }
     }
-    // if(senderName != null){
-    //   if (senderName != verify.username) {
-    //     throw new Error("Access denied");
-    //   }
-    // }
+ 
     next();
   } catch (error) {
     return res.status(401).json({

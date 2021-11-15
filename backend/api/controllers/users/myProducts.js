@@ -11,14 +11,12 @@ const jwt = require('jsonwebtoken');
 
 exports.myProducts = async (req, res) => {
   let username = null;
-
   decodedToken = jwt.decode(req.headers.authorization.split(" ")[1]);
-
   await User.findById(req.params.userid)
   .then((user)=>{
     username = user.username;
   })
-
+  
   if(username != decodedToken.username){
     res.status(404).json({
       error: {
