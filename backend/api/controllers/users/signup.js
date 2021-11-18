@@ -21,7 +21,7 @@ const inputValidator = (email, password) => {
     .is()
     .min(8) // Minimum length 8
     .is()
-    .max(30) // Maximum length 100
+    .max(30) // Maximum length 30
     .has()
     .uppercase() // Must have uppercase letters
     .has()

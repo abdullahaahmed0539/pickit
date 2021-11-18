@@ -3,24 +3,103 @@ import { useState, useEffect, Fragment } from "react";
 import axios from "axios";
 import { Button } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
+import { Dropdown } from "react-bootstrap";
 
-import Spinner from "../Components/Spinner";
+import Card from "../Components/Card";
+
 
 const MyAds = (props) => {
   const { userId } = useParams();
   const [listedProducts, setListedProducts] = useState([]);
+  const [filter, setFilter] = useState("all");
+  
+  
 
-  const statusColor = (status) => {
-    if (status === "active") {
-      return "#198754";
-    } else if (status === "rejected") {
-      return "#dc3545";
-    } else if (status === "pending") {
-      return "#0d6efd";
-    } else if (status === "sold") {
-      return "#fd7e14";
-    }
-  };
+  const allFilter = listedProducts
+    .map((item) => (
+      <Card
+        key={item._id}
+        _id={item._id}
+        image={item.images[0]}
+        name={item.productName}
+        date={item.date}
+        status={item.status}
+        requestsLength={item.requests.length}
+        description={item.description}
+        type={item.transactionType}
+        categoryId={item.categoryId}
+        price={item.price}
+      />
+    ))
+    .reverse();
+
+  const activeFilter = listedProducts
+    .filter((item) => item.status === "active")
+    .map((item) => (
+      <Card
+        _id={item._id}
+        image={item.images[0]}
+        name={item.productName}
+        date={item.date}
+        status={item.status}
+        requestsLength={item.requests.length}
+        description={item.description}
+        type={item.transactionType}
+        categoryId={item.categoryId}
+        price={item.price}
+      />
+    ));
+
+  const pendingFilter = listedProducts
+    .filter((item) => item.status === "pending")
+    .map((item) => (
+      <Card
+        _id={item._id}
+        image={item.images[0]}
+        name={item.productName}
+        date={item.date}
+        status={item.status}
+        requestsLength={item.requests.length}
+        description={item.description}
+        type={item.transactionType}
+        categoryId={item.categoryId}
+        price={item.price}
+      />
+    ));
+
+  const rejectedFilter = listedProducts
+    .filter((item) => item.status === "rejected")
+    .map((item) => (
+      <Card
+        _id={item._id}
+        image={item.images[0]}
+        name={item.productName}
+        date={item.date}
+        status={item.status}
+        requestsLength={item.requests.length}
+        description={item.description}
+        type={item.transactionType}
+        categoryId={item.categoryId}
+        price={item.price}
+      />
+    ));
+
+  const soldFilter = listedProducts
+    .filter((item) => item.status === "sold")
+    .map((item) => (
+      <Card
+        _id={item._id}
+        image={item.images[0]}
+        name={item.productName}
+        date={item.date}
+        status={item.status}
+        requestsLength={item.requests.length}
+        description={item.description}
+        type={item.transactionType}
+        categoryId={item.categoryId}
+        price={item.price}
+      />
+    ));
 
   useEffect(() => {
     const fetchMyProducts = async () => {
@@ -31,16 +110,35 @@ const MyAds = (props) => {
       );
       const myProducts = response.data.data.Products;
       setListedProducts(myProducts);
+
+      
     };
     fetchMyProducts();
   }, [userId]);
 
-  if (listedProducts.length === 0) {
-    return <Spinner />;
-  } else {
+if (listedProducts.length === 0){
+    return (
+      <>
+        <div className="row mt-5">
+          <h2 className="col-md-6 offset-md-4">You have no products listed.</h2>
+        </div>
+        <div className="row">
+          <div className="col-md-5 offset-5 mt-3 mb-4 ">
+            <Button
+              onClick={() => props.history.push(`/products/create_new`)}
+              variant="primary"
+              className="btn btn-lg"
+            >
+              Add product
+            </Button>
+          </div>
+        </div>
+      </>
+    );
+  }else {
     return (
       <Fragment>
-        <div className=" container">
+        <div className="container">
           <div className="row">
             <div className="col-md-4 mt-3 mb-4 ">
               <Button
@@ -52,150 +150,59 @@ const MyAds = (props) => {
               </Button>
             </div>
           </div>
-          <h2>All products you have listed</h2>
+          <div className="row">
+            <h2 className="col-md-5">All products you have listed</h2>
+
+            <Dropdown className="col-md-3 offset-md-4">
+              <Dropdown.Toggle variant="light" className="btn-outline-dark">
+                Filter by {filter}
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item
+                  onClick={() => {
+                    setFilter("all");
+                  }}
+                >
+                  All
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => {
+                    setFilter("active");
+                  }}
+                >
+                  Active
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => {
+                    setFilter("pending");
+                  }}
+                >
+                  Pending
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => {
+                    setFilter("rejected");
+                  }}
+                >
+                  Rejected
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => {
+                    setFilter("sold");
+                  }}
+                >
+                  Sold
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+          {filter === "all" && allFilter}
+          {filter === "active" && activeFilter}
+          {filter === "rejected" && rejectedFilter}
+          {filter === "pending" && pendingFilter}
+          {filter === "sold" && soldFilter}
         </div>
-        {listedProducts
-          .map((item) => (
-            <div key={item._id} className=" container card">
-              <div className="row g-0">
-                <div className="col-md-3 mt-3 mb-3 ">
-                  <img
-                    src={item.images[0]}
-                    className="img-fluid rounded-start "
-                    onClick={() => props.history.push(`/products/${item._id}`)}
-                    alt="..."
-                    style={{ height: "10em", cursor: "pointer" }}
-                  />
-                </div>
-                <div className="col-md-9">
-                  <div className="card-body">
-                    <div className="row">
-                      <h5
-                        className="card-title col-md-12"
-                        style={{ cursor: "pointer" }}
-                        onClick={() =>
-                          props.history.push(`/products/${item._id}`)
-                        }
-                      >
-                        <strong>
-                          {item.productName.charAt(0).toUpperCase() +
-                            item.productName.slice(1)}
-                        </strong>
-                      </h5>
-
-                      <div className="card-text col-md-12">
-                        <strong>PKR {item.price.toFixed(2)}</strong>
-                      </div>
-
-                      <div className="card-text col-md-12">
-                        <small>
-                          Date posted:{" "}
-                          {`${new Date(item.date).getDate() + 1}/${
-                            new Date(item.date).getMonth() + 1
-                          }/${new Date(item.date).getFullYear()}`}
-                        </small>
-                      </div>
-
-                      <div className="card-text col-md-12">
-                        <small>
-                          <strong
-                            className=""
-                            style={{ color: statusColor(item.status) }}
-                          >
-                            {item.status.charAt(0).toUpperCase() +
-                              item.status.slice(1)}
-                          </strong>
-                        </small>
-                      </div>
-                    </div>
-
-                    <div className="col-md-12 mt-3">
-                      <div className="row">
-                        <div className="col-md-1 ">
-                          <button
-                            type="button"
-                            className="btn btn-warning position-relative"
-                            onClick={() =>
-                              // props.history.push(`/products/${item._id}`)
-                              ""
-                            }
-                          >
-                            Requests
-                            {item.requests.length !== 0? <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                              {item.requests.length}
-                            </span>: ''}
-                          </button>
-                        </div>
-
-                        <div
-                          className="col-md-1 "
-                          style={{ marginLeft: "28px" }}
-                        >
-                          <Button
-                            onClick={() =>
-                              props.history.push(`/products/${item._id}`)
-                            }
-                            variant="success"
-                          >
-                            Details
-                          </Button>
-                        </div>
-
-                        <div
-                          className="col-md-1 "
-                          style={{ marginLeft: "2px" }}
-                        >
-                          <Button
-                            onClick={() => {
-                              props.history.push({
-                                pathname: `/products/update_product`,
-                                state: {
-                                  _id: item._id,
-                                  name: item.productName,
-                                  price: item.price,
-                                  imageLink: item.images[0],
-                                  description: item.description,
-                                  type: item.transactionType,
-                                  categoryid: item.categoryId,
-                                },
-                              });
-                            }}
-                            variant="primary"
-                          >
-                            Edit
-                          </Button>
-                        </div>
-                        <div
-                          className="col-md-1 "
-                          style={{ marginLeft: "-18px" }}
-                        >
-                          <Button
-                            onClick={async () => {
-                              const token = localStorage.getItem("token");
-                              const request = {
-                                headers: {
-                                  Authorization: `Bearer ${token}`,
-                                },
-                              };
-                              await axios.delete(
-                                `http://localhost:5000/products/${item._id}`,
-                                request
-                              );
-                              window.location.reload(true);
-                            }}
-                            variant="danger"
-                          >
-                            Remove
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))
-          .reverse()}
       </Fragment>
     );
   }

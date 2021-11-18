@@ -16,9 +16,9 @@ const NavBar = ({ history }) => {
   };
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div className="container-fluid">
+      <div className="container">
         <Link className="navbar-brand" to="/">
-          PickIt
+          <strong>PickIt</strong>
         </Link>
         {localStorage.getItem("userType") !== "moderator" &&
           localStorage.getItem("userType") != null && (
@@ -74,9 +74,6 @@ const NavBar = ({ history }) => {
                       Profile
                     </NavLink>
                   </li>
-                  {/* <li className="nav-item">
-                    
-                  </li> */}
                 </ul>
               </div>
             </div>

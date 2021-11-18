@@ -6,6 +6,10 @@ import React from "react";
 const LogIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  localStorage.removeItem('user_id')
+  localStorage.removeItem("username");
+  localStorage.removeItem('token');
+  localStorage.removeItem('userType');
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -102,7 +106,7 @@ const LogIn = () => {
                       </button>
                     </div>
 
-                    <p className='mt-5'>Don't have an account. <Link to='/home'>Create an account.</Link></p>
+                    <p className='mt-5'>Don't have an account. <Link to='/signup'>Create an account.</Link></p>
                   </div>
                 </form>
               </div>

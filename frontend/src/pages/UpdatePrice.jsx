@@ -35,11 +35,10 @@ const UpdatePrice = ({ history }) => {
 
       const prod = response.data.data;
       setProduct(prod);
-    }
+    };
 
-    fetchProduct()
+    fetchProduct();
   }, [productId]);
-
 
   const submitChanges = async (e) => {
     e.preventDefault();
@@ -75,7 +74,6 @@ const UpdatePrice = ({ history }) => {
         console.log("success");
 
         window.location = "/moderator_home";
-    
       }
     } catch (ex) {
       if (ex.response && ex.response.status === 401) {
@@ -97,7 +95,6 @@ const UpdatePrice = ({ history }) => {
           marginBottom: "20px",
         }}
       >
-        {/* <img src={require(`../assets/stanSmith.jpeg`).default} className="rounded mx-auto d-block" alt="..." /> */}
         <Image src={product.images[0]} rounded />
       </div>
       <div className="container">

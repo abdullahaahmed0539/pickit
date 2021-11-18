@@ -8,9 +8,10 @@ import MyAds from "./pages/MyAds";
 import CreateProduct from "./pages/CreateProduct";
 import UpdateProduct from "./pages/UpdateProduct";
 import UpdatePrice from "./pages/UpdatePrice";
+import SignUp from "./pages/signup";
+import ModeratorHome from "./pages/ModeratorHome";
 
 import NavBar from "./Components/Navbar";
-import ModeratorHome from "./pages/ModeratorHome";
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
       <Switch>
         <Route  path="/login">
           <LogIn />
+        </Route>
+        <Route  path="/signup">
+          <SignUp />
         </Route>
         <Route  path="/Home">
           <Home />
