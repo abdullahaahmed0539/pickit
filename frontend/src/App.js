@@ -42,6 +42,9 @@ function App() {
         <Route path="/products/create_new">
           <CreateProduct />
         </Route>
+        {/* <Route path="/categories/:productId">
+          <Product />
+        </Route> */}
         <Route  path="/products/update_product">
           <UpdateProduct />
         </Route>

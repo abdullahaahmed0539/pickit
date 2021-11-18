@@ -39,7 +39,7 @@ const Products = ({ history }) => {
               <h5 className="card-title"><strong>{product.productName.charAt(0).toUpperCase() + product.productName.slice(1)}</strong></h5>
               <p className="card-text">PKR <strong>{product.price.toFixed(2)}</strong></p>
               <p className="card-text">Available for <strong style={{color: '#198754'}}>{product.transactionType === 'sell' ? 'Purchase' : 'Exchange'}</strong></p>
-              <Button className="btn  btn-primary" onClick={() => history.push(`/categories/${product._id}`)}>Explore</Button>
+              <Button className="btn  btn-primary" onClick={() => history.push(`/products/${product._id}`)}>Explore</Button>
             </div>
           </div>
           </div>
