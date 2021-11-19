@@ -8,7 +8,7 @@ import MyAds from "./pages/MyAds";
 import CreateProduct from "./pages/CreateProduct";
 import UpdateProduct from "./pages/UpdateProduct";
 import UpdatePrice from "./pages/UpdatePrice";
-import SignUp from "./pages/signup";
+import SignUp from "./pages/Signup";
 import ModeratorHome from "./pages/ModeratorHome";
 
 import NavBar from "./Components/Navbar";
