@@ -16,7 +16,7 @@ import NavBar from "./Components/Navbar";
 function App() {
   return (
     <div className="App">
-      <NavBar />
+    <NavBar />
       <Switch>
         <Route  path="/login">
           <LogIn />
@@ -24,11 +24,13 @@ function App() {
         <Route  path="/signup">
           <SignUp />
         </Route>
+        {localStorage.getItem("userType")==="moderator" && 
+          <Route  path="/Home">
+            <ModeratorHome />
+          </Route>
+        }
         <Route  path="/Home">
           <Home />
-        </Route>
-        <Route  path="/moderator_home">
-          <ModeratorHome />
         </Route>
         <Route  path="/:userId/get_products">
           <MyAds />
@@ -42,9 +44,6 @@ function App() {
         <Route path="/products/create_new">
           <CreateProduct />
         </Route>
-        {/* <Route path="/categories/:productId">
-          <Product />
-        </Route> */}
         <Route  path="/products/update_product">
           <UpdateProduct />
         </Route>

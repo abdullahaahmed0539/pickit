@@ -1,13 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import axios from "axios";
 import { withRouter } from "react-router";
 
-
 const Card = (props) => {
-
-  
-
   const statusColor = (status) => {
     if (status === "active") {
       return "#198754";
@@ -30,8 +26,8 @@ const Card = (props) => {
     description,
     type,
     categoryId,
-    
-   } = props;
+    onRemove,
+  } = props;
 
   return (
     <React.Fragment>
@@ -138,24 +134,7 @@ const Card = (props) => {
                     </Button>
                   </div>
                   <div className="col-md-1 " style={{ marginLeft: "-18px" }}>
-                    <Button
-                      onClick={async () => {
-                        const token = localStorage.getItem("token");
-                        const request = {
-                          headers: {
-                            Authorization: `Bearer ${token}`,
-                          },
-                        };
-                        await axios.delete(
-                          `http://localhost:5000/products/${_id}`,
-                          request
-                        );
-                        window.location.reload(true);
-                        
-                        
-                      }}
-                      variant="danger"
-                    >
+                    <Button onClick={() => onRemove(_id)} variant="danger">
                       Remove
                     </Button>
                   </div>
@@ -169,4 +148,4 @@ const Card = (props) => {
   );
 };
 
-export default withRouter(Card)
+export default withRouter(Card);

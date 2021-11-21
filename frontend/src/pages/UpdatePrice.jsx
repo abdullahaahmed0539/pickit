@@ -84,23 +84,16 @@ const UpdatePrice = ({ history }) => {
   };
 
   return (
-    <div>
+    <div className="container">
+      <div className='row mt-5'>
+        {/* <div className='col-md-7'> */}
+          <img className='col-md-4' src={product.images[0]} alt='...' />
+        {/* </div> */}
+      <div className="col-md-5" style={{marginLeft:'5em'}}>
       <h2>Change Price Here !</h2>
-      <br />
-      <br />
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginBottom: "20px",
-        }}
-      >
-        <Image src={product.images[0]} rounded />
-      </div>
-      <div className="container">
         <form className="col-xs-12 col-md-5" onSubmit={submitChanges}>
           <div className="form-group">
-            <label htmlFor="productName">Product Name</label>
+            <label style={{marginTop: "20px"}} htmlFor="productName"><strong>Product Name</strong></label>
             <input
               type="text"
               className="form-control"
@@ -116,7 +109,7 @@ const UpdatePrice = ({ history }) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="description">Description</label>
+            <label style={{marginTop: "10px"}} htmlFor="description"><strong>Description</strong></label>
             <input
               type="text"
               className="form-control"
@@ -132,7 +125,7 @@ const UpdatePrice = ({ history }) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="price">Price (Rs) </label>
+            <label style={{marginTop: "10px"}} htmlFor="price"><strong>Price (Rs)</strong> </label>
             <input
               type="text"
               className="form-control"
@@ -154,6 +147,7 @@ const UpdatePrice = ({ history }) => {
             Save
           </button>
         </form>
+      </div>
       </div>
     </div>
   );

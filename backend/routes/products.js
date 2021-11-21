@@ -11,7 +11,7 @@ const router = express.Router();
 router.route("/create_new").post(checkAuth,createNewProductForListing);
 router.route("/unapproved").get(checkAuth,fetchUnapprovedProducts);
 router.route("/approve").post(checkAuth,approveProduct);
-router.route("/:product_id").get(checkAuth,fetchProduct);
+router.route("/:product_id").get(fetchProduct);
 router.route("/update").post(checkAuth,updateProduct);
 router.route("/:product_id").delete(checkAuth,deleteProduct);
 
