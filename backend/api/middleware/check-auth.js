@@ -6,13 +6,16 @@ module.exports = (req, res, next) => {
     const verify = jwt.verify(token, "verysecretprivatekey");
     const usernameRecieved = req.body.username;
     if (usernameRecieved != null) {
-      if (usernameRecieved != verify.username) {
+      if (usernameRecieved != verify.username && verify.userType !== 'moderator') {
+        console.log(usernameRecieved)
+        console.log(verify.username)
         throw new Error("Access denied");
       }
     }
  
     next();
   } catch (error) {
+    console.log('here')
     return res.status(401).json({
       error: {
         status: "1",

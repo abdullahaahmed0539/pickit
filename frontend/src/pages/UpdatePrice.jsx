@@ -79,7 +79,7 @@ const UpdatePrice = ({ history }) => {
       if (ex.response && ex.response.status === 401) {
         alert("Update request Unsuccessful");
       }
-      console.log("in catch");
+      console.log(ex);
     }
   };
 

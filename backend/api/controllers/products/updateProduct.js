@@ -16,7 +16,7 @@ exports.updateProduct = async (req,res) => {
         images,
     } = req.body;
 
-    if(decodedToken.username != username){
+    if(decodedToken.username != username && decodedToken.userType!== 'moderator'){
         return res.status(401).json({
             error: {
               status: "1",
