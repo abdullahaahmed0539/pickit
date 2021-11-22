@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "react-bootstrap";
-import axios from "axios";
 import { withRouter } from "react-router";
 
 const Card = (props) => {
@@ -134,7 +133,7 @@ const Card = (props) => {
                     </Button>
                   </div>
                   <div className="col-md-1 " style={{ marginLeft: "-18px" }}>
-                    <Button onClick={() => onRemove(_id)} variant="danger">
+                    <Button onClick={() => onRemove(_id, name)} variant="danger">
                       Remove
                     </Button>
                   </div>

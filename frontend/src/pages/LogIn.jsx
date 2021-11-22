@@ -1,15 +1,25 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import React from "react";
+import { login } from "../API calls/user";
+
+const clearLocalMemory = () => {
+  localStorage.removeItem("user_id");
+  localStorage.removeItem("username");
+  localStorage.removeItem("token");
+  localStorage.removeItem("userType");
+};
+
+const saveToLocalMemory = (data) => {
+  localStorage.setItem("user_id", data._id);
+  localStorage.setItem("username", data.username);
+  localStorage.setItem("token", data.token);
+  localStorage.setItem("userType", data.userType);
+};
 
 const LogIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  localStorage.removeItem('user_id')
-  localStorage.removeItem("username");
-  localStorage.removeItem('token');
-  localStorage.removeItem('userType');
+  clearLocalMemory();
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -18,29 +28,17 @@ const LogIn = () => {
       password: password,
     };
 
-    try {
-      const tokenKey = "token";
-      const response = await axios.post(
-        "http://localhost:5000/users/login",
-        data
-      );
-      if (response.status === 200 && response.data) {
-        //Saving the username & token in localstorage
-        localStorage.setItem("user_id", response.data.data._id);
-        localStorage.setItem("username", response.data.data.username);
-        localStorage.setItem(tokenKey, response.data.data.token);
-        localStorage.setItem('userType', response.data.data.userType);
-        if (response.data.data.userType === 'moderator'){
-          window.location = "/moderator_home";
-        }else{
-          window.location = "/Home";
-        }
-      }
-    } catch (ex) {
-      if (ex.response && ex.response.status === 401) {
-        alert("Invalid user or password");
-      }
-    }
+    login(data)
+      .then((response) => {
+        saveToLocalMemory(response.data.data);
+        response.data.data.userType === "moderator"
+          ? (window.location = "/moderator_home")
+          : (window.location = "/Home");
+      })
+      .catch((err) => {
+        if (err.response && err.response.status === 401)
+          alert("Invalid user or password");
+      });
   };
 
   return (
@@ -79,6 +77,7 @@ const LogIn = () => {
                         autoFocus
                       />
                     </div>
+       
                   </div>
                   <div className="row">
                     <div className="form-group mt-3">
@@ -106,7 +105,10 @@ const LogIn = () => {
                       </button>
                     </div>
 
-                    <p className='mt-5'>Don't have an account. <Link to='/signup'>Create an account.</Link></p>
+                    <p className="mt-5">
+                      Don't have an account.{" "}
+                      <Link to="/signup">Create an account.</Link>
+                    </p>
                   </div>
                 </form>
               </div>

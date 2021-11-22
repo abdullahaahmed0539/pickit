@@ -1,99 +1,42 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { Card, Button, Image, Container } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
+import {
+  fetchPendingProducts,
+  approve,
+  unapprove,
+} from "../API calls/products";
 
 const ModeratorHome = ({ history }) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    const fetchUnapprovedProducts = async () => {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(
-        `http://localhost:5000/products/unapproved`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      const prod = response.data.data;
-      const exchangeable = prod.filter(
-        (item) => item.transactionType === "exchange"
-      );
-      setProducts(exchangeable);
-      console.log(response);
-    };
-    fetchUnapprovedProducts();
+    fetchPendingProducts()
+      .then((response) => setProducts(response))
+      .catch(() => console.log("Error while fetching unapproved products"));
   }, []);
 
   const approveProduct = async (productId) => {
-    console.log("Approving Product " + productId);
-
-    const updatedPendingProducts = products.filter(
-      (prod) => prod._id !== productId
-    );
-
-    //Creating the data object for request body
-    const data = {
-      action: "active",
-      productId: productId,
-    };
-
-    setProducts(updatedPendingProducts);
-
-    const response = await axios.post(
-      `http://localhost:5000/products/approve`,
-      data,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
-
-    if (response.status === 200 && response.data) {
-      console.log("success");
-
-      console.log(response);
-
-      window.location = "/moderator_home";
-    }
+    const data = { action: "active", productId: productId };
+    approve(data)
+      .then(() => (window.location = "/moderator_home"))
+      .catch(() => console.log("Error while approving product"));
   };
 
   const deleteProduct = async (productId) => {
-    console.log("Deleting Product " + productId);
-
     const updatedPendingProducts = products.filter(
       (prod) => prod._id !== productId
     );
-
     setProducts(updatedPendingProducts);
-    const token = localStorage.getItem("token");
-
-    const response = await axios.delete(
-      `http://localhost:5000/products/${productId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    if (response.status === 200 && response.data) {
-      console.log("success");
-      console.log(response);
-
-      window.location = "/moderator_home";
-    }
+    unapprove(productId)
+      .then(() => (window.location = "/moderator_home"))
+      .catch(() => console.log("Error while unapproving product"));
   };
 
   return (
     <div>
       <Container>
         <h1>Welcome Moderator </h1>
-
         {products.length === 0 && (
           <h2>No pending products in your category yet</h2>
         )}

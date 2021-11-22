@@ -1,11 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import React from "react";
 import validator from "validator";
-
-import  OpenedEye from "../Components/EyeClosed";
-import  ClosedEye  from "../Components/EyeOpened";
+import OpenedEye from "../Components/UI/EyeClosed";
+import ClosedEye from "../Components/UI/EyeOpened";
+import { register } from "../API calls/user";
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
@@ -15,11 +13,15 @@ const SignUp = () => {
   const [passwordType, setPasswordType] = useState("password");
   const [confirmPasswordType, setConfirmPasswordType] = useState("password");
 
-  const toggleEyeButton = elementToChange => {
-    if (elementToChange === 'password'){
-        (passwordType === "password") ? setPasswordType("text"): setPasswordType("password");
-    }else{
-        (confirmPasswordType === "password") ? setConfirmPasswordType("text"): setConfirmPasswordType("password");
+  const toggleEyeButton = (elementToChange) => {
+    if (elementToChange === "password") {
+      passwordType === "password"
+        ? setPasswordType("text")
+        : setPasswordType("password");
+    } else {
+      confirmPasswordType === "password"
+        ? setConfirmPasswordType("text")
+        : setConfirmPasswordType("password");
     }
   };
 
@@ -42,7 +44,6 @@ const SignUp = () => {
     }
   };
 
-
   const submitForm = async (e) => {
     e.preventDefault();
     const data = {
@@ -51,20 +52,13 @@ const SignUp = () => {
       email: email,
     };
 
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/users/signup",
-        data
-      );
-      if (response.status === 201 && response.data) {
-        //Saving the username & token in localstorage
-        window.location = "/login";
-      }
-    } catch (ex) {
-      if (ex.response && ex.response.status === 401) {
-        alert("Invalid user or password");
-      }
-    }
+    register(data)
+      .then(() => (window.location = "/login"))
+      .catch((err) => {
+        if (err.response && err.response.status === 401) {
+          alert("Invalid user or password");
+        }
+      });
   };
 
   return (
@@ -118,7 +112,7 @@ const SignUp = () => {
                         placeholder="Enter your email here"
                       />
                     </div>
-                    {email!=='' && !emailValidator(email) && (
+                    {email !== "" && !emailValidator(email) && (
                       <div className="" style={{ color: "red" }}>
                         Please provide a valid email.
                       </div>
@@ -131,8 +125,16 @@ const SignUp = () => {
                         <strong>Password</strong>
                       </label>
 
-                      {passwordType === "password" && <OpenedEye toggleEye = {() => toggleEyeButton('password')}/> }
-                      {passwordType === "text" && <ClosedEye toggleEye = {() => toggleEyeButton('password')}/>}
+                      {passwordType === "password" && (
+                        <OpenedEye
+                          toggleEye={() => toggleEyeButton("password")}
+                        />
+                      )}
+                      {passwordType === "text" && (
+                        <ClosedEye
+                          toggleEye={() => toggleEyeButton("password")}
+                        />
+                      )}
 
                       <input
                         onChange={(e) => setPassword(e.target.value)}
@@ -141,9 +143,10 @@ const SignUp = () => {
                         placeholder="Enter your password here"
                       />
                     </div>
-                    {password!=='' && !passwordFormatValidator(password) && (
+                    {password !== "" && !passwordFormatValidator(password) && (
                       <div className="" style={{ color: "red" }}>
-                        Password should be minimum 8 characters with 1 uppercase, 1 lowercase and 2 digits.
+                        Password should be minimum 8 characters with 1
+                        uppercase, 1 lowercase and 2 digits.
                       </div>
                     )}
                   </div>
@@ -154,8 +157,16 @@ const SignUp = () => {
                         <strong>Confirm Password</strong>
                       </label>
 
-                      {confirmPasswordType === "password" && <OpenedEye toggleEye = {() => toggleEyeButton('confirmPassword')} /> }
-                      {confirmPasswordType === "text" && <ClosedEye toggleEye = {() => toggleEyeButton('confirmPassword')}/>}
+                      {confirmPasswordType === "password" && (
+                        <OpenedEye
+                          toggleEye={() => toggleEyeButton("confirmPassword")}
+                        />
+                      )}
+                      {confirmPasswordType === "text" && (
+                        <ClosedEye
+                          toggleEye={() => toggleEyeButton("confirmPassword")}
+                        />
+                      )}
 
                       <input
                         onChange={(e) => setConfirmPassword(e.target.value)}
@@ -164,13 +175,12 @@ const SignUp = () => {
                         placeholder="Enter your password here"
                       />
                     </div>
-                    {confirmPassword!=='' && confirmPassword!==password && (
+                    {confirmPassword !== "" && confirmPassword !== password && (
                       <div className="" style={{ color: "red" }}>
                         Passwords do not match.
                       </div>
                     )}
                   </div>
-
 
                   <div className="row mt-4">
                     <div className="col-md-3">

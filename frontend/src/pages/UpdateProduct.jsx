@@ -2,25 +2,19 @@ import { useEffect, useState } from "react";
 import ProductForm from "../Components/ProductForm"
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { fetchCategories } from "../API calls/categories";
 
 const UpdateProduct = () => {
 
     const location = useLocation();
     const [categoryName, setCategoryName] = useState('')
     useEffect(()=>{
-    const fetchCategory = async (id) => {
-        const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:5000/categories/", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setCategoryName( (response.data.data.categories.filter(
-          (category) => category._id === id
-        ))[0].categoryName)
-      }; 
-      fetchCategory(location.state.categoryid) 
-    },[location.state.categoryid])  
+      fetchCategories(location.state.categoryid)
+        .then(response => setCategoryName(response.data.data.categories.filter(
+                category => category._id === location.state.categoryid
+                )[0].categoryName))
+        .catch()
+      },[location.state.categoryid]) 
 
 
     return <>

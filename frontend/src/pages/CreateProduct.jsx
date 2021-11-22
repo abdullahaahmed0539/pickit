@@ -12,5 +12,4 @@ const CreateProduct = () => {
             categoryId='617301e3d53945aab87a00de' />
     </>
 }
-
 export default CreateProduct

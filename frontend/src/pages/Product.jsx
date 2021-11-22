@@ -1,29 +1,16 @@
-import { useParams } from "react-router-dom";
+import { useParams, withRouter } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { withRouter } from "react-router-dom";
-import { Button  } from "react-bootstrap";
+import { fetchProductDetails } from "../API calls/products";
+import { Button } from "react-bootstrap";
 
 const ProductDetails = ({ history }) => {
   const { productId } = useParams();
   const [product, setProduct] = useState({});
 
   useEffect(() => {
-    const fetchProductDetails = async () => {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(
-        `http://localhost:5000/products/${productId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      const prod = response.data.data;
-      setProduct(prod);
-    };
-    fetchProductDetails();
+    fetchProductDetails(productId)
+      .then((response) => setProduct(response.data.data))
+      .catch(() => console.log("Error while fetching product details"));
   }, [productId]);
 
   return (
@@ -46,23 +33,23 @@ const ProductDetails = ({ history }) => {
             product.status === "active" && (
               <>
                 <button
-                      type="button"
-                      className="btn btn-warning position-relative"
-                      style={{marginRight:'8px'}}
-                      onClick={() =>
-                        // props.history.push(`/products/${_id}`)
-                        ""
-                      }
-                    >
-                      Requests
-                      {product.requests.length !== 0 ? (
-                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                          {product.requests.length }
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                    </button>
+                  type="button"
+                  className="btn btn-warning position-relative"
+                  style={{ marginRight: "8px" }}
+                  onClick={() =>
+                    // props.history.push(`/products/${_id}`)
+                    ""
+                  }
+                >
+                  Requests
+                  {product.requests.length !== 0 ? (
+                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                      {product.requests.length}
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                </button>
                 <Button
                   onClick={() => {
                     history.push({
@@ -102,7 +89,7 @@ const ProductDetails = ({ history }) => {
             product.username !== localStorage.getItem("username") && (
               <>
                 <button className="col-md-3 mt-3 btn btn-primary">
-                  Exchange{" "}
+                  Send request
                 </button>
               </>
             )}
