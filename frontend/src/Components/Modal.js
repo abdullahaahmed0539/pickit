@@ -29,7 +29,6 @@ export const RemoveModal = (props) => {
         className="mb-5"
         style={{
           position: "fixed",
-
           top: "30vh",
           left: "30%",
           overflow: "hidden",

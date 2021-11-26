@@ -13,8 +13,10 @@
   "author": "shahmir shahzad",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.1036.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "email-validator": "^2.0.4",
     "express": "^4.17.1",
     "joi": "^17.4.2",

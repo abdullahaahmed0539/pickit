@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, withRouter } from "react-router-dom";
-import { Image } from "react-bootstrap";
+// import { Image } from "react-bootstrap";
 import axios from "axios";
 
 const UpdatePrice = ({ history }) => {

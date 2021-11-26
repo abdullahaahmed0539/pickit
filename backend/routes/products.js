@@ -5,14 +5,16 @@ const { approveProduct } = require('../api/controllers/products/approveProduct')
 const { fetchProduct } = require('../api/controllers/products/fetchProduct');
 const { updateProduct } = require("../api/controllers/products/updateProduct");
 const { deleteProduct } = require("../api/controllers/products/deleteProduct");
+const { uploadImage } = require("../api/controllers/products/uploadImage");
 const checkAuth = require('../api/middleware/check-auth');
 const router = express.Router();
 
 router.route("/create_new").post(checkAuth,createNewProductForListing);
 router.route("/unapproved").get(checkAuth,fetchUnapprovedProducts);
 router.route("/approve").post(checkAuth,approveProduct);
-router.route("/:product_id").get(fetchProduct);
+router.route("/upload_image").get(uploadImage)
 router.route("/update").post(checkAuth,updateProduct);
-router.route("/:product_id").delete(checkAuth,deleteProduct);
+router.route("/:product_id").get(fetchProduct);
+router.route("/:product_id").delete(checkAuth, deleteProduct);
 
 module.exports = router;

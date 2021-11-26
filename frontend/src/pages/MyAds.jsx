@@ -77,7 +77,7 @@ const MyAds = (props) => {
         price={item.price}
         onRemove={displayModal}
       />
-    ));
+    )).reverse();
 
   const pendingFilter = listedProducts
     .filter((item) => item.status === "pending")
@@ -96,7 +96,7 @@ const MyAds = (props) => {
         price={item.price}
         onRemove={displayModal}
       />
-    ));
+    )).reverse();
 
   const rejectedFilter = listedProducts
     .filter((item) => item.status === "rejected")
@@ -118,8 +118,8 @@ const MyAds = (props) => {
     ));
 
   const soldFilter = listedProducts
-    .filter((item) => item.status === "sold")
-    .map((item) => (
+    .filter(item => item.status === "sold")
+    .map(item => (
       <Card
         key={item._id}
         _id={item._id}
@@ -134,7 +134,8 @@ const MyAds = (props) => {
         price={item.price}
         onRemove={displayModal}
       />
-    ));
+    ))
+    .reverse();
 
   if (listedProducts.length === 0) {
     return (
@@ -180,6 +181,7 @@ const MyAds = (props) => {
           <div className="row">
             <h2 className="col-md-5">Your products</h2>
 
+            
             <DropdownSelector
               className="col-md-3 offset-md-4"
               variant="light"

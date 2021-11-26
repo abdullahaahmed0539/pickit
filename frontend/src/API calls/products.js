@@ -80,3 +80,21 @@ export const approve = async (data) => {
   );
   return response;
 };
+
+//fetches image upload link
+export const getUploadLink = async () => {
+  const response = await axios.get(`http://localhost:5000/products/upload_image`);
+  return response
+}
+
+//uploads to s3 bucket
+export const uploadImage = async (URL, file) => {
+ const options = {
+   headers: {
+     "Content-Type": file.type,
+   },
+ };
+  const response = await axios.put(URL, file, options);
+  return response;
+};
+

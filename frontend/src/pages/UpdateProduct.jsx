@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import ProductForm from "../Components/ProductForm"
 import { useLocation } from "react-router-dom";
-import axios from "axios";
 import { fetchCategories } from "../API calls/categories";
 
 const UpdateProduct = () => {
