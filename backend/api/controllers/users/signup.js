@@ -34,9 +34,9 @@ const inputValidator = (email, password) => {
 
   const isPasswordValid = passwordSchema.validate(password);
   if (!isPasswordValid) return "not valid";
-
   return "valid";
 };
+
 
 exports.signUp = (req, res) => {
   //storing values passed from client side

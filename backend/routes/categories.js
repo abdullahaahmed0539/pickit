@@ -4,6 +4,6 @@ const { displayCategory } = require("../api/controllers/categories/displayCatego
 const router = express.Router();
 
 router.route("/").get(displayCategories);
-router.route("/:category_id").get(displayCategory);
+router.route("/:category_id/:pageId").get(displayCategory);
 
 module.exports = router;

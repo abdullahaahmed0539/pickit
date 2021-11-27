@@ -9,10 +9,20 @@ DOCUMENTATION
 
 
 const CategoryProducts = require("../../model/product");
-exports.displayCategory = (req, res) => {
+exports.displayCategory = async (req, res) => {
+  // const categoryId = `ObjectId('${req.params.category_id}')`;
   const categoryId = req.params.category_id;
+  const pageId = req.params.pageId;
+  const limit = 3;
+  let numOfProducts = 0;
 
-  CategoryProducts.find({ categoryId: categoryId, status: "active" })
+  //to return the total number of products in this section : for pagination at front end too
+  await CategoryProducts.find({ categoryId: categoryId, status: "active" })
+  .then((Products)=>{
+    numOfProducts = Products.length;
+  })
+
+  await CategoryProducts.find({ categoryId: categoryId, status: "active" }).limit(limit).skip((pageId-1)*limit)
     .then((categoryProducts) => {
       res.status(200).json({
         error: {
@@ -22,6 +32,7 @@ exports.displayCategory = (req, res) => {
         },
         data: {
           categoryProducts,
+          totalProducts: numOfProducts
         },
       });
     })

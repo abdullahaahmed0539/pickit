@@ -23,7 +23,7 @@ exports.uploadImage = async (req, res) => {
   const imageName = rawBytes.toString("hex");
   const params = {
     Bucket: bucketName,
-    Key: imageName,
+    Key: `products/${imageName}`,
     Expires: 60,
   };
 

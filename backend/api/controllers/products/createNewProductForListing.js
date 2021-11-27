@@ -17,6 +17,7 @@ exports.createNewProductForListing = (req, res) => {
     transactionType,
     images,
   } = req.body;
+  
 
   var newProduct = new Product({
     productName,
@@ -27,7 +28,7 @@ exports.createNewProductForListing = (req, res) => {
     date,
     transactionType,
     images,
-    status: "pending",
+    status: transactionType === 'sell'? 'active': 'pending',
     requests: []
   });
 

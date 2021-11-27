@@ -37,29 +37,43 @@ const ProductForm = props => {
 
   const submit = async e => {
     e.preventDefault();
-    props.setLoading();
-    let data = {
-      productName,
-      categoryId: chosenCategoryId,
-      username: localStorage.getItem("username"),
-      description: productDescription,
-      price,
-      date: Date.now(),
-      transactionType: type,
-      // images: imgLink,
-    };
     if (props.action === "Update") {
-      data = { ...data, _id: props._id };
+      let data = {
+         _id: props._id,
+        productName,
+        categoryId: chosenCategoryId,
+        username: localStorage.getItem("username"),
+        description: productDescription,
+        price,
+        date: Date.now(),
+        transactionType: type,
+        images: props.imageLink,
+      };
       updateProduct(data)
         .then(() =>
           props.history.push(`/${localStorage.getItem("user_id")}/get_products`)
         )
-        .catch(() => console.log("error while updating"));
+        .catch(err => {
+          if (err.response.status === 401) {
+            alert("Unauthorized Access. Product was not created.");
+          } else if (err.response.status === 406) {
+            alert('Problem while updating product. Please try again or later.')
+          }
+        });
     } else {
+      
       getUploadLink()
         .then(response => {
           const uploadUrl = response.data.data.uploadURL;
-
+          let data = {
+            productName,
+            categoryId: chosenCategoryId,
+            username: localStorage.getItem("username"),
+            description: productDescription,
+            price,
+            date: Date.now(),
+            transactionType: type,
+          };
           uploadImage(uploadUrl, img)
             .then(() => {
               const imageUrl = uploadUrl.split("?")[0];
@@ -71,13 +85,21 @@ const ProductForm = props => {
                     `/${localStorage.getItem("user_id")}/get_products`
                   )
                 )
-                .catch(err => console.log(err));
+                .catch(err => {
+                  if (err.response.status === 401) {
+                    alert("Unauthorized Access. Product was not created.");
+                  } else if (err.response.status === 406) {
+                    alert(
+                      "Problem while updating product. Please try again or later."
+                    );
+                  }
+                });
             })
             .catch(err => {
               console.log(err.message);
             });
         })
-        .catch(err => console.log(err));
+        .catch(err => console.log(err.message));
     }
   };
 

@@ -3,19 +3,27 @@ import { withRouter } from "react-router-dom";
 import { fetchCategories } from "../API calls/categories";
 import Spinner from '../Components/Spinner'
 import HomeCard from "../Components/HomeCard";
+import Error from './Error'
 
 const Home = ({ history }) => {
   const [categories, setCategories] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     fetchCategories()
-      .then(response => setCategories(response.data.data.categories))
-      .catch('Error while fetching categories')
+      .then(response => {
+        setCategories(response.data.data.categories)
+      })
+      .catch(err => err.response.status === 500 ? setError(true): setError(false))
   }, []);
 
-  
-  if (categories.length === 0) 
-    return <Spinner />;
+  if (categories.length === 0 && !error) {
+    return <Spinner text='Loading'/>;
+  } else if (error) {
+    return (
+      <Error title='Internal Server Error' message="We are sorry for Inconvenience. You can try reloading the page." />
+    );
+  }
   else {
     return (
       <div className="container mt-4">

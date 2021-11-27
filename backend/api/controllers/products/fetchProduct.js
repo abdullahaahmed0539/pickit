@@ -6,10 +6,6 @@ exports.fetchProduct = async (req,res) => {
 
     await Product.findById(productId)
     .then((product)=>{
-        if(product.status === "") //removed sold
-        {
-            throw new Error("Product Unavailable");
-        }
         res.status(200).json({
             error: {
                 status: "0",
