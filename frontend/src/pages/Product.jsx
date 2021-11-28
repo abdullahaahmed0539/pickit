@@ -3,12 +3,29 @@ import { useState, useEffect } from "react";
 import { fetchProductDetails } from "../API calls/products";
 import Spinner from "../Components/Spinner";
 import Error from "./Error";
+import {
+  approve,
+  unapprove,
+} from "../API calls/products";
 
 const ProductDetails = ({ history }) => {
   const { productId } = useParams();
   const [product, setProduct] = useState({});
   const [error, setError] = useState(false);
   const [responseRecieved, setResponseRecieved] = useState(false);
+
+  const approveProduct = async  => {
+    const data = { action: "active", productId: product._id };
+    approve(data)
+      .then(() => (window.location = "/moderator_home"))
+      .catch(() => console.log("Error while approving product"));
+  };
+
+   const deleteProduct = async  => {
+     unapprove(product._id)
+       .then(() => (window.location = "/moderator_home"))
+       .catch(() => console.log("Error while unapproving product"));
+   };
 
   useEffect(() => {
     fetchProductDetails(productId)
@@ -52,6 +69,7 @@ const ProductDetails = ({ history }) => {
             </div>
 
             {product.username === localStorage.getItem("username") &&
+              localStorage.getItem("userType") === "normal" &&
               product.transactionType === "exchange" && (
                 <div className="row">
                   <button
@@ -93,6 +111,7 @@ const ProductDetails = ({ history }) => {
               )}
 
             {product.username === localStorage.getItem("username") &&
+              localStorage.getItem("userType") === "normal" &&
               product.transactionType === "sell" && (
                 <div className="row">
                   <button
@@ -119,6 +138,7 @@ const ProductDetails = ({ history }) => {
               )}
 
             {product.transactionType === "sell" &&
+              localStorage.getItem("userType") === "normal" &&
               product.username !== localStorage.getItem("username") && (
                 <div className="row">
                   <button className="col-5 col-md-4 col-lg-3 ms-3 btn btn-primary ">
@@ -131,6 +151,7 @@ const ProductDetails = ({ history }) => {
               )}
 
             {product.transactionType === "exchange" &&
+              localStorage.getItem("userType") === "normal" &&
               product.username !== localStorage.getItem("username") && (
                 <div className="row">
                   <button className="col-5 col-md-5 col-lg-4 ms-3 btn btn-primary ">
@@ -151,6 +172,31 @@ const ProductDetails = ({ history }) => {
                 Username: <strong>{product.username}</strong>
               </p>
             </div>
+
+            {localStorage.getItem("userType") === "moderator" && (
+              <div className="row mt-4">
+                <button
+                  className="col-4 col-md-4 col-lg-3 ms-3 me-1 btn btn-primary "
+                  onClick={() =>
+                    history.push(`/products/${product._id}/updatePrice`)
+                  }
+                >
+                  Update price
+                </button>
+                <button
+                  className="col-3 col-md-3 col-lg-3 me-1 btn btn-success "
+                  onClick={() => approveProduct(product._id)}
+                >
+                  Approve
+                </button>
+                <button
+                  className="col-3 col-md-3 col-lg-3 btn btn-danger "
+                  onClick={() => deleteProduct(product._id)}
+                >
+                  Reject
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}

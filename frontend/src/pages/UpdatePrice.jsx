@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useParams, withRouter } from "react-router-dom";
-// import { Image } from "react-bootstrap";
 import axios from "axios";
 
 const UpdatePrice = ({ history }) => {
@@ -55,7 +54,6 @@ const UpdatePrice = ({ history }) => {
       price: product.price,
     };
 
-    console.log(modifiedProduct);
 
     const token = localStorage.getItem("token");
 
@@ -73,7 +71,7 @@ const UpdatePrice = ({ history }) => {
       if (response.status === 200 && response.data) {
         console.log("success");
 
-        window.location = "/moderator_home";
+        window.location = `/products/${product._id}`;
       }
     } catch (ex) {
       if (ex.response && ex.response.status === 401) {
