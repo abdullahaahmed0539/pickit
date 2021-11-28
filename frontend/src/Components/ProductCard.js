@@ -3,13 +3,19 @@ import { Button } from "react-bootstrap";
 const ProductCard = (props) => {
   const { image, name, price, transactionType, onButtonPress } = props;
   return (
-    <div className="col-md-3 mb-4">
+    <div className="col-12 col-sm-6  col-lg-4 col-xl-3 mb-4 mt-2">
       <div className="card">
-        <img src={image} className="card-img-top" alt="..." />
+        <img
+          src={image}
+          className="card-img-top"
+          alt="..."
+          onClick={onButtonPress}
+          style={{ cursor: "pointer" }}
+        />
         <div className="card-body">
-          <h5 className="card-title">
+          <h6 className="card-title">
             <strong>{name.charAt(0).toUpperCase() + name.slice(1)}</strong>
-          </h5>
+          </h6>
           <p className="card-text">
             PKR <strong>{price.toFixed(2)}</strong>
           </p>

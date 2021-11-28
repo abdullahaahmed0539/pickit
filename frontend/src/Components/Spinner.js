@@ -1,9 +1,14 @@
 const Spinner = props => {
-    return <div className="d-flex justify-content-center" style={{marginTop:'25%'}}>
-        <div style={{marginRight:'4px'}}>{props.text}</div>
-        <div className="spinner-border" role="status">
+  return (
+    <div className="container">
+      <div className="row">
+        <div className=" d-flex align-items-center justify-content-center" style={{ height: '100px' }}>
+          <div>{props.text}</div>
+          <div className="spinner-border ms-1" role="status"></div>
+        </div>
+      </div>
     </div>
-</div>
-}
+  );
+};
 
 export default Spinner;

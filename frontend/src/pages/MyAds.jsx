@@ -201,7 +201,7 @@ const MyAds = props => {
               </div>
             </div>
             <div className="row">
-              <h2 className="col-md-5">Your products</h2>
+              <h2 className="col-md-5">Your products ({listedProducts.length})</h2>
 
               <DropdownSelector
                 className="col-md-3 offset-md-4"

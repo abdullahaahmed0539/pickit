@@ -77,16 +77,17 @@ const SignUp = () => {
       )}
       {!error && (
         <div className="row ">
-          <div className="col-md-7" style={{ background: "#92CDE6" }}>
+          <section
+            className="col-lg-6 d-none d-sm-none d-md-none d-lg-block"
+            style={{ backgroundColor: "#92CDE6", height: "100vh" }}
+          >
             <img
               src="https://businessmodelnavigator.com/img/navigator-pattern-img-2/5.png"
               className="img-fluid rounded-start "
               alt="..."
-              style={{ height: "93vh" }}
             />
-          </div>
-          <div className="col-md-5 mt-5">
-            <div className="container">
+          </section>
+          <div className="col-12 col-lg-6 mt-5 ">
               <h1>Welcome to PickIt.</h1>
               <p>
                 A place where you can buy or exchange whatever you want. Who
@@ -95,7 +96,7 @@ const SignUp = () => {
               </p>
 
               <div className="card">
-                <div className="card-body container">
+                <div className="card-body">
                   <form onSubmit={submitForm}>
                     <div className="row">
                       <div className="form-group ">
@@ -221,7 +222,7 @@ const SignUp = () => {
                   </form>
                 </div>
               </div>
-            </div>
+            
           </div>
         </div>
       )}

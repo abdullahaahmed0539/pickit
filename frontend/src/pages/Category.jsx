@@ -10,11 +10,13 @@ const Products = ({ history }) => {
   const { categoryId } = useParams();
   const [products, setProducts] = useState([]);
   const [pageId, setPageId] = useState(1);
-  const limit = 3;
+  const limit = 12;
   let itemsPaginate = [];
   const [pages, setPages] = useState(itemsPaginate);
   const [error, setError] = useState(false);
   const [responseRecieved, setResponseRecieved] = useState(false);
+
+  
 
   useEffect(() => {
     fetchProducts(categoryId, pageId)
@@ -38,61 +40,77 @@ const Products = ({ history }) => {
   }, [categoryId, pageId]);
 
   return (
-    <div className="grid container mt-4">
-      
-      {!error && !responseRecieved && <Spinner text='Fetching products'/>}
+    <div className="container">
+      {!error && !responseRecieved && <Spinner text="Fetching products" />}
       {error && (
-        <Error title='Internal Server Error.' message="We are sorry for Inconvenience. You can try reloading the page." />
+        <Error
+          title="Internal Server Error."
+          message="We are sorry for Inconvenience. You can try reloading the page."
+        />
       )}
       {!error && responseRecieved && products.length === 0 && (
-        <div style={{ marginTop: "20%", marginLeft: "37%" }}>
-          <h2>
-            <strong>No products to show.</strong>
-          </h2>
-          <button
-            className="btn btn-primary"
-            style={{ marginLeft: "70px", marginTop: "10px" }}
-            onClick={() => (window.location = "/")}
-          >
-            back to home page
-          </button>
-        </div>
-      )}
-      {!error && (
-        <div className="row">
-          {products.map(product => (
-            <ProductCard
-              key={product._id}
-              image={`${product.images[0]}`}
-              name={product.productName}
-              price={product.price}
-              transactionType={product.transactionType}
-              onButtonPress={() => history.push(`/products/${product._id}`)}
-            />
-          ))}
-          {pages && pages.length > 1 && (
+        <>
+          <div className="row mt-5">
             <div
-              style={{
-                marginTop: "10px",
-                display: "flex",
-                justifyContent: "center",
-              }}
+              className="d-flex justify-content-center"
+              style={{ marginTop: "100px" }}
             >
-              <Pagination>
-                {pages.map(number => (
-                  <Pagination.Item
-                    key={number}
-                    onClick={() => setPageId(number)}
-                    active={number === pageId}
-                  >
-                    {number}
-                  </Pagination.Item>
-                ))}
-              </Pagination>
+              <h2>
+                <strong>No products to show.</strong>
+              </h2>
+            </div>
+          </div>
+          <div className="row ">
+            <div className="d-flex justify-content-center">
+              <button
+                className="btn btn-primary"
+                onClick={() => (window.location = "/")}
+              >
+                back to home page
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+      {!error &&
+        responseRecieved &&
+        products.length !==0 && (
+            <div className="row mt-4">
+              <h2>Products available ({products.length})</h2>
+              {products.map(product => (
+                <ProductCard
+                  key={product._id}
+                  image={`${product.images[0]}`}
+                  name={product.productName}
+                  price={product.price}
+                  transactionType={product.transactionType}
+                  onButtonPress={() => history.push(`/products/${product._id}`)}
+                />
+              ))}
+
+              {pages && pages.length > 1 && (
+                <div
+                  style={{
+                    marginTop: "10px",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Pagination>
+                    {pages.map(number => (
+                      <Pagination.Item
+                        key={number}
+                        onClick={() => setPageId(number)}
+                        active={number === pageId}
+                      >
+                        {number}
+                      </Pagination.Item>
+                    ))}
+                  </Pagination>
+                </div>
+              )}
             </div>
           )}
-        </div>
-      )}
     </div>
   );
 };

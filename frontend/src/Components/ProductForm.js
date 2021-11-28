@@ -21,6 +21,7 @@ const ProductForm = props => {
   const [productName, setProductName] = useState(props.productName);
   const [price, setPrice] = useState(props.price);
   const [img, setImg] = useState([]);
+  const [variant, setVariant] = useState('primary')
   const [productDescription, setProductDescription] = useState(
     props.description
   );
@@ -163,9 +164,10 @@ const ProductForm = props => {
         <div className="row mt-4">
           <div className="col-md-2 offset-md-4">
             <Button
-              variant="primary"
+              variant={variant}
               type="submit"
               style={{ width: "100%" }}
+              onClick={()=>{setVariant('success')}}
               disabled={
                 productName === "" || price === "" || productDescription === ""
                   ? true

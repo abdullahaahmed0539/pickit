@@ -6,7 +6,7 @@ const header = { headers: { Authorization: `Bearer ${token}` } };
 //fetches users product
 export const fetchMyProducts = async (userId) => {
   const response = await axios.get(
-    `http://localhost:5000/users/${userId}/get_products`,
+    `http://192.168.100.6:5000/users/${userId}/get_products`,
     header
   );
   return response;
@@ -15,7 +15,7 @@ export const fetchMyProducts = async (userId) => {
 //Creates a product
 export const createProduct = async (data) => {
   const response = await axios.post(
-    "http://localhost:5000/products/create_new",
+    "http://192.168.100.6:5000/products/create_new",
     data,
     header
   );
@@ -25,7 +25,7 @@ export const createProduct = async (data) => {
 //fetch a product's detail
 export const fetchProductDetails = async (_id) => {
   const response = await axios.get(
-    `http://localhost:5000/products/${_id}`,
+    `http://192.168.100.6:5000/products/${_id}`,
     header
   );
   return response;
@@ -34,7 +34,7 @@ export const fetchProductDetails = async (_id) => {
 //Updates a product
 export const updateProduct = async (data) => {
   const response = await axios.post(
-    "http://localhost:5000/products/update",
+    "http://192.168.100.6:5000/products/update",
     data,
     header
   );
@@ -44,7 +44,7 @@ export const updateProduct = async (data) => {
 //delete a product
 export const deleteProduct = async (_id) => {
   const response = await axios.delete(
-    `http://localhost:5000/products/${_id}`,
+    `http://192.168.100.6:5000/products/${_id}`,
     header
   );
   return response;
@@ -53,7 +53,7 @@ export const deleteProduct = async (_id) => {
 //unapproves pending products
 export const unapprove = async (productId) => {
   const response = await axios.delete(
-    `http://localhost:5000/products/${productId}`,
+    `http://192.168.100.6:5000/products/${productId}`,
     header
   );
   return response;
@@ -62,7 +62,7 @@ export const unapprove = async (productId) => {
 //fetches pending products for the moderator
 export const fetchPendingProducts = async () => {
   const response = await axios.get(
-    `http://localhost:5000/products/unapproved`,
+    `http://192.168.100.6:5000/products/unapproved`,
     header
   );
   const exchangeableProducts = response.data.data.filter(
@@ -74,7 +74,7 @@ export const fetchPendingProducts = async () => {
 //approves products by moderator
 export const approve = async (data) => {
   const response = await axios.post(
-    `http://localhost:5000/products/approve`,
+    `http://192.168.100.6:5000/products/approve`,
     data,
     header
   );
@@ -83,7 +83,7 @@ export const approve = async (data) => {
 
 //fetches image upload link
 export const getUploadLink = async () => {
-  const response = await axios.get(`http://localhost:5000/products/upload_image`);
+  const response = await axios.get(`http://192.168.100.6:5000/products/upload_image`);
   return response
 }
 

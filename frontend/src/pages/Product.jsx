@@ -1,74 +1,76 @@
 import { useParams, withRouter } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { fetchProductDetails } from "../API calls/products";
-import { Button } from "react-bootstrap";
 import Spinner from "../Components/Spinner";
-import Error from './Error'
+import Error from "./Error";
 
 const ProductDetails = ({ history }) => {
   const { productId } = useParams();
   const [product, setProduct] = useState({});
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(false);
   const [responseRecieved, setResponseRecieved] = useState(false);
 
   useEffect(() => {
     fetchProductDetails(productId)
-      .then((response) => {
-        setResponseRecieved(true)
-        setProduct(response.data.data)
+      .then(response => {
+        setResponseRecieved(true);
+        setProduct(response.data.data);
       })
       .catch(err => {
         setResponseRecieved(true);
         if (err.response.status === 406) {
-          setError(true)
+          setError(true);
         }
-          
       });
   }, [productId]);
 
   return (
-    <div className="container mt-5">
-      {!responseRecieved && !error && <Spinner text='Fetching product details'/>}
+    <div className="container">
+      {!responseRecieved && !error && (
+        <Spinner text="Fetching product details" />
+      )}
       {responseRecieved && error && (
         <Error title="Error while fetching." message="Product Unavailable." />
       )}
       {responseRecieved && !error && (
-        <div className="row">
-          <div className="col-md-4">
-            <img className="col-md-11" src={product.images} alt="..." />
-          </div>
-          <div className="col-md-6">
+        <div className="row mt-5">
+          <img
+            className="col-12 col-md-4 mb-3"
+            src={product.images}
+            alt="..."
+            style={{ height: "100%" }}
+          />
+          <div className="col-12 col-md-6 offset-md-1">
             <div className="row">
-              <h2>{product.productName}</h2>
+              <h2 className="col-12">{product.productName}</h2>
             </div>
-            <div className="row">
-              <div>price: </div>
-              <div>
+            <div className="row mb-4">
+              <div className="col-12">price: </div>
+              <div className="col-12">
                 <h4>PKR {product.price}</h4>
               </div>
             </div>
+
             {product.username === localStorage.getItem("username") &&
-              product.status === "active" && (
-                <>
+              product.transactionType === "exchange" && (
+                <div className="row">
                   <button
-                    type="button"
-                    className="btn btn-warning position-relative"
-                    style={{ marginRight: "8px" }}
-                    onClick={() =>
-                      // props.history.push(`/products/${_id}`)
-                      ""
-                    }
+                    className="col-5 col-md-4 col-lg-3 ms-3 btn btn-warning "
+                    onClick={() => {
+                      /* props.history.push(`/products/${_id}`)}*/
+                    }}
                   >
-                    Requests
+                    Requests{" "}
                     {product.requests.length !== 0 ? (
-                      <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                      <span className="badge rounded-pill bg-danger">
                         {product.requests.length}
                       </span>
                     ) : (
                       ""
                     )}
                   </button>
-                  <Button
+                  <button
+                    className="col-5 col-md-4 col-lg-3 ms-3 btn btn-primary"
                     onClick={() => {
                       history.push({
                         pathname: `/products/update_product`,
@@ -86,30 +88,55 @@ const ProductDetails = ({ history }) => {
                     variant="primary"
                   >
                     Edit
-                  </Button>
-                </>
+                  </button>
+                </div>
               )}
+
+            {product.username === localStorage.getItem("username") &&
+              product.transactionType === "sell" && (
+                <div className="row">
+                  <button
+                    className="col-5 col-md-5 col-lg-4 ms-3 btn btn-primary "
+                    onClick={() => {
+                      history.push({
+                        pathname: `/products/update_product`,
+                        state: {
+                          _id: product._id,
+                          name: product.productName,
+                          price: product.price,
+                          imageLink: product.images[0],
+                          description: product.description,
+                          type: product.transactionType,
+                          categoryid: product.categoryId,
+                        },
+                      });
+                    }}
+                    variant="primary"
+                  >
+                    Edit
+                  </button>
+                </div>
+              )}
+
             {product.transactionType === "sell" &&
               product.username !== localStorage.getItem("username") && (
-                <>
-                  <button className="col-md-3 mt-3 btn btn-primary">
-                    Add to cart{" "}
+                <div className="row">
+                  <button className="col-5 col-md-4 col-lg-3 ms-3 btn btn-primary ">
+                    Add to cart
                   </button>
-                  <button
-                    className="col-md-3 mt-3 btn btn-success"
-                    style={{ marginLeft: "10px" }}
-                  >
+                  <button className="col-5 col-md-4 col-lg-3 ms-3 btn btn-success ">
                     Checkout
                   </button>
-                </>
+                </div>
               )}
+
             {product.transactionType === "exchange" &&
               product.username !== localStorage.getItem("username") && (
-                <>
-                  <button className="col-md-3 mt-3 btn btn-primary">
+                <div className="row">
+                  <button className="col-5 col-md-5 col-lg-4 ms-3 btn btn-primary ">
                     Send request
                   </button>
-                </>
+                </div>
               )}
 
             <div className="row mt-5">
@@ -125,7 +152,6 @@ const ProductDetails = ({ history }) => {
               </p>
             </div>
           </div>
-          <p></p>
         </div>
       )}
     </div>

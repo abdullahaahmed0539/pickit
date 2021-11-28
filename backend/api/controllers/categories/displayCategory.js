@@ -13,7 +13,7 @@ exports.displayCategory = async (req, res) => {
   // const categoryId = `ObjectId('${req.params.category_id}')`;
   const categoryId = req.params.category_id;
   const pageId = req.params.pageId;
-  const limit = 3;
+  const limit = 12;
   let numOfProducts = 0;
 
   //to return the total number of products in this section : for pagination at front end too
