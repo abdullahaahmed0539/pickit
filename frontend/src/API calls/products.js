@@ -111,7 +111,26 @@ export const updatePrice = async data => {
 //Fetch contents of user cart
 export const fetchCart = async (userId) => {
   const response = await axios.get(
-    `http://localhost:5000/products/cart/${userId}`,header
+    `http://192.168.100.4:5000/products/cart/${userId}`,
+    header
+  );
+  return response;
+}
+
+//Add a product to user's cart
+export const addToCart = async productId => {
+  const response = await axios.post(
+    `http://192.168.100.4:5000/products/addToCart/${productId}`,
+    {},
+    header
+  );
+  return response;
+}
+
+//Remove a product to user's cart
+export const removeFromCart = async (productId) => {
+  const response = await axios.post(
+    `http://localhost:5000/products/removeFromCart/${productId}`,{},header
   );
   return response;
 }

@@ -1,30 +1,55 @@
 import { useParams, withRouter } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { fetchProductDetails } from "../API calls/products";
+import { fetchProductDetails, addToCart, removeFromCart } from "../API calls/products";
 import Spinner from "../Components/Spinner";
 import Error from "./Error";
-import {
-  approve,
-  unapprove,
-} from "../API calls/products";
+import { approve, unapprove } from "../API calls/products";
 
 const ProductDetails = ({ history }) => {
   const { productId } = useParams();
   const [product, setProduct] = useState({});
   const [error, setError] = useState(false);
   const [responseRecieved, setResponseRecieved] = useState(false);
+  const [inCart, setInCart] = useState(false);
 
-  const approveProduct = async  => {
+  const approveProduct = async => {
     const data = { action: "active", productId: product._id };
     approve(data)
       .then(() => (window.location = "/moderator_home"))
       .catch(() => console.log("Error while approving product"));
   };
 
-   const deleteProduct = async  => {
-     unapprove(product._id)
-       .then(() => (window.location = "/moderator_home"))
-       .catch(() => console.log("Error while unapproving product"));
+  const deleteProduct = async => {
+    unapprove(product._id)
+      .then(() => (window.location = "/moderator_home"))
+      .catch(() => console.log("Error while unapproving product"));
+  };
+
+  const add = (productId, navigate) => {
+    addToCart(productId)
+      .then(response => {
+        if (response.status !== 200) {
+          alert("Unable to add product to cart !");
+        } else {
+          setInCart(true);
+          if (navigate) {
+            history.push(`/checkout`);
+          }
+        }
+      })
+      .catch(err => console.log(err));
+  };
+
+   const remove = productId => {
+     removeFromCart(productId)
+       .then(response => {
+         if (response.status !== 200) {
+           alert("Unable to remove product from the cart !");
+         } else {
+           setInCart(false);
+         }
+       })
+       .catch(response => console.log(response));
    };
 
   useEffect(() => {
@@ -40,6 +65,8 @@ const ProductDetails = ({ history }) => {
         }
       });
   }, [productId]);
+
+  
 
   return (
     <div className="container">
@@ -69,14 +96,15 @@ const ProductDetails = ({ history }) => {
             </div>
 
             {localStorage.getItem("username") === null && (
-                <div className="row">
+              <div className="row">
                 <button
                   className="col-5 col-md-4 col-lg-3 ms-3 btn btn-success "
-                  onClick={()=> history.push('/login')}>
-                    Login to continue
-                  </button>
-                </div>
-              )}
+                  onClick={() => history.push("/login")}
+                >
+                  Login to continue
+                </button>
+              </div>
+            )}
 
             {product.username === localStorage.getItem("username") &&
               localStorage.getItem("userType") === "normal" &&
@@ -151,12 +179,25 @@ const ProductDetails = ({ history }) => {
               localStorage.getItem("userType") === "normal" &&
               product.username !== localStorage.getItem("username") && (
                 <div className="row">
-                  <button className="col-5 col-md-4 col-lg-3 ms-3 btn btn-primary ">
-                    Add to cart
-                  </button>
+                  {!inCart && (
+                    <button
+                      onClick={() => add(productId, false)}
+                      className="col-5 col-md-4 col-lg-3 ms-3 btn btn-primary "
+                    >
+                      Add to cart
+                    </button>
+                  )}
+                  {inCart && (
+                    <button
+                      onClick={() => remove(productId)}
+                      className="col-5 col-md-4 col-lg-3 ms-3 btn btn-secondary "
+                    >
+                      Remove from cart
+                    </button>
+                  )}
                   <button
                     className="col-5 col-md-4 col-lg-3 ms-3 btn btn-success "
-                    onClick={() => history.push(`/checkout`)}
+                    onClick={() => add(productId, true)}
                   >
                     Checkout
                   </button>
