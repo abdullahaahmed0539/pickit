@@ -31,7 +31,7 @@ const ModeratorHome = ({ history }) => {
           </thead>
           <tbody>
             {products.map((item, index) => (
-              <tr>
+              <tr key={index}>
                 <td>{index + 1}.</td>
                 <td>{item.productName}</td>
                 <td>

@@ -6,7 +6,7 @@ import Card from "../Components/Card";
 import { RemoveModal } from "../Components/Modal";
 import DropdownSelector from "../Components/UI/Dropdown";
 import Spinner from "../Components/Spinner";
-import Error from './Error'
+import Error from "./Error";
 
 const MyAds = props => {
   const { userId } = useParams();
@@ -26,14 +26,14 @@ const MyAds = props => {
         setResponseRecieved(true);
         setListedProducts(response.data.data.Products);
       })
-      .catch((err) => {
+      .catch(err => {
         setResponseRecieved(true);
         if (err.response.status === 404) {
-          setNoProducts(true)
+          setNoProducts(true);
         } else if (err.response.status === 500 || err.response.status === 401) {
-          setError(true)
+          setError(true);
           setErrType(err.response.status);
-        } 
+        }
       });
   }, [userId]);
 
@@ -162,12 +162,17 @@ const MyAds = props => {
       {responseRecieved && noProducts && !error && (
         <>
           <div className="row mt-5">
-            <h2 className="col-md-6 offset-md-4">
-              You have no products listed.
-            </h2>
+            <div
+              className="d-flex justify-content-center"
+              style={{ marginTop: "100px" }}
+            >
+              <h2>
+                <strong>You do not have any products.</strong>
+              </h2>
+            </div>
           </div>
-          <div className="row">
-            <div className="col-md-5 offset-5 mt-3 mb-4 ">
+          <div className="row ">
+            <div className="d-flex justify-content-center">
               <Button
                 onClick={() => props.history.push(`/products/create_new`)}
                 variant="primary"
@@ -188,38 +193,39 @@ const MyAds = props => {
               productName={productNameToBeDeleted}
             />
           )}
-          <div className="container">
-            <div className="row">
-              <div className="col-md-4 mt-3 mb-4 ">
-                <Button
-                  onClick={() => props.history.push(`/products/create_new`)}
-                  variant="primary"
-                  className="btn btn-lg mb-3"
-                >
-                  Add product
-                </Button>
-              </div>
-            </div>
-            <div className="row">
-              <h2 className="col-md-5">Your products ({listedProducts.length})</h2>
 
-              <DropdownSelector
-                className="col-md-3 offset-md-4"
-                variant="light"
-                label=""
-                labelRequired={false}
-                chosen={filter}
-                options={["all", "active", "rejected", "pending", "sold"]}
-                onSelect={filter => setFilter(filter)}
-                dropdownOff="filter"
-              />
+          <div className="row">
+            <div className="col-7 col-md-3 col-lg-3 mt-4 mb-5">
+              <Button
+                onClick={() => props.history.push(`/products/create_new`)}
+                variant="primary"
+                className="btn btn-lg"
+              >
+                Add product
+              </Button>
             </div>
-            {filter === "all" && allFilter}
-            {filter === "active" && activeFilter}
-            {filter === "rejected" && rejectedFilter}
-            {filter === "pending" && pendingFilter}
-            {filter === "sold" && soldFilter}
           </div>
+          <div className="row mb-3">
+            <h2 className="col-7 col-md-4">
+              Your products ({listedProducts.length})
+            </h2>
+
+            <DropdownSelector
+              className="col-md-1 col-3 offset-2 offset-md-6"
+              variant="light"
+              label=""
+              labelRequired={false}
+              chosen={filter}
+              options={["all", "active", "rejected", "pending", "sold"]}
+              onSelect={filter => setFilter(filter)}
+              dropdownOff="filter"
+            />
+          </div>
+          {filter === "all" && allFilter}
+          {filter === "active" && activeFilter}
+          {filter === "rejected" && rejectedFilter}
+          {filter === "pending" && pendingFilter}
+          {filter === "sold" && soldFilter}
         </Fragment>
       )}
       {responseRecieved && error && (

@@ -4,20 +4,23 @@ const NormalNav = props => {
     return (
       <>
         <button
-          class="navbar-toggler"
+          className="navbar-toggler"
           data-bs-toggle="collapse"
           data-bs-target="#navbar"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon"></span>
         </button>
-        <div class="navbar-collapse collapse" id="navbar">
-          <ul class="navbar-nav">
-            <li class="nav-item">
+        <div className="navbar-collapse collapse" id="navbar">
+          <ul className="navbar-nav">
+            <li className="nav-item">
               <NavLink className="nav-link" aria-current="page" to="/Home">
                 Home
               </NavLink>
             </li>
-            <li class="nav-item">
+            <li>
+              <hr className="dropdown-divider" />
+            </li>
+            <li className="nav-item">
               <NavLink
                 className="nav-link"
                 aria-current="page"
@@ -26,13 +29,11 @@ const NormalNav = props => {
                 MyAds
               </NavLink>
             </li>
-            <li class="nav-item">
-              <NavLink className="nav-link" aria-current="page" to="/">
-                Profile
-              </NavLink>
+            <li>
+              <hr className="dropdown-divider" />
             </li>
           </ul>
-          <span class="navbar-text  d-none d-md-block  ms-auto me-5">
+          <span className="navbar-text  d-none d-md-block  ms-auto me-5">
             Welcome {localStorage.getItem("username")}
           </span>
           <button

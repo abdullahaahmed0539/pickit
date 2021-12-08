@@ -30,13 +30,15 @@ const CreateProduct = () => {
       {loading && <Spinner />}
       {!loading &&
         <div className="row mt-5">
-          <div className="col-md-3">
-            <form>
-              <img src={prev} alt="..." style={{ width: "150%" }} />
+          <div className="col-md-4">
+          <form>
+            <div className="row">
+              <img src={prev} alt="..." />
+            </div>
               <div className="row mt-2">
                 <input
                   type="file"
-                  className=" col-md-9"
+                  className="col-8"
                   ref={fileInputRef}
                   accept="image/*"
                   onChange={e => {
@@ -44,7 +46,7 @@ const CreateProduct = () => {
                   }}
                 />
                 <button
-                  className="btn btn-danger col-md-3"
+                  className="btn btn-danger col-2 col-md-3"
                   onClick={e => {
                     e.preventDefault();
                     setPrev(initial);
@@ -56,7 +58,7 @@ const CreateProduct = () => {
               </div>
             </form>
           </div>
-          <div className="col-md-8">
+          <div className="col-md-7">
             <ProductForm
               productName=""
               file={img}

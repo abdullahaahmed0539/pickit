@@ -8,7 +8,7 @@ const token = localStorage.getItem("token");
 export const fetchCategories = async () => {
   const headers = {Authorization: `Bearer ${token}`}  
   const response = await axios.get(
-    `http://192.168.100.6:5000/categories/`,
+    `http://192.168.100.4:5000/categories/`,
     headers
   );
   return response;
@@ -18,7 +18,7 @@ export const fetchCategories = async () => {
 export const fetchProducts = async (categoryId,pageId) => {
   const headers = {Authorization: `Bearer ${token}`}  
   const response = await axios.get(
-    `http://192.168.100.6:5000/categories/${categoryId}/${pageId}`,
+    `http://192.168.100.4:5000/categories/${categoryId}/${pageId}`,
     headers
   );
   return response;

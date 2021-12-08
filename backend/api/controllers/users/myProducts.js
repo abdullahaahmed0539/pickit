@@ -44,6 +44,7 @@ exports.myProducts = async (req, res) => {
             Products,
           },
         });
+        return;
       }
 
       res.status(200).json({
@@ -56,6 +57,7 @@ exports.myProducts = async (req, res) => {
           Products,
         },
       });
+      return;
     })
     .catch((err) => {
       res.status(500).json({

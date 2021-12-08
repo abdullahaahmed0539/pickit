@@ -32,6 +32,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  cart: {
+    type: [String],
+    trim: true
+  },
   userType: String,
   categoryId: String
 });

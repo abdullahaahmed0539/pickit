@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom";
 import { Modal, Button } from "react-bootstrap";
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 const Backdrop = () => {
   return ReactDOM.createPortal(
@@ -19,49 +19,59 @@ const Backdrop = () => {
   );
 };
 
-export const RemoveModal = (props) => {
-  const [inputVal, setInputVal] = useState('')
-  
+export const RemoveModal = props => {
+  const [inputVal, setInputVal] = useState("");
+
   return ReactDOM.createPortal(
     <React.Fragment>
       <Backdrop />
-      <Modal.Dialog
-        className="mb-5"
-        style={{
-          position: "fixed",
-          top: "30vh",
-          left: "30%",
-          overflow: "hidden",
-          zIndex: "100",
-        }}
-      >
-        <Modal.Header>
-          <Modal.Title>
-            Are you sure you want to delete? To continue type{" "}
-            <strong>"{props.productName}"</strong>
-          </Modal.Title>
-        </Modal.Header>
+      <div className="row">
+        <div className="offset-md-2 offset-lg-4">
+          <Modal.Dialog
+            className="mb-5"
+            style={{
+              position: "fixed",
+              top: "30vh",
+              overflow: "hidden",
+              zIndex: "100",
+            }}
+          >
+            <Modal.Header>
+              <Modal.Title>
+                Are you sure you want to delete? To continue type{" "}
+                <strong>"{props.productName}"</strong>
+              </Modal.Title>
+            </Modal.Header>
 
-        <Modal.Footer>
-          {/* <div className="form-group "> */}
-            <label className="form-label">
-            </label>
-            <input
-              onChange={(e) => setInputVal(e.target.value)}
-              type="text"
-              className="form-control"
-              placeholder={props.productName}
-              autoFocus
-            />
-          {/* </div> */}
-          <Button variant="secondary" className='mt-4' onClick={props.close}>
-            Close
-          </Button>
-          <Button variant="danger" className='mt-4' onClick={props.remove} disabled={inputVal===props.productName? false: true}>
-            Delete
-          </Button>
-        </Modal.Footer>
-      </Modal.Dialog>
+            <Modal.Footer>
+              <label className="form-label"></label>
+              <input
+                onChange={e => setInputVal(e.target.value)}
+                type="text"
+                className="form-control"
+                placeholder={props.productName}
+                autoFocus
+              />
+
+              <Button
+                variant="secondary"
+                className="mt-4"
+                onClick={props.close}
+              >
+                Close
+              </Button>
+              <Button
+                variant="danger"
+                className="mt-4"
+                onClick={props.remove}
+                disabled={inputVal === props.productName ? false : true}
+              >
+                Delete
+              </Button>
+            </Modal.Footer>
+          </Modal.Dialog>
+        </div>
+      </div>
     </React.Fragment>,
     document.getElementById("modal-root")
   );

@@ -131,7 +131,7 @@ const ProductForm = props => {
         />
 
         <div className="row mt-2">
-          <Form.Group className=" col-md-3 mb-3 offset-md-4">
+          <Form.Group className=" col-md-5 col-lg-3 col-12 mb-3 offset-md-2">
             <DropdownSelector
               variant="light"
               className=""
@@ -161,8 +161,8 @@ const ProductForm = props => {
           </Form.Group>
         </div>
 
-        <div className="row mt-4">
-          <div className="col-md-2 offset-md-4">
+        <div className="row mt-4 mb-3">
+          <div className="col-md-3 offset-md-2">
             <Button
               variant={variant}
               type="submit"

@@ -68,6 +68,16 @@ const ProductDetails = ({ history }) => {
               </div>
             </div>
 
+            {localStorage.getItem("username") === null && (
+                <div className="row">
+                <button
+                  className="col-5 col-md-4 col-lg-3 ms-3 btn btn-success "
+                  onClick={()=> history.push('/login')}>
+                    Login to continue
+                  </button>
+                </div>
+              )}
+
             {product.username === localStorage.getItem("username") &&
               localStorage.getItem("userType") === "normal" &&
               product.transactionType === "exchange" && (
@@ -144,7 +154,10 @@ const ProductDetails = ({ history }) => {
                   <button className="col-5 col-md-4 col-lg-3 ms-3 btn btn-primary ">
                     Add to cart
                   </button>
-                  <button className="col-5 col-md-4 col-lg-3 ms-3 btn btn-success ">
+                  <button
+                    className="col-5 col-md-4 col-lg-3 ms-3 btn btn-success "
+                    onClick={() => history.push(`/checkout`)}
+                  >
                     Checkout
                   </button>
                 </div>
@@ -174,14 +187,14 @@ const ProductDetails = ({ history }) => {
             </div>
 
             {localStorage.getItem("userType") === "moderator" && (
-              <div className="row mt-4">
+              <div className="row mt-4 mb-5">
                 <button
                   className="col-4 col-md-4 col-lg-3 ms-3 me-1 btn btn-primary "
                   onClick={() =>
                     history.push(`/products/${product._id}/updatePrice`)
                   }
                 >
-                  Update price
+                  Update product
                 </button>
                 <button
                   className="col-3 col-md-3 col-lg-3 me-1 btn btn-success "

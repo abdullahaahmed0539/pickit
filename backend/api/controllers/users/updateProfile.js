@@ -14,7 +14,7 @@ const User = require("../../model/user");
 const Joi = require("joi");
 
 exports.updateProfile = (req, res) => {
-  const { username, password, phone, address, image } = req.body;
+  const { username, password, phone, address } = req.body;
 
   //Check for phone number
   schema = Joi.object({
@@ -55,7 +55,7 @@ exports.updateProfile = (req, res) => {
   address != null
     ? (updateAttributes = { ...updateAttributes, address })
     : null;
-  image != null ? (updateAttributes = { ...updateAttributes, image }) : null;
+  // image != null ? (updateAttributes = { ...updateAttributes, image }) : null;
   if (password != null) {
     bcrypt.hash(password, 10, (err, hashedPassword) => {
       if (err) {
@@ -95,7 +95,7 @@ exports.updateProfile = (req, res) => {
               email: decodedToken.email,
               phone: user.phone,
               address: user.address,
-              image: user.image,
+              // image: user.image,
               userType: user.userType,
             },
           });
@@ -141,7 +141,7 @@ exports.updateProfile = (req, res) => {
           email: decodedToken.email,
           phone: user.phone,
           address: user.address,
-          image: user.image,
+          // image: user.image,
           userType: user.userType,
         },
       });

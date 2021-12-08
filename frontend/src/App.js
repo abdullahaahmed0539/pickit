@@ -10,44 +10,48 @@ import UpdateProduct from "./pages/UpdateProduct";
 import UpdatePrice from "./pages/UpdatePrice";
 import SignUp from "./pages/Signup";
 import ModeratorHome from "./pages/ModeratorHome";
+import Checkout from "./pages/Checkout";
 
 import NavBar from "./Components/Navbar";
 
 function App() {
   return (
     <div className="App">
-    <NavBar />
+      <NavBar />
       <Switch>
-        <Route  path="/login">
+        <Route path="/login">
           <LogIn />
         </Route>
-        <Route  path="/signup">
+        <Route path="/signup">
           <SignUp />
         </Route>
-        {localStorage.getItem("userType")==="moderator" && 
-          <Route  path="/Home">
+        {localStorage.getItem("userType") === "moderator" && (
+          <Route path="/Home">
             <ModeratorHome />
           </Route>
-        }
-        <Route  path="/Home">
+        )}
+        <Route path="/Home">
           <Home />
         </Route>
-        <Route  path="/:userId/get_products">
+        <Route path="/:userId/get_products">
           <MyAds />
         </Route>
-        <Route  path="/categories/:categoryId">
+        <Route path="/categories/:categoryId">
           <Category />
         </Route>
-        <Route  path= '/products/:productId/updatePrice'>
+        <Route path="/products/:productId/updatePrice">
           <UpdatePrice />
+        </Route>
+        <Route path="/checkout">
+          <Checkout />
         </Route>
         <Route path="/products/create_new">
           <CreateProduct />
         </Route>
-        <Route  path="/products/update_product">
+        <Route path="/products/update_product">
           <UpdateProduct />
         </Route>
-        <Route  path="/products/:productId">
+        <Route path="/products/:productId">
           <Product />
         </Route>
         <Redirect push to="/Home" />

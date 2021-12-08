@@ -75,6 +75,8 @@ exports.signUp = (req, res) => {
       username,
       email,
       password: hashedPassword,
+      phone: "",
+      address: "",
       userType,
     });
     newUser.save(function (err, user) {

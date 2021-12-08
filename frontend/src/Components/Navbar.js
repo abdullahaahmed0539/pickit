@@ -18,7 +18,7 @@ const NavBar = ({ history }) => {
     window.location = "/login";
   };
   return (
-    <nav class="navbar navbar-dark bg-dark navbar-expand-md">
+    <nav className="navbar navbar-dark bg-dark navbar-expand-md">
       <div className="container">
         <Link className="navbar-brand" to="/">
           <strong>PickIt</strong>
