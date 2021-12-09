@@ -29,3 +29,13 @@ export const updateUser = async data => {
   );
   return response;
 };
+
+//update user details
+export const clearCart = async () => {
+  const response = await axios.post(
+    `http://192.168.100.4:5000/users/clear_cart`,
+    {},
+    header
+  );
+  return response;
+};

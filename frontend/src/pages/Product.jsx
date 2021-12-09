@@ -6,7 +6,7 @@ import Error from "./Error";
 import { approve, unapprove } from "../API calls/products";
 
 const ProductDetails = ({ history }) => {
-  const { productId } = useParams();
+  const {productId} = useParams();
   const [product, setProduct] = useState({});
   const [error, setError] = useState(false);
   const [responseRecieved, setResponseRecieved] = useState(false);
@@ -65,9 +65,7 @@ const ProductDetails = ({ history }) => {
         }
       });
   }, [productId]);
-
   
-
   return (
     <div className="container">
       {!responseRecieved && !error && (

@@ -25,6 +25,7 @@ const Card = props => {
     description,
     type,
     categoryId,
+    transactionType,
     onRemove,
   } = props;
 
@@ -90,23 +91,25 @@ const Card = props => {
                 </div>
 
                 <div className="row mt-5">
-                  <button
-                    type="button"
-                    className=" col-lg-2 col-md-3 col-3 ms-1 btn btn-warning position-relative "
-                    onClick={() =>
-                      // props.history.push(`/products/${_id}`)
-                      ""
-                    }
-                  >
-                    Offers
-                    {requestsLength !== 0 ? (
-                      <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                        {requestsLength}
-                      </span>
-                    ) : (
-                      ""
-                    )}
-                  </button>
+                  {transactionType === 'exchange' && status === 'active'  &&
+                    <button
+                      type="button"
+                      className=" col-lg-2 col-md-3 col-3 ms-1 btn btn-warning position-relative "
+                      onClick={() =>
+                        // props.history.push(`/products/${_id}`)
+                        ""
+                      }
+                    >
+                      Offers
+                      {requestsLength !== 0 ? (
+                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                          {requestsLength}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                    </button>
+                  }
 
                   <Button
                     className="col-lg-2 col-md-2 col-3 ms-1"

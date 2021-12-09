@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { userDetail, updateUser } from "../API calls/user";
-import { fetchCart } from "../API calls/products";
+import { createOrder } from "../API calls/orders";
+import { clearCart } from "../API calls/user";
+import { fetchCart, sellProduct } from "../API calls/products";
 import Spinner from "../Components/Spinner";
+import { PreviewModal, ConfirmationModal } from "../Components/Modal";
 
 const Checkout = () => {
   const [userExists, setUserExists] = useState(false);
@@ -11,7 +14,42 @@ const Checkout = () => {
   const [address, setAddress] = useState("");
   const [cart, setCart] = useState([]);
   const [disabled, setDisabled] = useState(true);
+  const [previewModalOpen, setPreviewModalOpen] = useState(false);
+  const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
+
   let total = 0;
+
+  const placeOrder = () => {
+    const order = {
+      username,
+      email,
+      phone,
+      address,
+      total,
+      cart,
+    };
+
+    createOrder(order)
+      .then(response => {
+        
+        cart.map(item => 
+          sellProduct(item._id).catch(err => console.log(err))
+        )
+        
+        clearCart()
+          .then(() => setCart([]))
+          .catch(err => console.log(err));
+      })
+      .catch(err => alert('Could not place order.'));
+  };
+
+  const displayPreviewModal = modalStatus => {
+    setPreviewModalOpen(modalStatus);
+  };
+
+  const displayConfirmationModal = modalStatus => {
+    setConfirmationModalOpen(modalStatus);
+  };
 
   useEffect(() => {
     userDetail(localStorage.getItem("username"))
@@ -27,14 +65,24 @@ const Checkout = () => {
     fetchCart(localStorage.getItem("user_id")).then(response =>
       setCart(response.data.data.cartProducts)
     );
-  }, []);
-  cart.map(item => (total += parseFloat(item.price)));
+  }, [cart]);
 
+  cart.map(item => (total += parseFloat(item.price)));
   return (
     <div className="container">
       {!userExists && <Spinner text="Loading" />}
       {userExists && (
         <>
+          {previewModalOpen && (
+            <PreviewModal
+              close={() => displayPreviewModal(false)}
+              pay={placeOrder}
+              openConfirmationModal={() => displayConfirmationModal(true)}
+            />
+          )}
+          {confirmationModalOpen && (
+            <ConfirmationModal close={() => displayConfirmationModal(false)} />
+          )}
           <h2 className="row mt-3">Checkout</h2>
           <div className="row card mt-3">
             <div className="card-header">Your details</div>
@@ -174,6 +222,7 @@ const Checkout = () => {
 
               <button
                 className="btn btn-primary col-12 col-md-2 mt-3"
+                onClick={() => displayPreviewModal(true)}
                 disabled={
                   username === "" ||
                   email === "" ||

@@ -72,6 +72,7 @@ const MyAds = props => {
         type={item.transactionType}
         categoryId={item.categoryId}
         price={item.price}
+        transactionType={item.transactionType}
         onRemove={displayModal}
       />
     ))
@@ -92,6 +93,7 @@ const MyAds = props => {
         type={item.transactionType}
         categoryId={item.categoryId}
         price={item.price}
+        transactionType={item.transactionType}
         onRemove={displayModal}
       />
     ))
@@ -112,6 +114,7 @@ const MyAds = props => {
         type={item.transactionType}
         categoryId={item.categoryId}
         price={item.price}
+        transactionType={item.transactionType}
         onRemove={displayModal}
       />
     ))
@@ -132,6 +135,7 @@ const MyAds = props => {
         type={item.transactionType}
         categoryId={item.categoryId}
         price={item.price}
+        transactionType={item.transactionType}
         onRemove={displayModal}
       />
     ));
@@ -151,6 +155,7 @@ const MyAds = props => {
         type={item.transactionType}
         categoryId={item.categoryId}
         price={item.price}
+        transactionType={item.transactionType}
         onRemove={displayModal}
       />
     ))

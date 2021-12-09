@@ -134,3 +134,11 @@ export const removeFromCart = async (productId) => {
   );
   return response;
 }
+
+//sell a product
+export const sellProduct = async (_id) => {  
+  const response = await axios.post(
+    `http://localhost:5000/products/sell_product`,{_id},header
+  );
+  return response;
+}

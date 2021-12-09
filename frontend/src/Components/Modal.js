@@ -76,3 +76,131 @@ export const RemoveModal = props => {
     document.getElementById("modal-root")
   );
 };
+
+export const PreviewModal = props => {
+  return ReactDOM.createPortal(
+    <React.Fragment>
+      <Backdrop />
+      <div className="row">
+        <div className="offset-md-2 offset-lg-4">
+          <Modal.Dialog
+            className="mb-5"
+            style={{
+              position: "fixed",
+              top: "30vh",
+              overflow: "hidden",
+              zIndex: "100",
+            }}
+          >
+            <Modal.Header>
+              <Modal.Title>
+                You are about to place an order. Click pay to finish placing
+                order.
+              </Modal.Title>
+            </Modal.Header>
+
+            <Modal.Footer>
+              <Button
+                variant="secondary"
+                className="mt-4"
+                onClick={props.close}
+              >
+                Close
+              </Button>
+              <Button
+                variant="primary"
+                className="mt-4"
+                onClick={() => {
+                  props.openConfirmationModal();
+                  props.close();
+                  props.pay();
+                }}
+              >
+                Pay
+              </Button>
+            </Modal.Footer>
+          </Modal.Dialog>
+        </div>
+      </div>
+    </React.Fragment>,
+    document.getElementById("preview-root")
+  );
+};
+
+export const ConfirmationModal = props => {
+  return ReactDOM.createPortal(
+    <React.Fragment>
+      <Backdrop />
+      <div className="row">
+        <div className="offset-md-2 offset-lg-4">
+          <Modal.Dialog
+            className="mb-5"
+            style={{
+              position: "fixed",
+              top: "30vh",
+              overflow: "hidden",
+              zIndex: "100",
+            }}
+          >
+            <Modal.Header>
+              <Modal.Title>
+                <span className="text-success">Payment successful.</span> You
+                can check order under orders tab.
+              </Modal.Title>
+            </Modal.Header>
+
+            <Modal.Footer>
+              <Button
+                variant="secondary"
+                className="mt-4"
+                onClick={props.close}
+              >
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal.Dialog>
+        </div>
+      </div>
+    </React.Fragment>,
+    document.getElementById("confirmation-root")
+  );
+};
+
+
+export const ErrorModal = props => {
+  return ReactDOM.createPortal(
+    <React.Fragment>
+      <Backdrop />
+      <div className="row">
+        <div className="offset-md-2 offset-lg-4">
+          <Modal.Dialog
+            className="mb-5"
+            style={{
+              position: "fixed",
+              top: "30vh",
+              overflow: "hidden",
+              zIndex: "100",
+            }}
+          >
+            <Modal.Header>
+              <Modal.Title>
+                <span className="text-danger">Payment unsuccessful.</span> Please try again later. 
+              </Modal.Title>
+            </Modal.Header>
+
+            <Modal.Footer>
+              <Button
+                variant="secondary"
+                className="mt-4"
+                onClick={props.close}
+              >
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal.Dialog>
+        </div>
+      </div>
+    </React.Fragment>,
+    document.getElementById("confirmation-root")
+  );
+};
