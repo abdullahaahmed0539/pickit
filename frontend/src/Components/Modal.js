@@ -153,7 +153,10 @@ export const ConfirmationModal = props => {
               <Button
                 variant="secondary"
                 className="mt-4"
-                onClick={props.close}
+                onClick={() => {
+                  props.close()
+                  
+                }}
               >
                 Close
               </Button>
@@ -166,41 +169,3 @@ export const ConfirmationModal = props => {
   );
 };
 
-
-export const ErrorModal = props => {
-  return ReactDOM.createPortal(
-    <React.Fragment>
-      <Backdrop />
-      <div className="row">
-        <div className="offset-md-2 offset-lg-4">
-          <Modal.Dialog
-            className="mb-5"
-            style={{
-              position: "fixed",
-              top: "30vh",
-              overflow: "hidden",
-              zIndex: "100",
-            }}
-          >
-            <Modal.Header>
-              <Modal.Title>
-                <span className="text-danger">Payment unsuccessful.</span> Please try again later. 
-              </Modal.Title>
-            </Modal.Header>
-
-            <Modal.Footer>
-              <Button
-                variant="secondary"
-                className="mt-4"
-                onClick={props.close}
-              >
-                Close
-              </Button>
-            </Modal.Footer>
-          </Modal.Dialog>
-        </div>
-      </div>
-    </React.Fragment>,
-    document.getElementById("confirmation-root")
-  );
-};

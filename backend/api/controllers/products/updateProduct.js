@@ -35,7 +35,7 @@ exports.updateProduct = async (req,res) => {
         date: date,
         transactionType: transactionType,
         images: images,
-        status: "pending"
+        status: transactionType === 'sell' ? "active" : "pending"
     }
 
     Product.updateOne({_id: _id},modifiedProductValues)

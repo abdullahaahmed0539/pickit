@@ -26,7 +26,16 @@ const NormalNav = props => {
                 aria-current="page"
                 to={`/${props.userId}/get_products`}
               >
-                MyAds
+                Ads
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                className="nav-link"
+                aria-current="page"
+                to={`/orders`}
+              >
+                Orders
               </NavLink>
             </li>
             <li>

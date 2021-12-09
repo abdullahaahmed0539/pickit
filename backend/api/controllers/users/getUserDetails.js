@@ -3,7 +3,7 @@ const User = require("../../model/user");
 exports.getUserDetails = async (req, res) => {
   const username = req.params.username;
   User.findOne({ username: username })
-    .select("-password")
+    .select("-password -userType")
     .then(user => {
       if (user.length === 0) {
         res.status(404).json({

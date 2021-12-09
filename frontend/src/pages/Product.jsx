@@ -1,12 +1,16 @@
 import { useParams, withRouter } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { fetchProductDetails, addToCart, removeFromCart } from "../API calls/products";
+import {
+  fetchProductDetails,
+  addToCart,
+  removeFromCart,
+} from "../API calls/products";
 import Spinner from "../Components/Spinner";
 import Error from "./Error";
 import { approve, unapprove } from "../API calls/products";
 
 const ProductDetails = ({ history }) => {
-  const {productId} = useParams();
+  const { productId } = useParams();
   const [product, setProduct] = useState({});
   const [error, setError] = useState(false);
   const [responseRecieved, setResponseRecieved] = useState(false);
@@ -40,17 +44,17 @@ const ProductDetails = ({ history }) => {
       .catch(err => console.log(err));
   };
 
-   const remove = productId => {
-     removeFromCart(productId)
-       .then(response => {
-         if (response.status !== 200) {
-           alert("Unable to remove product from the cart !");
-         } else {
-           setInCart(false);
-         }
-       })
-       .catch(response => console.log(response));
-   };
+  const remove = productId => {
+    removeFromCart(productId)
+      .then(response => {
+        if (response.status !== 200) {
+          alert("Unable to remove product from the cart !");
+        } else {
+          setInCart(false);
+        }
+      })
+      .catch(response => console.log(response));
+  };
 
   useEffect(() => {
     fetchProductDetails(productId)
@@ -65,7 +69,7 @@ const ProductDetails = ({ history }) => {
         }
       });
   }, [productId]);
-  
+
   return (
     <div className="container">
       {!responseRecieved && !error && (
@@ -148,7 +152,8 @@ const ProductDetails = ({ history }) => {
 
             {product.username === localStorage.getItem("username") &&
               localStorage.getItem("userType") === "normal" &&
-              product.transactionType === "sell" && (
+              product.transactionType === "sell" &&
+              product.status !== "sold" && (
                 <div className="row">
                   <button
                     className="col-5 col-md-5 col-lg-4 ms-3 btn btn-primary "
@@ -177,7 +182,7 @@ const ProductDetails = ({ history }) => {
               localStorage.getItem("userType") === "normal" &&
               product.username !== localStorage.getItem("username") && (
                 <div className="row">
-                  {!inCart && (
+                  {!inCart && product.status === "active" && (
                     <button
                       onClick={() => add(productId, false)}
                       className="col-5 col-md-4 col-lg-3 ms-3 btn btn-primary "
@@ -185,7 +190,7 @@ const ProductDetails = ({ history }) => {
                       Add to cart
                     </button>
                   )}
-                  {inCart && (
+                  {inCart && product.status === "active" && (
                     <button
                       onClick={() => remove(productId)}
                       className="col-5 col-md-4 col-lg-3 ms-3 btn btn-secondary "
@@ -193,12 +198,14 @@ const ProductDetails = ({ history }) => {
                       Remove from cart
                     </button>
                   )}
-                  <button
-                    className="col-5 col-md-4 col-lg-3 ms-3 btn btn-success "
-                    onClick={() => add(productId, true)}
-                  >
-                    Checkout
-                  </button>
+                  {product.status === "active" && (
+                    <button
+                      className="col-5 col-md-4 col-lg-3 ms-3 btn btn-success "
+                      onClick={() => add(productId, true)}
+                    >
+                      Checkout
+                    </button>
+                  )}
                 </div>
               )}
 

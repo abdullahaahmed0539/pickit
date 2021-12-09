@@ -118,27 +118,27 @@ const Card = props => {
                   >
                     View
                   </Button>
-
-                  <Button
-                    onClick={() => {
-                      props.history.push({
-                        pathname: `/products/update_product`,
-                        state: {
-                          _id: _id,
-                          name: name,
-                          price: price,
-                          imageLink: image,
-                          description: description,
-                          type: type,
-                          categoryid: categoryId,
-                        },
-                      });
-                    }}
-                    variant="primary"
-                    className="col-lg-2 col-md-2 col-2 ms-1"
-                  >
-                    Edit
-                  </Button>
+                  {status !== 'sold' && 
+                    <Button
+                      onClick={() => {
+                        props.history.push({
+                          pathname: `/products/update_product`,
+                          state: {
+                            _id: _id,
+                            name: name,
+                            price: price,
+                            imageLink: image,
+                            description: description,
+                            type: type,
+                            categoryid: categoryId,
+                          },
+                        });
+                      }}
+                      variant="primary"
+                      className="col-lg-2 col-md-2 col-2 ms-1"
+                    >
+                      Edit
+                    </Button>}
 
                   <Button
                     onClick={() => onRemove(_id, name)}

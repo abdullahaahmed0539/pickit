@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { withRouter } from "react-router-dom";
 import { userDetail, updateUser } from "../API calls/user";
 import { createOrder } from "../API calls/orders";
 import { clearCart } from "../API calls/user";
@@ -6,7 +7,7 @@ import { fetchCart, sellProduct } from "../API calls/products";
 import Spinner from "../Components/Spinner";
 import { PreviewModal, ConfirmationModal } from "../Components/Modal";
 
-const Checkout = () => {
+const Checkout = ({ history }) => {
   const [userExists, setUserExists] = useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -31,16 +32,13 @@ const Checkout = () => {
 
     createOrder(order)
       .then(response => {
-        
-        cart.map(item => 
-          sellProduct(item._id).catch(err => console.log(err))
-        )
-        
+        cart.map(item => sellProduct(item._id).catch(err => console.log(err)));
+
         clearCart()
           .then(() => setCart([]))
           .catch(err => console.log(err));
       })
-      .catch(err => alert('Could not place order.'));
+      .catch(err => alert("Could not place order."));
   };
 
   const displayPreviewModal = modalStatus => {
@@ -81,7 +79,12 @@ const Checkout = () => {
             />
           )}
           {confirmationModalOpen && (
-            <ConfirmationModal close={() => displayConfirmationModal(false)} />
+            <ConfirmationModal
+              close={() => {
+                displayConfirmationModal(false);
+                history.push("/orders");
+              }}
+            />
           )}
           <h2 className="row mt-3">Checkout</h2>
           <div className="row card mt-3">
@@ -243,4 +246,4 @@ const Checkout = () => {
   );
 };
 
-export default Checkout;
+export default withRouter(Checkout);

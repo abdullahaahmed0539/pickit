@@ -11,7 +11,8 @@ import UpdatePrice from "./pages/UpdatePrice";
 import SignUp from "./pages/Signup";
 import ModeratorHome from "./pages/ModeratorHome";
 import Checkout from "./pages/Checkout";
-
+import Orders from "./pages/Orders";
+import Order from "./pages/Order";
 import NavBar from "./Components/Navbar";
 
 function App() {
@@ -44,6 +45,12 @@ function App() {
         </Route>
         <Route path="/checkout">
           <Checkout />
+        </Route>
+        <Route exact path="/orders">
+          <Orders />
+        </Route>
+        <Route path="/orders/:orderId">
+          <Order />
         </Route>
         <Route path="/products/create_new">
           <CreateProduct />
