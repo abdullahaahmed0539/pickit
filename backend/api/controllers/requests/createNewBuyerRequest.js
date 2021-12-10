@@ -1,7 +1,5 @@
 const Request = require('../../model/request');
 const Product = require('../../model/product');
-const mongoose = require('mongoose');
-const request = require('../../model/request');
 
 exports.createNewBuyerRequest = async (req,res) => {
     const {
@@ -32,9 +30,7 @@ exports.createNewBuyerRequest = async (req,res) => {
             },
             data: { request_generation_confirmation: "false"}
         });
-        return console.error(err);
     })
-    console.log(isProductAvailable);
     if(!isProductAvailable){
         return;
     }

@@ -10,6 +10,6 @@ router.route("/create_new").post(checkAuth,createNewBuyerRequest);
 router.route("/pending").get(checkAuth,fetchPendingRequests);
 router.route("/:product_id").get(checkAuth,fetchProductRequests);
 router.route("/:request_id").post(checkAuth, performAction);
-//router.route('/remove/:request_id').get(checkAuth, removeRequest);
+// router.route('/remove/:request_id').get(checkAuth, removeRequest);
 
 module.exports = router;

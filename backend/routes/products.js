@@ -11,8 +11,10 @@ const {removeFromCart,} = require("../api/controllers/products/removeFromCart");
 const {sellProduct} = require('../api/controllers/products/sellProduct')
 const { addToCart } = require("../api/controllers/products/addToCart");
 const checkAuth = require('../api/middleware/check-auth');
+const { fetchAllExchangable } = require("../api/controllers/products/fetchAllExchangable");
 const router = express.Router();
 
+router.route("/fetch_all_exchangable").get(checkAuth, fetchAllExchangable);
 router.route("/create_new").post(checkAuth,createNewProductForListing);
 router.route("/unapproved").get(checkAuth,fetchUnapprovedProducts);
 router.route("/approve").post(checkAuth, approveProduct);

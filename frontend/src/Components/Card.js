@@ -25,7 +25,6 @@ const Card = props => {
     description,
     type,
     categoryId,
-    transactionType,
     onRemove,
   } = props;
 
@@ -91,13 +90,15 @@ const Card = props => {
                 </div>
 
                 <div className="row mt-5">
-                  {transactionType === 'exchange' && status === 'active'  &&
+                  {type === "exchange" && status === "active" && (
                     <button
                       type="button"
                       className=" col-lg-2 col-md-3 col-3 ms-1 btn btn-warning position-relative "
                       onClick={() =>
-                        // props.history.push(`/products/${_id}`)
-                        ""
+                        props.history.push({
+                          pathname: `/requests/${_id}`,
+                          state: { name, price, description, image },
+                        })
                       }
                     >
                       Offers
@@ -109,7 +110,7 @@ const Card = props => {
                         ""
                       )}
                     </button>
-                  }
+                  )}
 
                   <Button
                     className="col-lg-2 col-md-2 col-3 ms-1"
@@ -118,7 +119,7 @@ const Card = props => {
                   >
                     View
                   </Button>
-                  {status !== 'sold' && 
+                  {status !== "sold" && (
                     <Button
                       onClick={() => {
                         props.history.push({
@@ -138,7 +139,8 @@ const Card = props => {
                       className="col-lg-2 col-md-2 col-2 ms-1"
                     >
                       Edit
-                    </Button>}
+                    </Button>
+                  )}
 
                   <Button
                     onClick={() => onRemove(_id, name)}

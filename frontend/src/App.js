@@ -14,6 +14,10 @@ import Checkout from "./pages/Checkout";
 import Orders from "./pages/Orders";
 import Order from "./pages/Order";
 import NavBar from "./Components/Navbar";
+import SentRequests from './pages/SentRequests'
+import RecievedRequests from './pages/RecievedRequests';
+import Cart from './pages/Cart'
+
 
 function App() {
   return (
@@ -46,11 +50,20 @@ function App() {
         <Route path="/checkout">
           <Checkout />
         </Route>
+        <Route path="/requests/sent/:userId">
+          <SentRequests />
+        </Route>
+        <Route path="/requests/:productId">
+          <RecievedRequests />
+        </Route>
         <Route exact path="/orders">
           <Orders />
         </Route>
         <Route path="/orders/:orderId">
           <Order />
+        </Route>
+        <Route path="/cart">
+          <Cart />
         </Route>
         <Route path="/products/create_new">
           <CreateProduct />

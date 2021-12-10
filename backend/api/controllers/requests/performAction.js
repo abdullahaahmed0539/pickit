@@ -8,6 +8,7 @@ exports.performAction = async (req,res) => {
     let isOwner = true;
     let senderName = null;
     let productId = null;
+    let exchangeProductId = "";
 
     let isRequestAvailable = true;
     
@@ -28,6 +29,7 @@ exports.performAction = async (req,res) => {
         }
         productId = request.productId;
         senderName = request.senderName;
+        exchangeProductId = request.offer.productId;
         
         Request.findByIdAndUpdate(requestId,{$set: {status: action+"ed"}})
         .then()
@@ -61,9 +63,21 @@ exports.performAction = async (req,res) => {
 
 
     if(action==="accept"){
-        await
+        let soldProducts = [productId,exchangeProductId];
+        //Change the status of the product being exchanged with
+        await Product.findByIdAndUpdate(exchangeProductId,{$set: {status: "sold",requests: []}})
+        .then((product)=>{
+            console.log("successfully updated the status of exchanged product");
+        })
 
-        await Product.findByIdAndUpdate(productId,{$set: {status: "sold"}})
+        //Close all requests associated with these products
+        await Request.updateMany({productId: {$in: soldProducts }, senderName: {$nin: [senderName]}},{$set: {status: "rejected"}})
+        .then((requests)=>{
+            console.log("successfully updated the status of requests associated with these products");
+        })
+
+        //Change the status of original product
+        await Product.findByIdAndUpdate(productId,{$set: {status: "sold", requests: []}})
         .then((product)=>{
             res.status(200).json({
                 error: {
@@ -88,6 +102,7 @@ exports.performAction = async (req,res) => {
     }
 
     if(action === "reject"){
+        // Product.findByIdAndUpdate(productId,{$set: {status: "requestId"}})
         Product.findByIdAndUpdate(productId,{$pull: {requests: requestId}})
         .then((product)=>{
             res.status(200).json({

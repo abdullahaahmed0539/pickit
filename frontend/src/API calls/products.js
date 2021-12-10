@@ -147,3 +147,12 @@ export const sellProduct = async (_id) => {
   );
   return response;
 }
+
+//fetches exchanegable
+export const fetchAllExchangable = async () => {
+  const response = await axios.get(
+    `http://localhost:5000/products/fetch_all_exchangable`,
+    header
+  );
+  return response;
+};

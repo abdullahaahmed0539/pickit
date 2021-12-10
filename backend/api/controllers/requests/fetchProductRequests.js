@@ -44,7 +44,7 @@ exports.fetchProductRequests = async (req,res) => {
                 code: "0",
                 message: "no error.",
             },
-            data: requestsOfThisProduct
+            data: { requestsOfThisProduct }
         })
     })
     .catch((err)=> {

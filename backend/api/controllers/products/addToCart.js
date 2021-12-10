@@ -5,12 +5,37 @@ const User = require("../../model/user");
 exports.addToCart = async (req,res) => {
 
     decodedToken = jwt.decode(req.headers.authorization.split(" ")[1]);
-    // const action = req.body.action;
     const username = decodedToken.username;
     const productId = req.params.product_id;
+    let isInCart = false;
 
     let productAvailable = true;
 
+    await User.findOne({ username }).select('cart')
+        .then(response => {
+            response.cart.forEach(item => {
+                if (item === productId) {
+                    isInCart = true
+                    
+            } })
+        })
+    
+    console.log(isInCart)
+
+    if (isInCart) {
+        res.status(200).json({
+          error: {
+            status: "0",
+            code: "0",
+            message: "no error.",
+          },
+          data: {
+            confirmation: true,
+           
+          },
+        });
+        return;
+    }
     await Product.find({_id: productId}).then((item)=> {
         if(item.status ==="sold"){
 
