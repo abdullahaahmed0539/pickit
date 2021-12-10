@@ -8,6 +8,7 @@ import Spinner from "../Components/Spinner";
 import { PreviewModal, ConfirmationModal } from "../Components/Modal";
 
 const Checkout = ({ history }) => {
+  const [orderId, setOrderId] = useState('')
   const [userExists, setUserExists] = useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -37,6 +38,8 @@ const Checkout = ({ history }) => {
         clearCart()
           .then(() => setCart([]))
           .catch(err => console.log(err));
+        
+        setOrderId(response.data.data._id)
       })
       .catch(err => alert("Could not place order."));
   };
@@ -82,7 +85,7 @@ const Checkout = ({ history }) => {
             <ConfirmationModal
               close={() => {
                 displayConfirmationModal(false);
-                history.push("/orders");
+                history.push(`/orders/${orderId}`);
               }}
             />
           )}

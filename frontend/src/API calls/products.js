@@ -4,9 +4,10 @@ const token = localStorage.getItem("token");
 const header = { headers: { Authorization: `Bearer ${token}` } };
 
 //fetches users product
-export const fetchMyProducts = async (userId) => {
-  const response = await axios.get(
-    `http://192.168.100.4:5000/users/${userId}/get_products`,
+export const fetchMyProducts = async (userId, pageId, productFilter) => {
+  const response = await axios.post(
+    `http://localhost:5000/users/${userId}/get_products`,
+    {pageId,productFilter},
     header
   );
   return response;
@@ -15,7 +16,7 @@ export const fetchMyProducts = async (userId) => {
 //Creates a product
 export const createProduct = async (data) => {
   const response = await axios.post(
-    "http://192.168.100.4:5000/products/create_new",
+    `http://localhost:5000/products/create_new`,
     data,
     header
   );
@@ -25,7 +26,7 @@ export const createProduct = async (data) => {
 //fetch a product's detail
 export const fetchProductDetails = async (_id) => {
   const response = await axios.get(
-    `http://192.168.100.4:5000/products/${_id}`,
+    `http://localhost:5000/products/${_id}`,
     header
   );
   return response;
@@ -34,7 +35,7 @@ export const fetchProductDetails = async (_id) => {
 //Updates a product
 export const updateProduct = async (data) => {
   const response = await axios.post(
-    "http://192.168.100.4:5000/products/update",
+    `http://localhost:5000/products/update`,
     data,
     header
   );
@@ -44,7 +45,7 @@ export const updateProduct = async (data) => {
 //delete a product
 export const deleteProduct = async (_id) => {
   const response = await axios.delete(
-    `http://192.168.100.4:5000/products/${_id}`,
+    `http://localhost:5000/products/${_id}`,
     header
   );
   return response;
@@ -53,7 +54,7 @@ export const deleteProduct = async (_id) => {
 //unapproves pending products
 export const unapprove = async (productId) => {
   const response = await axios.delete(
-    `http://192.168.100.4:5000/products/${productId}`,
+    `http://localhost:5000/products/${productId}`,
     header
   );
   return response;
@@ -62,7 +63,7 @@ export const unapprove = async (productId) => {
 //fetches pending products for the moderator
 export const fetchPendingProducts = async () => {
   const response = await axios.get(
-    `http://192.168.100.4:5000/products/unapproved`,
+    `http://localhost:5000/products/unapproved`,
     header
   );
   const exchangeableProducts = response.data.data.filter(
@@ -74,7 +75,7 @@ export const fetchPendingProducts = async () => {
 //approves products by moderator
 export const approve = async (data) => {
   const response = await axios.post(
-    `http://192.168.100.4:5000/products/approve`,
+    `http://localhost:5000/products/approve`,
     data,
     header
   );
@@ -83,7 +84,7 @@ export const approve = async (data) => {
 
 //fetches image upload link
 export const getUploadLink = async () => {
-  const response = await axios.get(`http://192.168.100.4:5000/products/upload_image`);
+  const response = await axios.get(`http://localhost:5000/products/upload_image`);
   return response
 }
 
@@ -101,7 +102,7 @@ export const uploadImage = async (URL, file) => {
 //allows moderator to update price
 export const updatePrice = async data => {
   const response = await axios.post(
-    `http://192.168.100.4:5000/products/update`,
+    `http://localhost:5000/products/update`,
     data,
     header
   );
@@ -111,7 +112,7 @@ export const updatePrice = async data => {
 //Fetch contents of user cart
 export const fetchCart = async (userId) => {
   const response = await axios.get(
-    `http://192.168.100.4:5000/products/cart/${userId}`,
+    `http://localhost:5000/products/cart/${userId}`,
     header
   );
   return response;
@@ -120,7 +121,7 @@ export const fetchCart = async (userId) => {
 //Add a product to user's cart
 export const addToCart = async productId => {
   const response = await axios.post(
-    `http://192.168.100.4:5000/products/addToCart/${productId}`,
+    `http://localhost:5000/products/addToCart/${productId}`,
     {},
     header
   );
@@ -130,7 +131,9 @@ export const addToCart = async productId => {
 //Remove a product to user's cart
 export const removeFromCart = async (productId) => {
   const response = await axios.post(
-    `http://localhost:5000/products/removeFromCart/${productId}`,{},header
+    `http://localhost:5000/products/removeFromCart/${productId}`,
+    {},
+    header
   );
   return response;
 }
@@ -138,7 +141,9 @@ export const removeFromCart = async (productId) => {
 //sell a product
 export const sellProduct = async (_id) => {  
   const response = await axios.post(
-    `http://localhost:5000/products/sell_product`,{_id},header
+    `http://localhost:5000/products/sell_product`,
+    { _id },
+    header
   );
   return response;
 }

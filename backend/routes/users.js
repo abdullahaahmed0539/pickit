@@ -13,7 +13,7 @@ router.route("/login").post(login);
 router.route("/clear_cart").post(checkAuth,clearCart);
 router.route("/get_user_details/:username").get(checkAuth,getUserDetails);
 router.route("/update_profile").post(checkAuth,updateProfile);
-router.route("/:userid/get_products").get(checkAuth, myProducts);
+router.route("/:userid/get_products").post(checkAuth, myProducts);
 
 
 module.exports = router;

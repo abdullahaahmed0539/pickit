@@ -1,5 +1,4 @@
 const express = require("express");
-// const {  } = require("../api/controllers/products/{filename}");
 const router = express.Router();
 const checkAuth = require('../api/middleware/check-auth');
 const {createNewBuyerRequest} = require('../api/controllers/requests/createNewBuyerRequest');
@@ -10,6 +9,7 @@ const {performAction} = require('../api/controllers/requests/performAction');
 router.route("/create_new").post(checkAuth,createNewBuyerRequest);
 router.route("/pending").get(checkAuth,fetchPendingRequests);
 router.route("/:product_id").get(checkAuth,fetchProductRequests);
-router.route("/:request_id").post(checkAuth,performAction);
+router.route("/:request_id").post(checkAuth, performAction);
+//router.route('/remove/:request_id').get(checkAuth, removeRequest);
 
 module.exports = router;

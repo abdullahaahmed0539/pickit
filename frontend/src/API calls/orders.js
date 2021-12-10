@@ -7,7 +7,7 @@ const header = { headers: { Authorization: `Bearer ${token}` } };
 //create orders
 export const createOrder = async data => {
   const response = await axios.post(
-    `http://192.168.100.4:5000/orders/create_order`,
+    `http://localhost:5000/orders/create_order`,
     data,
     header
   );
@@ -18,7 +18,7 @@ export const createOrder = async data => {
 export const myOrders = async username => {
   const response = await axios.get(
     `http://localhost:5000/orders/my_orders/${username}`,
-    header,  
+    header
   );
   return response;
 };
@@ -27,7 +27,7 @@ export const myOrders = async username => {
 export const getOrder = async orderId => {
   const response = await axios.get(
     `http://localhost:5000/orders/${orderId}`,
-    header,  
+    header
   );
   return response;
 };

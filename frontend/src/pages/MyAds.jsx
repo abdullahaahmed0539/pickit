@@ -1,7 +1,7 @@
 import { useParams, withRouter } from "react-router-dom";
 import { useState, useEffect, Fragment } from "react";
 import { fetchMyProducts, deleteProduct } from "../API calls/products";
-import { Button } from "react-bootstrap";
+import { Button, Pagination } from "react-bootstrap";
 import Card from "../Components/Card";
 import { RemoveModal } from "../Components/Modal";
 import DropdownSelector from "../Components/UI/Dropdown";
@@ -19,12 +19,26 @@ const MyAds = props => {
   const [error, setError] = useState(false);
   const [errType, setErrType] = useState();
   const [noProducts, setNoProducts] = useState(false);
+  const [pageId, setPageId] = useState(1);
+  const [pages, setPages] = useState([]);
+  const [totalProducts, setTotalProducts] = useState(0);
+  const limit = 4;
 
   useEffect(() => {
-    fetchMyProducts(userId)
+    fetchMyProducts(userId, pageId, filter)
       .then(response => {
         setResponseRecieved(true);
-        setListedProducts(response.data.data.Products);
+        setTotalProducts(response.data.data.totalProducts);
+        setListedProducts(response.data.data.paginatedProducts);
+        let arrpages = [];
+        for (
+          let number = 1;
+          number <= Math.ceil(response.data.data.totalProducts / limit);
+          number++
+        ) {
+          arrpages.push(number);
+        }
+        setPages(arrpages);
       })
       .catch(err => {
         setResponseRecieved(true);
@@ -35,7 +49,7 @@ const MyAds = props => {
           setErrType(err.response.status);
         }
       });
-  }, [userId]);
+  }, [userId, pageId, filter]);
 
   const displayModal = (id, name) => {
     setModalOpen(true);
@@ -57,109 +71,6 @@ const MyAds = props => {
       })
       .catch(() => console.log("Error while deleting product"));
   };
-
-  const allFilter = listedProducts
-    .map(item => (
-      <Card
-        key={item._id}
-        _id={item._id}
-        image={item.images[0]}
-        name={item.productName}
-        date={item.date}
-        status={item.status}
-        requestsLength={item.requests.length}
-        description={item.description}
-        type={item.transactionType}
-        categoryId={item.categoryId}
-        price={item.price}
-        transactionType={item.transactionType}
-        onRemove={displayModal}
-      />
-    ))
-    .reverse();
-
-  const activeFilter = listedProducts
-    .filter(item => item.status === "active")
-    .map(item => (
-      <Card
-        key={item._id}
-        _id={item._id}
-        image={item.images[0]}
-        name={item.productName}
-        date={item.date}
-        status={item.status}
-        requestsLength={item.requests.length}
-        description={item.description}
-        type={item.transactionType}
-        categoryId={item.categoryId}
-        price={item.price}
-        transactionType={item.transactionType}
-        onRemove={displayModal}
-      />
-    ))
-    .reverse();
-
-  const pendingFilter = listedProducts
-    .filter(item => item.status === "pending")
-    .map(item => (
-      <Card
-        key={item._id}
-        _id={item._id}
-        image={item.images[0]}
-        name={item.productName}
-        date={item.date}
-        status={item.status}
-        requestsLength={item.requests.length}
-        description={item.description}
-        type={item.transactionType}
-        categoryId={item.categoryId}
-        price={item.price}
-        transactionType={item.transactionType}
-        onRemove={displayModal}
-      />
-    ))
-    .reverse();
-
-  const rejectedFilter = listedProducts
-    .filter(item => item.status === "rejected")
-    .map(item => (
-      <Card
-        key={item._id}
-        _id={item._id}
-        image={item.images[0]}
-        name={item.productName}
-        date={item.date}
-        status={item.status}
-        requestsLength={item.requests.length}
-        description={item.description}
-        type={item.transactionType}
-        categoryId={item.categoryId}
-        price={item.price}
-        transactionType={item.transactionType}
-        onRemove={displayModal}
-      />
-    ));
-
-  const soldFilter = listedProducts
-    .filter(item => item.status === "sold")
-    .map(item => (
-      <Card
-        key={item._id}
-        _id={item._id}
-        image={item.images[0]}
-        name={item.productName}
-        date={item.date}
-        status={item.status}
-        requestsLength={item.requests.length}
-        description={item.description}
-        type={item.transactionType}
-        categoryId={item.categoryId}
-        price={item.price}
-        transactionType={item.transactionType}
-        onRemove={displayModal}
-      />
-    ))
-    .reverse();
 
   return (
     <div className="container">
@@ -211,9 +122,7 @@ const MyAds = props => {
             </div>
           </div>
           <div className="row mb-3">
-            <h2 className="col-7 col-md-4">
-              Your products ({listedProducts.length})
-            </h2>
+            <h2 className="col-7 col-md-4">Your products ({totalProducts})</h2>
 
             <DropdownSelector
               className="col-md-1 col-3 offset-2 offset-md-6"
@@ -226,11 +135,50 @@ const MyAds = props => {
               dropdownOff="filter"
             />
           </div>
-          {filter === "all" && allFilter}
-          {filter === "active" && activeFilter}
-          {filter === "rejected" && rejectedFilter}
-          {filter === "pending" && pendingFilter}
-          {filter === "sold" && soldFilter}
+
+          {listedProducts && listedProducts.length > 0 ? (
+            listedProducts
+              .map(item => (
+                <Card
+                  key={item._id}
+                  _id={item._id}
+                  image={item.images[0]}
+                  name={item.productName}
+                  date={item.date}
+                  status={item.status}
+                  requestsLength={item.requests.length}
+                  description={item.description}
+                  type={item.transactionType}
+                  categoryId={item.categoryId}
+                  price={item.price}
+                  onRemove={displayModal}
+                />
+              ))
+              .reverse()
+          ) : (
+            <></>
+          )}
+          {pages && pages.length > 1 && (
+            <div
+              style={{
+                marginTop: "10px",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Pagination>
+                {pages.map(number => (
+                  <Pagination.Item
+                    key={number}
+                    onClick={() => setPageId(number)}
+                    active={number === pageId}
+                  >
+                    {number}
+                  </Pagination.Item>
+                ))}
+              </Pagination>
+            </div>
+          )}
         </Fragment>
       )}
       {responseRecieved && error && (
