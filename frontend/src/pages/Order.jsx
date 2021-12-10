@@ -44,6 +44,12 @@ const Order = () => {
               </strong>
             </p>
             <h4>Total: PKR {order.total}</h4>
+            <p>
+              Verification PIN:  
+              <strong>
+                <u>{`   ${order.verificationCode}`}</u>
+              </strong>
+            </p>
             <hr />
             <h4 className="card-title">Items bought</h4>
 
@@ -88,8 +94,8 @@ const Order = () => {
           <p className="mb-2 card-text">
             Address:
             <strong>{` ${order.address}`}</strong>
-                  </p>
-                  <hr/>
+          </p>
+          <hr />
         </div>
       )}
     </div>

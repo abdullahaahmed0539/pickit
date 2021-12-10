@@ -9,6 +9,7 @@ exports.createOrder = (req, res) => {
     phone,
     address,
     total,
+    verificationCode: Math.floor(1000 + Math.random() * 9000),
     date: Date.now(),
     status: "In progress",
     order: cart,

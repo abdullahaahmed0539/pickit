@@ -23,9 +23,16 @@ const NavBar = ({ history }) => {
         <Link className="navbar-brand" to="/">
           <strong>PickIt</strong>
         </Link>
-        {localStorage.getItem("userType") === "normal" && <NormalNav userId={userId} userAccess={userAccess}/>}
-        {localStorage.getItem("userType") === "moderator" && <ModeratorNav userAccess={userAccess} />}
-        {localStorage.getItem("userType") === null && <LoginNav userAccess={userAccess}/>}
+        {localStorage.getItem("userType") === "normal" && (
+          <NormalNav userId={userId} userAccess={userAccess} />
+        )}
+        {(localStorage.getItem("userType") === "moderator" ||
+          localStorage.getItem("userType") === "delivery") && (
+          <ModeratorNav userAccess={userAccess} />
+        )}
+        {localStorage.getItem("userType") === null && (
+          <LoginNav userAccess={userAccess} />
+        )}
       </div>
     </nav>
   );

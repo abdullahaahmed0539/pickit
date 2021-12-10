@@ -31,3 +31,23 @@ export const getOrder = async orderId => {
   );
   return response;
 };
+
+//list all orders
+export const getAllOrders = async () => {
+  const response = await axios.get(
+    `http://localhost:5000/orders/get_all_orders`,
+    header
+  );
+  return response;
+};
+
+
+//list all orders
+export const fullfilOrder = async (data) => {
+  const response = await axios.post(
+    `http://localhost:5000/orders/fullfil`,
+    data,
+    header
+  );
+  return response;
+};

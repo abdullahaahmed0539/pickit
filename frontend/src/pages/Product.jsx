@@ -2,7 +2,6 @@ import { useParams, withRouter } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {
   fetchProductDetails,
-  fetchMyProducts,
   addToCart,
   removeFromCart,
   fetchAllExchangable

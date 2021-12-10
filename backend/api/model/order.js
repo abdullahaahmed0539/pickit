@@ -41,6 +41,11 @@ const orderSchema = new mongoose.Schema({
     require: [true, "order is required."],
     trim: true,
   },
+  verificationCode: {
+    type: String,
+    require: [true, "pin is required."],
+    trim: true,
+  },
 });
 
 const Order = mongoose.model("Order", orderSchema);

@@ -16,7 +16,9 @@ import Order from "./pages/Order";
 import NavBar from "./Components/Navbar";
 import SentRequests from './pages/SentRequests'
 import RecievedRequests from './pages/RecievedRequests';
+import Delivery from "./pages/Delivery";
 import Cart from './pages/Cart'
+import  FulfillOrder from "./pages/FulfillOrder";
 
 
 function App() {
@@ -35,8 +37,16 @@ function App() {
             <ModeratorHome />
           </Route>
         )}
+        {localStorage.getItem("userType") === "delivery" && (
+          <Route path="/Home">
+            <Delivery />
+          </Route>
+        )}
         <Route path="/Home">
           <Home />
+        </Route>
+        <Route path="/order/fulfill/:orderId">
+          <FulfillOrder />
         </Route>
         <Route path="/:userId/get_products">
           <MyAds />
@@ -44,6 +54,7 @@ function App() {
         <Route path="/categories/:categoryId">
           <Category />
         </Route>
+
         <Route path="/products/:productId/updatePrice">
           <UpdatePrice />
         </Route>
