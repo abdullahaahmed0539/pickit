@@ -56,9 +56,9 @@ const Cart = ({ history }) => {
         <div className="container mt-5 ml-1">
             <div>
                 <h1 style={{marginBottom: "30px"}}>
-                    Welcome to your Cart !
+                    You have { cartItems.length} items in your cart.
                 </h1>
-                {cartItems && cartItems.length ===0 && <h5 style={{color: "red"}}>No products in your cart yet</h5>}
+                {cartItems && cartItems.length ===0 && <h5 >What are you waiting for? Start shopping now!</h5>}
             </div>
             <div>
                 {cartItems && cartItems.map((item)=> (

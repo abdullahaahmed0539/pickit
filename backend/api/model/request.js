@@ -5,7 +5,7 @@ const requestSchema = new mongoose.Schema({
   recieverName: String,
   offer: {
     cash: String,
-    productId: String
+    productId: String,
   },
   productId: String,
   status: String,

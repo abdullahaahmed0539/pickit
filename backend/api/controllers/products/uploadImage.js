@@ -41,7 +41,7 @@ exports.uploadImage = async (req, res) => {
     });
   } catch {
     err => {
-      console.log(err)
+      console.log(err);
       res.status(406).json({
         error: {
           status: "1",
@@ -50,6 +50,6 @@ exports.uploadImage = async (req, res) => {
         },
         data: {},
       });
-    }
+    };
   }
 };

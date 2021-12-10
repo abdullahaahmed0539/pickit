@@ -15,24 +15,24 @@ exports.getUserDetails = async (req, res) => {
           data: {},
         });
       } else {
-          res.status(200).json({
-            error: {
-              status: "0",
-              code: "0",
-              message: "",
-            },
-            data: user,
-          });
+        res.status(200).json({
+          error: {
+            status: "0",
+            code: "0",
+            message: "",
+          },
+          data: user,
+        });
       }
     })
-      .catch(err => {
-        res.status(500).json({
-          error: {
-            status: "1",
-            code: "1",
-            message: "Internal server error.",
-          },
-          data: {},
-        });
+    .catch(err => {
+      res.status(500).json({
+        error: {
+          status: "1",
+          code: "1",
+          message: "Internal server error.",
+        },
+        data: {},
+      });
     });
 };

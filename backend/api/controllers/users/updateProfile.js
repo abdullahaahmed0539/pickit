@@ -71,7 +71,7 @@ exports.updateProfile = (req, res) => {
       updateAttributes = { ...updateAttributes, password: hashedPassword };
       User.updateOne({ _id: decodedToken._id }, updateAttributes)
         .then()
-        .catch((err) => {
+        .catch(err => {
           res.status(500).json({
             error: {
               status: "1",
@@ -83,7 +83,7 @@ exports.updateProfile = (req, res) => {
           console.error(`Error log: \n ${err}`);
         });
       User.findById({ _id: decodedToken._id })
-        .then((user) => {
+        .then(user => {
           res.status(201).json({
             error: {
               status: "0",
@@ -100,7 +100,7 @@ exports.updateProfile = (req, res) => {
             },
           });
         })
-        .catch((err) => {
+        .catch(err => {
           res.status(500).json({
             error: {
               status: "1",
@@ -117,7 +117,7 @@ exports.updateProfile = (req, res) => {
 
   User.updateOne({ _id: decodedToken._id }, updateAttributes)
     .then()
-    .catch((err) => {
+    .catch(err => {
       res.status(500).json({
         error: {
           status: "1",
@@ -129,7 +129,7 @@ exports.updateProfile = (req, res) => {
       console.error(`Error log: \n ${err}`);
     });
   User.findById({ _id: decodedToken._id })
-    .then((user) => {
+    .then(user => {
       res.status(201).json({
         error: {
           status: "0",
@@ -141,12 +141,11 @@ exports.updateProfile = (req, res) => {
           email: decodedToken.email,
           phone: user.phone,
           address: user.address,
-          // image: user.image,
           userType: user.userType,
         },
       });
     })
-    .catch((err) => {
+    .catch(err => {
       res.status(500).json({
         error: {
           status: "1",

@@ -43,7 +43,7 @@ const SentRequests = ({ history }) => {
           {requests && requests.length !== 0 ? (
             <h1 style={{ color: "gray" }}>Sent Requests</h1>
           ) : (
-            <h1 style={{ color: "red" }}>No Requests Sent Yet</h1>
+            <h1>No Requests Sent Yet</h1>
           )}
         </div>
 

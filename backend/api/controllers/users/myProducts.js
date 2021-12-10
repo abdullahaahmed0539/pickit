@@ -7,7 +7,7 @@ DOCUMENTATION
 
 const Products = require("../../model/product");
 const User = require("../../model/user");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 exports.myProducts = async (req, res) => {
   let username = null;
@@ -29,7 +29,6 @@ exports.myProducts = async (req, res) => {
     productFilter = req.body.productFilter;
   }
 
-  // const limit = 3;
   let numOfProducts = 0;
 
   decodedToken = jwt.decode(req.headers.authorization.split(" ")[1]);
@@ -56,21 +55,6 @@ exports.myProducts = async (req, res) => {
     numOfProducts = Products.length;
   });
 
-  // await Products.find({ username: username })
-  //   .then(Products => {
-  //     if (Products.length == 0) {
-  //       res.status(404).json({
-  //         error: {
-  //           status: "1",
-  //           code: "1",
-  //           message: "No products listed.",
-  //         },
-  //         data: {
-  //           Products,
-  //         },
-  //       });
-  //       return;
-  //     }// await Products.find({ username: username }).limit(limit).skip((pageId-1)*limit)
   await Products.find({ username: username })
     .then(products => {
       let returnProducts = [...products];
@@ -83,7 +67,6 @@ exports.myProducts = async (req, res) => {
       }
 
       if (Math.ceil(returnProducts.length / limit) >= pageId) {
-        // returnProducts = returnProducts.slice((pageId-1)*limit,limit);
         paginatedProducts = returnProducts.slice(
           (pageId - 1) * limit,
           (pageId - 1) * limit + limit
@@ -115,4 +98,4 @@ exports.myProducts = async (req, res) => {
       });
       return console.error(`Error log: \n ${err}`);
     });
-};;
+};

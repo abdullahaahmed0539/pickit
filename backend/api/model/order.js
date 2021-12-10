@@ -20,7 +20,7 @@ const orderSchema = new mongoose.Schema({
     type: String,
     require: [true, "address  is required."],
     trim: true,
-    },
+  },
   total: {
     type: Number,
     require: [true, "total is required."],
@@ -38,7 +38,7 @@ const orderSchema = new mongoose.Schema({
   },
   order: {
     type: [Object],
-    require: [true, "Status is required."],
+    require: [true, "order is required."],
     trim: true,
   },
 });

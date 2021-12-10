@@ -37,7 +37,6 @@ const inputValidator = (email, password) => {
   return "valid";
 };
 
-
 exports.signUp = (req, res) => {
   //storing values passed from client side
   const { username, email, password } = req.body;

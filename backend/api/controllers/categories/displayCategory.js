@@ -4,10 +4,6 @@ DOCUMENTATION
         1. Problem in find Query = 1
 */
 
-
-
-
-
 const CategoryProducts = require("../../model/product");
 exports.displayCategory = async (req, res) => {
   // const categoryId = `ObjectId('${req.params.category_id}')`;
@@ -17,13 +13,17 @@ exports.displayCategory = async (req, res) => {
   let numOfProducts = 0;
 
   //to return the total number of products in this section : for pagination at front end too
-  await CategoryProducts.find({ categoryId: categoryId, status: "active" })
-  .then((Products)=>{
+  await CategoryProducts.find({
+    categoryId: categoryId,
+    status: "active",
+  }).then(Products => {
     numOfProducts = Products.length;
-  })
+  });
 
-  await CategoryProducts.find({ categoryId: categoryId, status: "active" }).limit(limit).skip((pageId-1)*limit)
-    .then((categoryProducts) => {
+  await CategoryProducts.find({ categoryId: categoryId, status: "active" })
+    .limit(limit)
+    .skip((pageId - 1) * limit)
+    .then(categoryProducts => {
       res.status(200).json({
         error: {
           status: "0",
@@ -32,19 +32,19 @@ exports.displayCategory = async (req, res) => {
         },
         data: {
           categoryProducts,
-          totalProducts: numOfProducts
+          totalProducts: numOfProducts,
         },
       });
     })
-    .catch((err) => {
-        res.status(500).json({
-            error: {
-              status: "1",
-              code: "1",
-              message: "Problem with FindOne query.",
-            },
-            data: {},
-          });
-          return console.error(`Error log: \n ${err}`);
+    .catch(err => {
+      res.status(500).json({
+        error: {
+          status: "1",
+          code: "1",
+          message: "Problem with FindOne query.",
+        },
+        data: {},
+      });
+      return console.error(`Error log: \n ${err}`);
     });
 };

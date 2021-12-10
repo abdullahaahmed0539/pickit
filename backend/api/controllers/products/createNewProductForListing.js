@@ -17,7 +17,6 @@ exports.createNewProductForListing = (req, res) => {
     transactionType,
     images,
   } = req.body;
-  
 
   var newProduct = new Product({
     productName,
@@ -28,13 +27,13 @@ exports.createNewProductForListing = (req, res) => {
     date,
     transactionType,
     images,
-    status: transactionType === 'sell'? 'active': 'pending',
-    requests: []
+    status: transactionType === "sell" ? "active" : "pending",
+    requests: [],
   });
 
   newProduct
     .save()
-    .then((product) => {
+    .then(product => {
       res.status(201).json({
         error: {
           status: "0",
@@ -50,11 +49,11 @@ exports.createNewProductForListing = (req, res) => {
           date: product.date,
           images: product.images,
           status: product.status,
-          requests: product.requests
+          requests: product.requests,
         },
       });
     })
-    .catch((err) => {
+    .catch(err => {
       res.status(406).json({
         error: {
           status: "1",

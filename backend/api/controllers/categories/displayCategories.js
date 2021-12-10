@@ -8,7 +8,7 @@ const Categories = require("../../model/category");
 
 exports.displayCategories = (req, res) => {
   Categories.find()
-    .then((categories) => {
+    .then(categories => {
       res.status(200).json({
         error: {
           status: "0",
@@ -20,7 +20,7 @@ exports.displayCategories = (req, res) => {
         },
       });
     })
-    .catch((err) => {
+    .catch(err => {
       res.status(500).json({
         error: {
           status: "1",

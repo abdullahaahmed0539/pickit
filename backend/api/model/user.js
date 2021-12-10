@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -22,7 +21,7 @@ const userSchema = new mongoose.Schema({
   phone: {
     type: String,
     unique: true,
-    trim: true
+    trim: true,
   },
   address: {
     type: String,
@@ -34,10 +33,10 @@ const userSchema = new mongoose.Schema({
   },
   cart: {
     type: [String],
-    trim: true
+    trim: true,
   },
   userType: String,
-  categoryId: String
+  categoryId: String,
 });
 
 const User = mongoose.model("User", userSchema);

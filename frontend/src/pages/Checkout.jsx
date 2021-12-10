@@ -66,10 +66,11 @@ const Checkout = ({ history }) => {
     fetchCart(localStorage.getItem("user_id")).then(response =>
       setCart(response.data.data.cartProducts)
     );
-  }, [cart]);
+  }, []);
 
   cart.map(item => (total += parseFloat(item.price)));
   return (
+    
     <div className="container">
       {!userExists && <Spinner text="Loading" />}
       {userExists && (
@@ -125,7 +126,9 @@ const Checkout = ({ history }) => {
                     className="form-control"
                     value={phone}
                     placeholder={phone}
-                    onChange={e => setPhone(e.target.value)}
+                    onChange={e => {
+                      setPhone(e.target.value)
+                    }}
                     disabled={disabled}
                   />
                   {(phone === "" ||

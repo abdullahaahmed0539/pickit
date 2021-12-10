@@ -17,7 +17,7 @@ exports.login = (req, res) => {
 
   //searching the mongo database
   User.findOne({ username: username })
-    .then((user) => {
+    .then(user => {
       if (user == null) {
         res.status(404).json({
           error: {
@@ -86,7 +86,7 @@ exports.login = (req, res) => {
         });
       }
     })
-    .catch((err) => {
+    .catch(err => {
       res.status(500).json({
         error: {
           status: "1",

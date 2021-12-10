@@ -1,61 +1,58 @@
-const Product = require('../../model/product');
-const jwt = require('jsonwebtoken');
+const Product = require("../../model/product");
+const jwt = require("jsonwebtoken");
 const User = require("../../model/user");
 
-exports.approveProduct = async (req,res) => {
+exports.approveProduct = async (req, res) => {
+  decodedToken = jwt.decode(req.headers.authorization.split(" ")[1]);
+  const action = req.body.action;
+  const productId = req.body.productId;
 
-    decodedToken = jwt.decode(req.headers.authorization.split(" ")[1]);
-    const action = req.body.action;
-    const productId = req.body.productId;
-
-    if(decodedToken.userType!="moderator"){
-        return res.status(401).json({
-            error: {
-              status: "1",
-              code: "4",
-              message: "Unauthorized Access - Not a Moderator",
-            },
-            data: {},
-        });
-    }
-    let moderatorCategoryId = null;
-    await User.find({_id: decodedToken._id}).then((user) => {
-        moderatorCategoryId = user[0].categoryId;
+  if (decodedToken.userType != "moderator") {
+    return res.status(401).json({
+      error: {
+        status: "1",
+        code: "4",
+        message: "Unauthorized Access - Not a Moderator",
+      },
+      data: {},
+    });
+  }
+  let moderatorCategoryId = null;
+  await User.find({ _id: decodedToken._id })
+    .then(user => {
+      moderatorCategoryId = user[0].categoryId;
     })
-    .catch((err)=>{
-        res.status(500).json({
-            error: {
-                status: "1",
-                code: "1",
-                message: "Moderator data not found",
-            },
-            data: {},
-        });
-    })
-
-
-    Product.updateOne({_id: productId},{$set: {status: action}})
-    .then((unapprovedProducts)=>{
-        res.status(200).json({
-            error: {
-                status: "0",
-                code: "0",
-                message: "no error.",
-            },
-            data: unapprovedProducts
-        })
-    })
-    .catch((err) => {
-        res.status(406).json({
+    .catch(err => {
+      res.status(500).json({
         error: {
-            status: "1",
-            code: "1",
-            message: "Problem in finding unapproved products in database",
+          status: "1",
+          code: "1",
+          message: "Moderator data not found",
         },
         data: {},
-        });
-        return console.error(err);
+      });
     });
 
-
-}
+  Product.updateOne({ _id: productId }, { $set: { status: action } })
+    .then(unapprovedProducts => {
+      res.status(200).json({
+        error: {
+          status: "0",
+          code: "0",
+          message: "no error.",
+        },
+        data: unapprovedProducts,
+      });
+    })
+    .catch(err => {
+      res.status(406).json({
+        error: {
+          status: "1",
+          code: "1",
+          message: "Problem in finding unapproved products in database",
+        },
+        data: {},
+      });
+      return console.error(err);
+    });
+};
