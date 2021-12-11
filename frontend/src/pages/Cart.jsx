@@ -38,14 +38,12 @@ const Cart = ({ history }) => {
               setCartItems(prevCartItems);
             }
             else{
-              // history.push("/cart");
-            //   setInCart(false);
+        
             console.log("Successfully removed from cart");
             }
           })
           .catch((response)=>{
-            // console.log(response);
-            // alert(response.message);
+          
             alert('Unable to remove product from the cart !');
             setCartItems(prevCartItems);
           })

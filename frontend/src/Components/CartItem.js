@@ -2,8 +2,8 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import { withRouter } from "react-router";
 
-const Card = (props) => {
-  const statusColor = (status) => {
+const Card = props => {
+  const statusColor = status => {
     if (status === "active") {
       return "#198754";
     } else if (status === "rejected") {
@@ -21,14 +21,14 @@ const Card = (props) => {
     price,
     date,
     status,
-    onRemove
+    onRemove,
     // description,
     // categoryId,
   } = props;
 
   return (
     <React.Fragment>
-      <div key={_id} className="card" style={{marginTop: "10px"}}>
+      <div key={_id} className="card" style={{ marginTop: "10px" }}>
         <div className="row ">
           <div className="col-md-3 mt-3 mb-3 ">
             <img
@@ -55,11 +55,14 @@ const Card = (props) => {
                     {name.charAt(0).toUpperCase() + name.slice(1)}
                   </strong>
                 </h5>
-
+              </div>
+              <div className="row">
                 <div className="card-text col-md-12">
                   <strong>PKR {price.toFixed(2)}</strong>
                 </div>
+              </div>
 
+              <div className="row">
                 <div className="card-text col-md-12">
                   <small>
                     Date posted:{" "}
@@ -68,7 +71,9 @@ const Card = (props) => {
                     }/${new Date(date).getFullYear()}`}
                   </small>
                 </div>
+              </div>
 
+              <div className="row">
                 <div className="card-text col-md-12">
                   <small>
                     <strong className="" style={{ color: statusColor(status) }}>
@@ -78,70 +83,25 @@ const Card = (props) => {
                 </div>
               </div>
 
-              <div className="col-md-12 mt-3">
-                <div className="row">
-                  {/* <div className="col-md-1 ">
-                    <button
-                      type="button"
-                      className="btn btn-warning position-relative"
-                      onClick={() =>
-                        // props.history.push(`/products/${_id}`)
-                        ""
-                      }
-                    >
-                      Requests
-                      {requestsLength !== 0 ? (
-                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                          {requestsLength}
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                    </button>
-                  </div> */}
+              <div className="row mt-4">
+                  <Button
+                    className="col-2 col-md-2 ms-2 me-2"
+                    onClick={() => props.history.push(`/products/${_id}`)}
+                    variant="success"
+                  >
+                    Details
+                  </Button>
 
-                  <div className="col-md-1 " style={{ marginLeft: "1px" }}>
-                    <Button
-                      onClick={() => props.history.push(`/products/${_id}`)}
-                      variant="success"
-                    >
-                      Details
-                    </Button>
-                  </div>
-                  <div className="col-md-1 " style={{ marginLeft: "10px" }}>
-                    <Button onClick={()=>onRemove(_id)}  variant="danger">
-                      Remove
-                    </Button>
-                  </div>
-
-                  {/* <div className="col-md-1 " style={{ marginLeft: "2px" }}>
-                    <Button
-                      onClick={() => {
-                        props.history.push({
-                          pathname: `/products/update_product`,
-                          state: {
-                            _id: _id,
-                            name: name,
-                            price: price,
-                            imageLink: image,
-                            description: description,
-                            type: type,
-                            categoryid: categoryId,
-                          },
-                        });
-                      }}
-                      variant="primary"
-                    >
-                      Edit
-                    </Button>
-                  </div> */}
-                  {/* <div className="col-md-1 " style={{ marginLeft: "-18px" }}>
-                    <Button onClick={() => onRemove(_id, name)} variant="danger">
-                      Remove
-                    </Button>
-                  </div> */}
-                </div>
+                  <Button
+                    className="col-2 col-md-2 "
+                    onClick={() => onRemove(_id)}
+                    variant="danger"
+                  >
+                    Remove
+                  </Button>
+                
               </div>
+              
             </div>
           </div>
         </div>

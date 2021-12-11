@@ -91,8 +91,8 @@ const ProductDetails = ({ history }) => {
       .then(response => {
         setResponseRecieved(true);
         setProduct(response.data.data.product);
-        setInCart(response.data.data.inCart)
-        setRequestSent(response.data.data.sentRequest)
+        setInCart(response.data.data.inCart);
+        setRequestSent(response.data.data.sentRequest);
         setRequestRecieved(response.data.data.recievedRequest);
       })
       .catch(err => {
@@ -101,8 +101,9 @@ const ProductDetails = ({ history }) => {
           setError(true);
         }
       });
-    
-      fetchAllExchangable(localStorage.getItem("user_id"))//change this
+
+    if (localStorage.getItem("token")) {
+      fetchAllExchangable(localStorage.getItem("user_id")) //change this
         .then(response => {
           setMyProducts(
             response.data.data.filter(
@@ -112,6 +113,7 @@ const ProductDetails = ({ history }) => {
           );
         })
         .catch(() => console.log("Error retrieving User Products from the db"));
+    }
   }, [productId, inCart, requestSent]);
 
   return (
@@ -150,7 +152,7 @@ const ProductDetails = ({ history }) => {
             {localStorage.getItem("username") === null && (
               <div className="row">
                 <button
-                  className="col-5 col-md-4 col-lg-3 ms-3 btn btn-success "
+                  className="col-5 col-md-6 col-lg-4 ms-3 btn btn-success "
                   onClick={() => history.push("/login")}
                 >
                   Login to continue
@@ -280,14 +282,14 @@ const ProductDetails = ({ history }) => {
                 <div className="row">
                   {!requestSent && <h6>Exchange with: </h6>}
                   {!requestSent ? (
-                    <Dropdown className="">
+                    <Dropdown>
                       <Dropdown.Toggle
                         variant="light"
                         className="btn-outline-dark"
                       >
                         {chosenProduct}
                       </Dropdown.Toggle>
-                      <Dropdown.Menu>
+                      <Dropdown.Menu className="col-12">
                         {myProducts.map(item => (
                           <Dropdown.Item
                             key={item._id}
@@ -297,8 +299,7 @@ const ProductDetails = ({ history }) => {
                               setPriceDifference(product.price - item.price);
                             }}
                           >
-                            {/* {dropdownOff === "category" ? item.categoryName : item}{" "} */}
-                            {item.productName}
+                            <p className="col-3">{item.productName}</p>
                           </Dropdown.Item>
                         ))}
                       </Dropdown.Menu>
@@ -322,7 +323,7 @@ const ProductDetails = ({ history }) => {
                   )}
                   {!requestSent && (
                     <button
-                      className="col-5 col-md-5 col-lg-4 ms-3 btn btn-primary "
+                      className="col-5 col-md-5 col-lg-4 ms-3 mt-3 btn btn-primary "
                       onClick={() => request(productId, chosenProductId)}
                       disabled={
                         chosenProduct === "" || requestSent ? true : false

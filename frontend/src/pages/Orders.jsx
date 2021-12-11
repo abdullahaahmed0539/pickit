@@ -12,45 +12,49 @@ const Orders = () => {
 
   return (
     <div className="container">
-      <div className="row">
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">Order#</th>
-              <th scope="col">Order ID</th>
-              <th scope="col">Date</th>
-              <th scope="col">Status</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map((item, index) => (
-              <tr
-                className={item.status === "In progress" ? "" : "table-success"}
-                key={index}
-              >
-                <td>{index + 1}.</td>
-                <td>{item._id}</td>
-                <td>{`${new Date(item.date).getDate() + 1}/${
-                  new Date(item.date).getMonth() + 1
-                }/${new Date(item.date).getFullYear()}`}</td>
-               
-                <td
-                  className={
-                    item.status === "In progress"
-                      ? "text-danger"
-                      : "text-success"
-                  }
-                >
-                  {item.status}
-                </td>
-                <td>
-                  <a href={`/orders/${item._id}`}>View</a>
-                </td>
+      <div className="row mt-4">
+          <table className="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Order ID</th>
+                <th scope="col" className="d-none d-md-block">
+                  Date
+                </th>
+                <th scope="col">Status</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {orders.map((item, index) => (
+                <tr
+                  className={
+                    item.status === "In progress" ? "" : "table-success"
+                  }
+                  key={index}
+                >
+                  <td>{index + 1}.</td>
+                  <td>
+                    <a href={`/orders/${item._id}`}>{item._id}</a>
+                  </td>
+                  <td className="d-none d-md-block">{`${
+                    new Date(item.date).getDate() + 1
+                  }/${new Date(item.date).getMonth() + 1}/${new Date(
+                    item.date
+                  ).getFullYear()}`}</td>
+
+                  <td
+                    className={
+                      item.status === "In progress"
+                        ? "text-danger"
+                        : "text-success"
+                    }
+                  >
+                    {item.status}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
       </div>
     </div>
   );

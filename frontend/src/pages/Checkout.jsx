@@ -58,8 +58,12 @@ const Checkout = ({ history }) => {
         setUserExists(true);
         setUsername(response.data.data.username);
         setEmail(response.data.data.email);
-        setPhone(response.data.data.phone);
-        setAddress(response.data.data.address);
+        if (response.data.data.phone) {
+          setPhone(response.data.data.phone);
+        }
+        if (response.data.data.address) {
+          setAddress(response.data.data.address);
+        }
       })
       .catch(err => console.log(err));
 

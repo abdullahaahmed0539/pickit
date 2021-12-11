@@ -76,10 +76,13 @@ const SentRequests = ({ history }) => {
                           verticalAlign: "middle",
                         }}
                       >
-                        {
-                          products.find(item => item._id === request.productId)
-                            .productName
-                        }
+                        <a href={`/products/${request.productId}`}>
+                          {
+                            products.find(
+                              item => item._id === request.productId
+                            ).productName
+                          }
+                        </a>
                       </td>
                       <td
                         style={
@@ -108,14 +111,7 @@ const SentRequests = ({ history }) => {
                             textAlign: "center",
                           }}
                         >
-                          <Button
-                            onClick={() =>
-                              history.push(`/products/${request.productId}`)
-                            }
-                            className="requestcardbutton"
-                          >
-                            View Product
-                          </Button>
+                         
                           <Button
                             variant="danger"
                             onClick={() => remove(request._id)}

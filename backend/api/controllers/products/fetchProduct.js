@@ -5,12 +5,44 @@ const Request = require("../../model/request");
 
 exports.fetchProduct = async (req, res) => {
   decodedToken = jwt.decode(req.headers.authorization.split(" ")[1]);
-  const username = decodedToken.username;
   const productId = req.params.product_id;
 
   let inCart = false;
   let sentRequest = false;
   let recievedRequest = false;
+
+  
+  await Product.findById(productId)
+    .then(product => {
+      res.status(200).json({
+        error: {
+          status: "0",
+          code: "0",
+          message: "no error.",
+        },
+        data: {
+          product,
+          inCart,
+          sentRequest,
+          recievedRequest,
+        },
+      });
+      return  
+    })
+    .catch(err => {
+      res.status(406).json({
+        error: {
+          status: "1",
+          code: "1",
+          message: "Product Unavailable",
+        },
+        data: {},
+      });
+      return console.error(err);
+    });
+
+  
+    const username = decodedToken.username;
 
   await User.findOne({ _id: decodedToken._id }).then(user => {
     //Check to see if the product is present in user's cart
@@ -43,31 +75,4 @@ exports.fetchProduct = async (req, res) => {
     })
     .catch();
 
-  await Product.findById(productId)
-    .then(product => {
-      res.status(200).json({
-        error: {
-          status: "0",
-          code: "0",
-          message: "no error.",
-        },
-        data: {
-          product,
-          inCart,
-          sentRequest,
-          recievedRequest,
-        },
-      });
-    })
-    .catch(err => {
-      res.status(406).json({
-        error: {
-          status: "1",
-          code: "1",
-          message: "Product Unavailable",
-        },
-        data: {},
-      });
-      return console.error(err);
-    });
 };
