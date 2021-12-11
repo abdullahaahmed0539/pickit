@@ -1,92 +1,100 @@
+import { lazy, Suspense } from "react";
 import "./App.css";
 import { Route, Switch, Redirect } from "react-router-dom";
-import Home from "./pages/Home";
-import LogIn from "./pages/LogIn";
-import Category from "./pages/Category";
-import Product from "./pages/Product";
-import MyAds from "./pages/MyAds";
-import CreateProduct from "./pages/CreateProduct";
-import UpdateProduct from "./pages/UpdateProduct";
-import UpdatePrice from "./pages/UpdatePrice";
-import SignUp from "./pages/Signup";
-import ModeratorHome from "./pages/ModeratorHome";
-import Checkout from "./pages/Checkout";
-import Orders from "./pages/Orders";
-import Order from "./pages/Order";
-import NavBar from "./Components/Navbar";
-import SentRequests from './pages/SentRequests'
-import RecievedRequests from './pages/RecievedRequests';
-import Delivery from "./pages/Delivery";
-import Cart from './pages/Cart'
-import  FulfillOrder from "./pages/FulfillOrder";
+import Spinner from "./Components/Spinner";
+
+const Home = lazy(() => import("./pages/Home"));
+const LogIn = lazy(() => import("./pages/LogIn"));
+const Category = lazy(() => import("./pages/Category"));
+const Product = lazy(() => import("./pages/Product"));
+const MyAds = lazy(() => import("./pages/MyAds"));
+const CreateProduct = lazy(() => import("./pages/CreateProduct"));
+const UpdateProduct = lazy(() => import("./pages/UpdateProduct"));
+const UpdatePrice = lazy(() => import("./pages/UpdatePrice"));
+const SignUp = lazy(() => import("./pages/Signup"));
+const ModeratorHome = lazy(() => import("./pages/ModeratorHome"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const Orders = lazy(() => import("./pages/Orders"));
+const Order = lazy(() => import("./pages/Order"));
+const NavBar = lazy(() => import("./Components/Navbar"));
+const SentRequests = lazy(() => import("./pages/SentRequests"));
+const RecievedRequests = lazy(() => import("./pages/RecievedRequests"));
+const Delivery = lazy(() => import("./pages/Delivery"));
+const Cart = lazy(() => import("./pages/Cart"));
+const FulfillOrder = lazy(() => import("./pages/FulfillOrder"));
+
 
 
 function App() {
   return (
     <div className="App">
-      <NavBar />
-      <Switch>
-        <Route path="/login">
-          <LogIn />
-        </Route>
-        <Route path="/signup">
-          <SignUp />
-        </Route>
-        {localStorage.getItem("userType") === "moderator" && (
-          <Route path="/Home">
-            <ModeratorHome />
+      <Suspense fallback={
+        <Spinner text='Loading'/>
+      }>
+        <NavBar />
+        <Switch>
+          <Route path="/login">
+            <LogIn />
           </Route>
-        )}
-        {localStorage.getItem("userType") === "delivery" && (
-          <Route path="/Home">
-            <Delivery />
+          <Route path="/signup">
+            <SignUp />
           </Route>
-        )}
-        <Route path="/Home">
-          <Home />
-        </Route>
-        <Route path="/order/fulfill/:orderId">
-          <FulfillOrder />
-        </Route>
-        <Route path="/:userId/get_products">
-          <MyAds />
-        </Route>
-        <Route path="/categories/:categoryId">
-          <Category />
-        </Route>
+          {localStorage.getItem("userType") === "moderator" && (
+            <Route path="/Home">
+              <ModeratorHome />
+            </Route>
+          )}
+          {localStorage.getItem("userType") === "delivery" && (
+            <Route path="/Home">
+              <Delivery />
+            </Route>
+          )}
+          <Route path="/Home">
+            <Home />
+          </Route>
+          <Route path="/order/fulfill/:orderId">
+            <FulfillOrder />
+          </Route>
+          <Route path="/:userId/get_products">
+            <MyAds />
+          </Route>
+          <Route path="/categories/:categoryId">
+            <Category />
+          </Route>
 
-        <Route path="/products/:productId/updatePrice">
-          <UpdatePrice />
-        </Route>
-        <Route path="/checkout">
-          <Checkout />
-        </Route>
-        <Route path="/requests/sent/:userId">
-          <SentRequests />
-        </Route>
-        <Route path="/requests/:productId">
-          <RecievedRequests />
-        </Route>
-        <Route exact path="/orders">
-          <Orders />
-        </Route>
-        <Route path="/orders/:orderId">
-          <Order />
-        </Route>
-        <Route path="/cart">
-          <Cart />
-        </Route>
-        <Route path="/products/create_new">
-          <CreateProduct />
-        </Route>
-        <Route path="/products/update_product">
-          <UpdateProduct />
-        </Route>
-        <Route path="/products/:productId">
-          <Product />
-        </Route>
-        <Redirect push to="/Home" />
-      </Switch>
+          <Route path="/products/:productId/updatePrice">
+            <UpdatePrice />
+          </Route>
+          <Route path="/checkout">
+            <Checkout />
+          </Route>
+          <Route path="/requests/sent/:userId">
+            <SentRequests />
+          </Route>
+          <Route path="/requests/:productId">
+            <RecievedRequests />
+          </Route>
+          <Route exact path="/orders">
+            <Orders />
+          </Route>
+          <Route path="/orders/:orderId">
+            <Order />
+          </Route>
+          <Route path="/cart">
+            <Cart />
+          </Route>
+          <Route path="/products/create_new">
+            <CreateProduct />
+          </Route>
+          <Route path="/products/update_product">
+            <UpdateProduct />
+          </Route>
+          <Route path="/products/:productId">
+            <Product />
+          </Route>
+          <Redirect push to="/Home" />
+        </Switch>
+      </Suspense>
     </div>
   );
 }
