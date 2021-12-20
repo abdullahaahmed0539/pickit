@@ -24,6 +24,7 @@ const ProductDetails = ({ history }) => {
   const [priceDifference, setPriceDifference] = useState(0);
   const [requestSent, setRequestSent] = useState(false);
   const [requestRecieved, setRequestRecieved] = useState(false);
+  const [soldTo, setSoldTo] = useState("");
 
   //moderator deletion of product
   const approveProduct = async => {
@@ -91,6 +92,7 @@ const ProductDetails = ({ history }) => {
         setInCart(response.data.data.inCart);
         setRequestSent(response.data.data.sentRequest);
         setRequestRecieved(response.data.data.recievedRequest);
+        setSoldTo(response.data.data.soldTo);
       })
       .catch(err => {
         setResponseRecieved(true);
@@ -157,10 +159,16 @@ const ProductDetails = ({ history }) => {
               </div>
             )}
 
+            {product.status === "sold" && (
+              <p>
+                Sold to: <strong>{soldTo}</strong>
+              </p>
+            )}
             {/* if user is loggedin/normal/owner/exchange */}
             {product.username === localStorage.getItem("username") &&
               localStorage.getItem("userType") === "normal" &&
-              product.transactionType === "exchange" && (
+              product.transactionType === "exchange" &&
+              product.status !== "sold" && (
                 <div className="row">
                   <button
                     className="col-5 col-md-4 col-lg-3 ms-3 btn btn-warning "
@@ -275,7 +283,8 @@ const ProductDetails = ({ history }) => {
             {!requestRecieved &&
               product.transactionType === "exchange" &&
               localStorage.getItem("userType") === "normal" &&
-              product.username !== localStorage.getItem("username") && (
+              product.username !== localStorage.getItem("username") &&
+              product.status !== "sold" && (
                 <div className="row">
                   {!requestSent && <h6>Exchange with: </h6>}
                   {!requestSent ? (

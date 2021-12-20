@@ -36,7 +36,10 @@ exports.fetchProductRequests = async (req, res) => {
     return;
   }
 
-  await Request.find({ productId: productId, status: "pending" })
+  await Request.find({
+    productId: productId,
+    status: { $in: ["pending", "accepted"] },
+  })
     .then(requestsOfThisProduct => {
       res.status(200).json({
         error: {

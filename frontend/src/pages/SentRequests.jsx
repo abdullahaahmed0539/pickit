@@ -63,6 +63,8 @@ const SentRequests = ({ history }) => {
                   <tr style={{ textAlign: "center" }}>
                     <th>Product Title</th>
                     <th>Request Status</th>
+                    <th>Product offered</th>
+                    <th>Cash offered</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -93,8 +95,15 @@ const SentRequests = ({ history }) => {
                                 display: "table-cell",
                                 verticalAlign: "middle",
                               }
-                            : {
+                            : request.status === "pending"
+                            ? {
                                 color: "blue",
+                                textAlign: "center",
+                                display: "table-cell",
+                                verticalAlign: "middle",
+                              }
+                            : {
+                                color: "green",
                                 textAlign: "center",
                                 display: "table-cell",
                                 verticalAlign: "middle",
@@ -103,6 +112,31 @@ const SentRequests = ({ history }) => {
                       >
                         {request.status}
                       </td>
+                      <td><a href={`/products/${request.offer.productId}`}>{request.offer.productId}</a></td>
+
+                      {request.offer.cash < 0 ? (
+                        <td
+                          style={{
+                            color: "green",
+                            display: "table-cell",
+                            verticalAlign: "middle",
+                            textAlign: "center",
+                          }}
+                        >
+                          {request.offer.cash}
+                        </td>
+                      ) : (
+                        <td
+                          style={{
+                            color: "red",
+                            display: "table-cell",
+                            verticalAlign: "middle",
+                            textAlign: "center",
+                          }}
+                        >
+                          {request.offer.cash}
+                        </td>
+                      )}
                       {request.status === "pending" ? (
                         <td
                           style={{
@@ -111,7 +145,6 @@ const SentRequests = ({ history }) => {
                             textAlign: "center",
                           }}
                         >
-                         
                           <Button
                             variant="danger"
                             onClick={() => remove(request._id)}
@@ -122,7 +155,7 @@ const SentRequests = ({ history }) => {
                         </td>
                       ) : (
                         <td>
-                          <b></b>
+                          <></>
                         </td>
                       )}
                     </tr>
