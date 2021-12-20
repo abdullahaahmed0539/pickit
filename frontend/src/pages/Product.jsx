@@ -4,13 +4,13 @@ import {
   fetchProductDetails,
   addToCart,
   removeFromCart,
-  fetchAllExchangable
+  fetchAllExchangable,
 } from "../API calls/products";
 import { sendRequest } from "../API calls/requests";
 import Spinner from "../Components/Spinner";
 import Error from "./Error";
 import { approve, unapprove } from "../API calls/products";
-import {Dropdown} from 'react-bootstrap'
+import { Dropdown } from "react-bootstrap";
 
 const ProductDetails = ({ history }) => {
   const { productId } = useParams();
@@ -57,7 +57,6 @@ const ProductDetails = ({ history }) => {
   };
 
   const request = (prodId, exchangeId) => {
-    console.log("In request Product Id : " + prodId);
     let sender = localStorage.getItem("username");
     let reciever = product.username;
     sendRequest(prodId, sender, reciever, priceDifference, exchangeId)
@@ -66,8 +65,6 @@ const ProductDetails = ({ history }) => {
           setRequestSent(true);
           history.push(`/Home`);
         } else {
-          console.log("ERROR");
-          console.log(response);
           alert("Unable to send request");
         }
       })
@@ -103,7 +100,7 @@ const ProductDetails = ({ history }) => {
       });
 
     if (localStorage.getItem("token")) {
-      fetchAllExchangable(localStorage.getItem("user_id")) //change this
+      fetchAllExchangable(localStorage.getItem("user_id"))
         .then(response => {
           setMyProducts(
             response.data.data.filter(
