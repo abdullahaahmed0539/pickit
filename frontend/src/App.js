@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import "./App.css";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Spinner from "./Components/Spinner";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 const Home = lazy(() => import("./pages/Home"));
 const LogIn = lazy(() => import("./pages/LogIn"));
@@ -23,14 +24,10 @@ const Delivery = lazy(() => import("./pages/Delivery"));
 const Cart = lazy(() => import("./pages/Cart"));
 const FulfillOrder = lazy(() => import("./pages/FulfillOrder"));
 
-
-
 function App() {
   return (
     <div className="App">
-      <Suspense fallback={
-        <Spinner text='Loading'/>
-      }>
+      <Suspense fallback={<Spinner text="Loading" />}>
         <NavBar />
         <Switch>
           <Route path="/login">
@@ -65,24 +62,27 @@ function App() {
           <Route path="/products/:productId/updatePrice">
             <UpdatePrice />
           </Route>
-          <Route path="/checkout">
+          {/* <Route path="/checkout">
             <Checkout />
-          </Route>
+          </Route> */}
+          <ProtectedRoute path="/checkout" component={Checkout} />
           <Route path="/requests/sent/:userId">
             <SentRequests />
           </Route>
           <Route path="/requests/:productId">
             <RecievedRequests />
           </Route>
-          <Route exact path="/orders">
+          {/* <Route exact path="/orders">
             <Orders />
-          </Route>
+          </Route> */}
+          <ProtectedRoute path="/orders" component={Orders} />
           <Route path="/orders/:orderId">
             <Order />
           </Route>
-          <Route path="/cart">
+          {/* <Route path="/cart">
             <Cart />
-          </Route>
+          </Route> */}
+          <ProtectedRoute path="/cart" component={Cart} />
           <Route path="/products/create_new">
             <CreateProduct />
           </Route>
