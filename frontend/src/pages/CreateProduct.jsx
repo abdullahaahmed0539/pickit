@@ -25,16 +25,15 @@ const CreateProduct = () => {
   
 
   return (
-
     <div className="container">
       {loading && <Spinner />}
-      {!loading &&
+      {!loading && (
         <div className="row mt-5">
           <div className="col-md-4">
-          <form>
-            <div className="row">
-              <img src={prev} alt="..." />
-            </div>
+            <form>
+              <div className="row">
+                <img src={prev} alt="..." />
+              </div>
               <div className="row mt-2">
                 <input
                   type="file"
@@ -66,14 +65,13 @@ const CreateProduct = () => {
               description=""
               type="sell"
               categoryName="sports"
-            categoryId="617301e3d53945aab87a00de"
-            setLoading= {() => setLoading(true)}
+              categoryId="62a26a796f47ab8f425cdbc7"
+              setLoading={() => setLoading(true)}
             />
           </div>
         </div>
-      }
-      </div>
-
+      )}
+    </div>
   );
 };
 export default CreateProduct;

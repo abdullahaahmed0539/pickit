@@ -16,7 +16,7 @@ mongoose
   });
 
 //Starting up server
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.clear();
   console.log(`Running on port ${PORT}.`);

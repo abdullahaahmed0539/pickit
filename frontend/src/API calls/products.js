@@ -6,17 +6,17 @@ const header = { headers: { Authorization: `Bearer ${token}` } };
 //fetches users product
 export const fetchMyProducts = async (userId, pageId, productFilter) => {
   const response = await axios.post(
-    `http://${process.env.REACT_APP_SERVER}/users/${userId}/get_products`,
-    {pageId,productFilter},
+    `http://localhost:8080/users/${userId}/get_products`,
+    { pageId, productFilter },
     header
   );
   return response;
 };
 
 //Creates a product
-export const createProduct = async (data) => {
+export const createProduct = async data => {
   const response = await axios.post(
-    `http://${process.env.REACT_APP_SERVER}/products/create_new`,
+    `http://localhost:8080/products/create_new`,
     data,
     header
   );
@@ -24,18 +24,18 @@ export const createProduct = async (data) => {
 };
 
 //fetch a product's detail
-export const fetchProductDetails = async (_id) => {
+export const fetchProductDetails = async _id => {
   const response = await axios.get(
-    `http://${process.env.REACT_APP_SERVER}/products/${_id}`,
+    `http://localhost:8080/products/${_id}`,
     header
   );
   return response;
 };
 
 //Updates a product
-export const updateProduct = async (data) => {
+export const updateProduct = async data => {
   const response = await axios.post(
-    `http://${process.env.REACT_APP_SERVER}/products/update`,
+    `http://localhost:8080/products/update`,
     data,
     header
   );
@@ -43,18 +43,18 @@ export const updateProduct = async (data) => {
 };
 
 //delete a product
-export const deleteProduct = async (_id) => {
+export const deleteProduct = async _id => {
   const response = await axios.delete(
-    `http://${process.env.REACT_APP_SERVER}/products/${_id}`,
+    `http://localhost:8080/products/${_id}`,
     header
   );
   return response;
 };
 
 //unapproves pending products
-export const unapprove = async (productId) => {
+export const unapprove = async productId => {
   const response = await axios.delete(
-    `http://${process.env.REACT_APP_SERVER}/products/${productId}`,
+    `http://localhost:8080/products/${productId}`,
     header
   );
   return response;
@@ -63,19 +63,19 @@ export const unapprove = async (productId) => {
 //fetches pending products for the moderator
 export const fetchPendingProducts = async () => {
   const response = await axios.get(
-    `http://${process.env.REACT_APP_SERVER}/products/unapproved`,
+    `http://localhost:8080/products/unapproved`,
     header
   );
   const exchangeableProducts = response.data.data.filter(
-    (item) => item.transactionType === "exchange"
+    item => item.transactionType === "exchange"
   );
   return exchangeableProducts;
 };
 
 //approves products by moderator
-export const approve = async (data) => {
+export const approve = async data => {
   const response = await axios.post(
-    `http://${process.env.REACT_APP_SERVER}/products/approve`,
+    `http://localhost:8080/products/approve`,
     data,
     header
   );
@@ -84,17 +84,19 @@ export const approve = async (data) => {
 
 //fetches image upload link
 export const getUploadLink = async () => {
-  const response = await axios.get(`http://${process.env.REACT_APP_SERVER}/products/upload_image`);
-  return response
-}
+  const response = await axios.get(
+    `http://localhost:8080/products/upload_image`
+  );
+  return response;
+};
 
 //uploads to s3 bucket
 export const uploadImage = async (URL, file) => {
- const options = {
-   headers: {
-     "Content-Type": file.type,
-   },
- };
+  const options = {
+    headers: {
+      "Content-Type": file.type,
+    },
+  };
   const response = await axios.put(URL, file, options);
   return response;
 };
@@ -102,7 +104,7 @@ export const uploadImage = async (URL, file) => {
 //allows moderator to update price
 export const updatePrice = async data => {
   const response = await axios.post(
-    `http://${process.env.REACT_APP_SERVER}/products/update`,
+    `http://localhost:8080/products/update`,
     data,
     header
   );
@@ -110,48 +112,48 @@ export const updatePrice = async data => {
 };
 
 //Fetch contents of user cart
-export const fetchCart = async (userId) => {
+export const fetchCart = async userId => {
   const response = await axios.get(
-    `http://${process.env.REACT_APP_SERVER}/products/cart/${userId}`,
+    `http://localhost:8080/products/cart/${userId}`,
     header
   );
   return response;
-}
+};
 
 //Add a product to user's cart
 export const addToCart = async productId => {
   const response = await axios.post(
-    `http://${process.env.REACT_APP_SERVER}/products/addToCart/${productId}`,
+    `http://localhost:8080/products/addToCart/${productId}`,
     {},
     header
   );
   return response;
-}
+};
 
 //Remove a product to user's cart
-export const removeFromCart = async (productId) => {
+export const removeFromCart = async productId => {
   const response = await axios.post(
-    `http://${process.env.REACT_APP_SERVER}/products/removeFromCart/${productId}`,
+    `http://localhost:8080/products/removeFromCart/${productId}`,
     {},
     header
   );
   return response;
-}
+};
 
 //sell a product
-export const sellProduct = async (_id) => {  
+export const sellProduct = async _id => {
   const response = await axios.post(
-    `http://${process.env.REACT_APP_SERVER}/products/sell_product`,
+    `http://localhost:8080/products/sell_product`,
     { _id },
     header
   );
   return response;
-}
+};
 
 //fetches exchanegable
 export const fetchAllExchangable = async () => {
   const response = await axios.get(
-    `http://${process.env.REACT_APP_SERVER}/products/fetch_all_exchangable`,
+    `http://localhost:8080/products/fetch_all_exchangable`,
     header
   );
   return response;

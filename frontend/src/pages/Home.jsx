@@ -9,6 +9,7 @@ const Home = ({ history }) => {
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(false);
 
+
   useEffect(() => {
     fetchCategories()
       .then(response => {

@@ -2,7 +2,6 @@ import { lazy, Suspense } from "react";
 import "./App.css";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Spinner from "./Components/Spinner";
-import ProtectedRoute from "./Components/ProtectedRoute";
 
 const Home = lazy(() => import("./pages/Home"));
 const LogIn = lazy(() => import("./pages/LogIn"));
@@ -58,31 +57,27 @@ function App() {
           <Route path="/categories/:categoryId">
             <Category />
           </Route>
-
           <Route path="/products/:productId/updatePrice">
             <UpdatePrice />
           </Route>
-          {/* <Route path="/checkout">
+          <Route path="/checkout">
             <Checkout />
-          </Route> */}
-          <ProtectedRoute path="/checkout" component={Checkout} />
+          </Route>
           <Route path="/requests/sent/:userId">
             <SentRequests />
           </Route>
           <Route path="/requests/:productId">
             <RecievedRequests />
           </Route>
-          {/* <Route exact path="/orders">
+          <Route exact path="/orders">
             <Orders />
-          </Route> */}
-          <ProtectedRoute path="/orders" component={Orders} />
+          </Route>
           <Route path="/orders/:orderId">
             <Order />
           </Route>
-          {/* <Route path="/cart">
+          <Route path="/cart">
             <Cart />
-          </Route> */}
-          <ProtectedRoute path="/cart" component={Cart} />
+          </Route>
           <Route path="/products/create_new">
             <CreateProduct />
           </Route>
@@ -92,7 +87,8 @@ function App() {
           <Route path="/products/:productId">
             <Product />
           </Route>
-          <Redirect push to="/Home" />
+          {localStorage.getItem("token") !== null ?
+            <Redirect push to="/Home" /> : <Redirect push to="/login" />}
         </Switch>
       </Suspense>
     </div>

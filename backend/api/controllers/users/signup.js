@@ -55,6 +55,7 @@ exports.signUp = (req, res) => {
     return "";
   }
 
+
   //encrypts the password
   bcrypt.hash(password, 10, (err, hashedPassword) => {
     if (err) {
@@ -66,7 +67,8 @@ exports.signUp = (req, res) => {
         },
         data: {},
       });
-      return console.error(`Error log: \n ${err}`);
+      console.error(`Error log: \n ${err}`);
+      return
     }
 
     //create new user
@@ -78,6 +80,7 @@ exports.signUp = (req, res) => {
       address: "",
       userType,
     });
+
     newUser.save(function (err, user) {
       //if username or email already exist in database, then send error.
       if (err) {
@@ -89,8 +92,11 @@ exports.signUp = (req, res) => {
           },
           data: {},
         });
-        return console.error(`Error log: \n ${err}`);
+        console.error(`Error log: \n ${err}`);
+        return;
       }
+  
+
 
       //if username or email doesn't exist in database, then send success response.
       res.status(201).json({

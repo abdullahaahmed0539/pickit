@@ -104,8 +104,8 @@ const RecievedRequests = ({ history}) => {
                         <tr key={request._id}>
                             <td>{request.senderName}</td>
                             <td style={request.offer.cash > 0 ? {color: "green"} : {color: "red "}}>{request.offer.cash}</td>
-                            {request.status==="pending" ? <td><Button onClick={()=>history.push(`/products/${request.offer.productId}`)} className="requestcardbutton">View Product</Button> 
-                            <Button variant="danger" onClick={()=>doAction(request._id,"reject")} className="requestcardbutton">Reject</Button> 
+                            {request.status==="pending" ? <td><Button onClick={()=>history.push(`/products/${request.offer.productId}`)} className="requestcardbutton me-1">View Product</Button> 
+                            <Button variant="danger" onClick={()=>doAction(request._id,"reject")} className="requestcardbutton me-1">Reject</Button> 
                             <Button onClick={()=>doAction(request._id,"accept")} variant="success" className="requestcardbutton">Accept</Button></td> : <td><b>{request.status}</b></td>}
                         </tr>)}
                 </tbody>

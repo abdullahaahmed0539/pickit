@@ -10,7 +10,7 @@
   "keywords": [
     "pickit"
   ],
-  "author": "shahmir shahzad",
+  "author": "Abdullah Ahmed",
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.1036.0",

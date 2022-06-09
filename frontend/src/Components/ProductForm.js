@@ -21,7 +21,7 @@ const ProductForm = props => {
   const [productName, setProductName] = useState(props.productName);
   const [price, setPrice] = useState(props.price);
   const [img, setImg] = useState([]);
-  const [variant, setVariant] = useState('primary')
+  const [variant, setVariant] = useState("primary");
   const [productDescription, setProductDescription] = useState(
     props.description
   );
@@ -40,7 +40,7 @@ const ProductForm = props => {
     e.preventDefault();
     if (props.action === "Update") {
       let data = {
-         _id: props._id,
+        _id: props._id,
         productName,
         categoryId: chosenCategoryId,
         username: localStorage.getItem("username"),
@@ -58,11 +58,10 @@ const ProductForm = props => {
           if (err.response.status === 401) {
             alert("Unauthorized Access. Product was not created.");
           } else if (err.response.status === 406) {
-            alert('Problem while updating product. Please try again or later.')
+            alert("Problem while updating product. Please try again or later.");
           }
         });
     } else {
-      
       getUploadLink()
         .then(response => {
           const uploadUrl = response.data.data.uploadURL;
@@ -103,7 +102,6 @@ const ProductForm = props => {
         .catch(err => console.log(err.message));
     }
   };
-
   return (
     <React.Fragment>
       <Form onSubmit={submit}>
@@ -155,6 +153,7 @@ const ProductForm = props => {
               onSelect={cat => {
                 setChosenCategoryId(cat._id);
                 setChosenCategoryName(cat.categoryName);
+                
               }}
               dropdownOff="category"
             />
@@ -167,7 +166,9 @@ const ProductForm = props => {
               variant={variant}
               type="submit"
               style={{ width: "100%" }}
-              onClick={()=>{setVariant('success')}}
+              onClick={() => {
+                setVariant("success");
+              }}
               disabled={
                 productName === "" || price === "" || productDescription === ""
                   ? true
