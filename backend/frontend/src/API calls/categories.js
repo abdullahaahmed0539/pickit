@@ -6,7 +6,7 @@ const token = localStorage.getItem("token");
 export const fetchCategories = async () => {
   const headers = { Authorization: `Bearer ${token}` };
   const response = await axios.get(
-    `http://localhost:8080/categories/`,
+    `https://pickitt.herokuapp.com:8080/categories/`,
     headers
   );
   return response;
@@ -16,7 +16,7 @@ export const fetchCategories = async () => {
 export const fetchProducts = async (categoryId, pageId) => {
   const headers = { Authorization: `Bearer ${token}` };
   const response = await axios.get(
-    `http://localhost:8080/categories/${categoryId}/${pageId}`,
+    `https://pickitt.herokuapp.com:8080/categories/${categoryId}/${pageId}`,
     headers
   );
   return response;

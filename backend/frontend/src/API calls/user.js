@@ -5,16 +5,16 @@ const header = { headers: { Authorization: `Bearer ${token}` } };
 
 //logs in a user
 export const login = async data =>
-  await axios.post(`http://localhost:8080/users/login`, data);
+  await axios.post(`https://pickitt.herokuapp.com:8080/users/login`, data);
 
 //register a user
 export const register = async data =>
-  await axios.post(`http://localhost:8080/users/signup`, data);
+  await axios.post(`https://pickitt.herokuapp.com:8080/users/signup`, data);
 
 //get User details
 export const userDetail = async username => {
   const response = await axios.get(
-    `http://localhost:8080/users/get_user_details/${username}`,
+    `https://pickitt.herokuapp.com:8080/users/get_user_details/${username}`,
     header
   );
   return response;
@@ -23,7 +23,7 @@ export const userDetail = async username => {
 //update user details
 export const updateUser = async data => {
   const response = await axios.post(
-    `http://localhost:8080/users/update_profile`,
+    `https://pickitt.herokuapp.com:8080/users/update_profile`,
     data,
     header
   );
@@ -33,7 +33,7 @@ export const updateUser = async data => {
 //update user details
 export const clearCart = async () => {
   const response = await axios.post(
-    `http://localhost:8080/users/clear_cart`,
+    `https://pickitt.herokuapp.com:8080/users/clear_cart`,
     {},
     header
   );

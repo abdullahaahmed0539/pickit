@@ -7,7 +7,7 @@ const header = { headers: { Authorization: `Bearer ${token}` } };
 //fetches users product
 export const fetchMyProducts = async (userId) => {
   const response = await axios.get(
-    `http://localhost:8080/users/${userId}/get_products`,
+    `https://pickitt.herokuapp.com:8080/users/${userId}/get_products`,
     header
   );
   return response;
@@ -25,7 +25,7 @@ export const sendRequest = async (prodId, sender, reciever, price,exchangeId) =>
         }
     };
   const response = await axios.post(
-    `http://localhost:8080/requests/create_new`,info,header
+    `https://pickitt.herokuapp.com:8080/requests/create_new`,info,header
   );
   return response;
 }
@@ -33,7 +33,7 @@ export const sendRequest = async (prodId, sender, reciever, price,exchangeId) =>
 // //fetch a product's detail
 export const fetchProductRequests = async (_id) => {
   const response = await axios.get(
-    `http://localhost:8080/requests/${_id}`,
+    `https://pickitt.herokuapp.com:8080/requests/${_id}`,
     header
   );
   return response;
@@ -42,7 +42,7 @@ export const fetchProductRequests = async (_id) => {
 //Perform an action on the request
 export const performAction = async (requestId, action) => {
   const response = await axios.post(
-    `http://localhost:8080/requests/${requestId}`,{action},header
+    `https://pickitt.herokuapp.com:8080/requests/${requestId}`,{action},header
   );
   return response;
 }
@@ -50,7 +50,7 @@ export const performAction = async (requestId, action) => {
 // //fetch requests sent by a user to different products
 export const fetchSentRequests = async () => {
   const response = await axios.get(
-    `http://localhost:8080/requests/pending`,
+    `https://pickitt.herokuapp.com:8080/requests/pending`,
     header
   );
   return response;
@@ -59,7 +59,7 @@ export const fetchSentRequests = async () => {
 // API call to remove the request from db
 export const removeRequest = async (requestId) => {
   const response = await axios.get(
-    `http://localhost:8080/requests/remove/${requestId}`,
+    `https://pickitt.herokuapp.com:8080/requests/remove/${requestId}`,
     header
   );
   return response;
