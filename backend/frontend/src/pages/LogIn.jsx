@@ -35,7 +35,7 @@ const LogIn = () => {
         saveToLocalMemory(response.data.data);
         response.data.data.userType === "moderator"
           ? (window.location = "/moderator_home")
-          : (window.location = "/Home");
+          : (window.location = "/home");
       })
       .catch(err => {
         if (err.response.status === 401)
