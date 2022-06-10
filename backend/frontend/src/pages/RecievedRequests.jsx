@@ -1,8 +1,8 @@
 import { useState, useEffect, Fragment } from 'react';
 import { withRouter, useParams } from 'react-router';
-import { fetchProductRequests } from './../API calls/requests';
+import { fetchProductRequests } from '../API calls/requests';
 import {useLocation} from 'react-router-dom';
-import { performAction } from './../API calls/requests';
+import { performAction } from '../API calls/requests';
 import {Button,Table} from 'react-bootstrap';
 
 const RecievedRequests = ({ history}) => {

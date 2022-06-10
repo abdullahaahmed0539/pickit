@@ -9,6 +9,7 @@ const orderRouter = require("./routes/orders");
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(express.static('frontend/build'));
 
 app.use("/users", userRouter);
 app.use("/products", productRouter);

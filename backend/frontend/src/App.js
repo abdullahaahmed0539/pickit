@@ -87,8 +87,11 @@ function App() {
           <Route path="/products/:productId">
             <Product />
           </Route>
-          {localStorage.getItem("token") !== null ?
-            <Redirect push to="/Home" /> : <Redirect push to="/login" />}
+          {localStorage.getItem("token") !== null ? (
+            <Redirect push to="/Home" />
+          ) : (
+            <Redirect push to="/login" />
+          )}
         </Switch>
       </Suspense>
     </div>
