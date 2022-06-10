@@ -11,10 +11,10 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static('frontend/build'));
 
-app.use("/users", userRouter);
-app.use("/products", productRouter);
-app.use("/categories", categoryRouter);
-app.use("/requests", requestRouter);
-app.use("/orders", orderRouter);
+app.use("/api/users", userRouter);
+app.use("/api/products", productRouter);
+app.use("/api/categories", categoryRouter);
+app.use("/api/requests", requestRouter);
+app.use("/api/orders", orderRouter);
 
 module.exports = app;

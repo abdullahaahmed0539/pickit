@@ -6,7 +6,7 @@ const header = { headers: { Authorization: `Bearer ${token}` } };
 //create orders
 export const createOrder = async data => {
   const response = await axios.post(
-    `https://pickitt.herokuapp.com:8080/orders/create_order`,
+    `https://pickitt.herokuapp.com/api/orders/create_order`,
     data,
     header
   );
@@ -16,7 +16,7 @@ export const createOrder = async data => {
 //list orders
 export const myOrders = async username => {
   const response = await axios.get(
-    `https://pickitt.herokuapp.com:8080/orders/my_orders/${username}`,
+    `https://pickitt.herokuapp.com/api/orders/my_orders/${username}`,
     header
   );
   return response;
@@ -25,7 +25,7 @@ export const myOrders = async username => {
 //get order
 export const getOrder = async orderId => {
   const response = await axios.get(
-    `https://pickitt.herokuapp.com:8080/orders/${orderId}`,
+    `https://pickitt.herokuapp.com/api/orders/${orderId}`,
     header
   );
   return response;
@@ -34,7 +34,7 @@ export const getOrder = async orderId => {
 //list all orders
 export const getAllOrders = async () => {
   const response = await axios.get(
-    `https://pickitt.herokuapp.com:8080/orders/get_all_orders`,
+    `https://pickitt.herokuapp./api/orders/get_all_orders`,
     header
   );
   return response;
@@ -44,7 +44,7 @@ export const getAllOrders = async () => {
 //list all orders
 export const fullfilOrder = async (data) => {
   const response = await axios.post(
-    `https://pickitt.herokuapp.com:8080/orders/fullfil`,
+    `https://pickitt.herokuapp./api/orders/fullfil`,
     data,
     header
   );
