@@ -36,16 +36,16 @@ function App() {
             <SignUp />
           </Route>
           {localStorage.getItem("userType") === "moderator" && (
-            <Route path="/Home">
+            <Route path="/home">
               <ModeratorHome />
             </Route>
           )}
           {localStorage.getItem("userType") === "delivery" && (
-            <Route path="/Home">
+            <Route path="/home">
               <Delivery />
             </Route>
           )}
-          <Route path="/Home">
+          <Route path="/home">
             <Home />
           </Route>
           <Route path="/order/fulfill/:orderId">
@@ -88,7 +88,7 @@ function App() {
             <Product />
           </Route>
           {localStorage.getItem("token") !== null ? (
-            <Redirect push to="/Home" />
+            <Redirect push to="/home" />
           ) : (
             <Redirect push to="/login" />
           )}
