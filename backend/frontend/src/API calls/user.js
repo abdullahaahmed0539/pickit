@@ -8,8 +8,10 @@ export const login = async data =>
   await axios.post(`https://pickitt.herokuapp.com:8080/users/login`, data);
 
 //register a user
-export const register = async data =>
+export const register = async data => {
+  console.log('request sent.')
   await axios.post(`https://pickitt.herokuapp.com:8080/users/signup`, data);
+}
 
 //get User details
 export const userDetail = async username => {

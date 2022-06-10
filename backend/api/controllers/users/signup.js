@@ -38,6 +38,7 @@ const inputValidator = (email, password) => {
 };
 
 exports.signUp = (req, res) => {
+  console.log('request recieved')
   //storing values passed from client side
   const { username, email, password } = req.body;
   const userType = "normal";
